@@ -1,10 +1,10 @@
-package Main.mbti;
+package Main.server;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MbtiApplicationTests {
+class ServerApplicationTests {
 
 	@Test
 	void contextLoads() {

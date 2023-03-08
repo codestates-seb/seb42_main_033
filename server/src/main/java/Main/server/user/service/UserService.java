@@ -1,0 +1,80 @@
+package Main.server.user.service;
+
+import Main.server.advice.BusinessLogicalException;
+import Main.server.advice.ExceptionCode;
+import Main.server.user.entity.Users;
+import Main.server.user.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+@Service
+@Transactional
+public class UserService {
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public Users createUser(Users users) throws Exception {
+        verifyExistedEmail(users.getEmail());
+        Users createdUsers = userRepository.save(users);
+        return createdUsers;
+    }
+
+    public Users updateUser(Users users) throws Exception {
+        Users findUsers = loadExistedUser(users.getUserId());
+        verifyExistedUserNickName(users.getNickName());
+
+        Optional.ofNullable(users.getNickName())
+                .ifPresent(findUsers::setNickName);
+        Optional.ofNullable(users.getPassword1())
+                .ifPresent(findUsers::setPassword1);
+        Optional.ofNullable(users.getPassword2())
+                .ifPresent(findUsers::setPassword2);
+        Optional.ofNullable(users.getMbti())
+                .ifPresent(findUsers::setMbti);
+
+        return userRepository.save(findUsers);
+    }
+
+    public Users getUser(long userId) {
+        return loadExistedUser(userId);
+    }
+
+    public Page<Users> getUsers(int page) {
+        if(userRepository.findAll() == null) {
+            throw new BusinessLogicalException(ExceptionCode.NULL_POINT_ERROR);
+        }
+        return userRepository.findAll(PageRequest.of(page-1, 10, Sort.by("userId").descending()));
+    }
+
+    public void deleteUser(long userId) {
+        Users deleteUsers = loadExistedUser(userId);
+        userRepository.delete(deleteUsers);
+    }
+
+    public void verifyExistedEmail(String email) throws Exception {
+        Optional<Users> foundEmail = userRepository.findByEmail(email);
+        if(foundEmail.isPresent())
+            throw new BusinessLogicalException(ExceptionCode.EMAIL_ALREADY_EXIST);
+    }
+    public Users loadExistedUser(long userId) {
+        Users findUsers = userRepository.findById(userId);
+        if(findUsers == null) {
+            throw new BusinessLogicalException(ExceptionCode.MEMBER_NOT_FOUND);
+        }
+        return findUsers;
+    }
+    // 존재하는 닉네임인지 확인
+    public void verifyExistedUserNickName(String nickName) {
+        Optional<Users> foundUserName = userRepository.findByNickName(nickName);
+        if(foundUserName.isPresent())
+            throw new BusinessLogicalException(ExceptionCode.NICKNAME_ALREADY_EXIST);
+    }
+}
