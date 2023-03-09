@@ -12,7 +12,7 @@ const Headerbody = styled.div`
   background-color: rgb(255, 255, 255);
   left: 0;
   top: 0;
-  z-index: 2;
+  z-index: 1;
 `;
 const Headerimg = styled.img`
   display: flex;
