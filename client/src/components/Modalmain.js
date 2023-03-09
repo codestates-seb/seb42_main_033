@@ -85,7 +85,8 @@ const Modallogout = styled(FaPowerOff)`
   color: #707070;
 `;
 const Modalword = styled.a`
-  font-size: 2em;
+  width: 13rem;
+  font-size: 2.5em;
   margin-top: 0.5rem;
   color: #3a3a3a;
   @media (max-width: 1740px) {
