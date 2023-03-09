@@ -40,7 +40,9 @@ public class UserService {
         Optional.ofNullable(users.getMbti())
                 .ifPresent(findUsers::setMbti);
 
+
         return userRepository.save(findUsers);
+
     }
 
     public Users getUser(long userId) {
@@ -77,4 +79,5 @@ public class UserService {
         if(foundUserName.isPresent())
             throw new BusinessLogicalException(ExceptionCode.NICKNAME_ALREADY_EXIST);
     }
+
 }
