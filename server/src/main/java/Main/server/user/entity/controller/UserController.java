@@ -1,4 +1,4 @@
-package Main.server.user.controller;
+package Main.server.user.entity.controller;
 
 import Main.server.user.dto.UserDto;
 import Main.server.user.entity.Users;

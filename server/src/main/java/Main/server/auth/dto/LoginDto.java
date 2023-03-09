@@ -1,4 +1,4 @@
-package Main.server.dto;
+package Main.server.auth.dto;
 
 import lombok.Getter;
 
