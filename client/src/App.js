@@ -1,10 +1,10 @@
 import './App.css';
-import BoardCarddetail from './components/BoardCarddetail';
+import PostlistPage from './page/PostlistPage';
 
 function App() {
   return (
     <div>
-      <BoardCarddetail />
+      <PostlistPage />
     </div>
   );
 }
