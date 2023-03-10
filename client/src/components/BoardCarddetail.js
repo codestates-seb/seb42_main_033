@@ -31,6 +31,7 @@ const BoardCarddetail = () => {
         font-size: 22px;
       }
       .nickname {
+        display: flex;
         font-size: 12px;
         margin-top: 5px;
         color: #959595;

@@ -7,7 +7,10 @@ import Footer from './components/Footer';
 import Modalmain from './components/Modalmain.js';
 import Dm from './components/Dm.js';
 // import PostlistPage from './page/PostlistPage';
+// import PostPage from './page/PostPage.js';
+import PostviewPage from './page/PostviewPage.js';
 import BoardAnswer from './components/BoardAnswer.js';
+import MypageSidebar from './components/MypageSidebar.js';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -23,7 +26,10 @@ function App() {
       {/* <Login /> */}
       <Dm />
       {/* <PostlistPage /> */}
+      {/* <PostPage /> */}
+      <PostviewPage />
       <BoardAnswer />
+      <MypageSidebar />
       {/* <Signup /> */}
       <Footer />
     </div>

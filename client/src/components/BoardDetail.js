@@ -1,5 +1,7 @@
-const BoardDetail = () => {
-  return ()
-};
+// const BoardDetail = () => {
+//   return (
 
-export default BoardDetail;
+// );
+// };
+
+// export default BoardDetail;

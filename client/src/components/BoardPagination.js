@@ -1,7 +1,6 @@
-const BoardPagination = () => {
-  return (
-    
-  )
-};
+// const BoardPagination = () => {
+//   return (
+//   )
+// };
 
-export default BoardPagination;
+// export default BoardPagination;
