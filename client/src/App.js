@@ -1,7 +1,12 @@
 import './App.css';
+import BoardCarddetail from './components/BoardCarddetail';
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div>
+      <BoardCarddetail />
+    </div>
+  );
 }
 
 export default App;
