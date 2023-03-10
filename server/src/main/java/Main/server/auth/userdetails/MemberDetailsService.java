@@ -73,7 +73,7 @@ public class MemberDetailsService implements UserDetailsService{
 
         @Override
         public boolean isEnabled() {
-            return false;
+            return true;
         }
     }
 

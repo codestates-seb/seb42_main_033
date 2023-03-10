@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +22,6 @@ import java.util.Arrays;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
@@ -32,15 +32,15 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http
-                .headers().frameOptions().sameOrigin() // 동일 출처로부터 들어오는 request만 페이지 렌더링 허용
-                .and()
-                .csrf().disable() // Cross-Site Request Forgery 비활성화
-                .cors(withDefaults()) //cors정책 default
+        http.csrf().disable(); // Cross-Site Request Forgery 비활성화
+
+
+        http.cors(withDefaults()) //cors정책 default
                 .formLogin().disable() //formLogin 비활성화
                 .httpBasic().disable() //httpBasic 인증 비활성화
+                .apply(new CustomFilterConfigurer())
+                .and()
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll()); // anyRequest 받기.
-
         return http.build();
     }
 
@@ -68,10 +68,9 @@ public class SecurityConfiguration {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
-            jwtAuthenticationFilter.setFilterProcessesUrl("user/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("users/login");
 
             builder.addFilter(jwtAuthenticationFilter);
         }
     }
-
 }
