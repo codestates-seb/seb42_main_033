@@ -138,7 +138,7 @@ const Headerbox = styled.div`
     background-color: rgba(0, 0, 0, 0);
   }
 `;
-function HeaderLogin({ setLogin, setModal }) {
+function HeaderLogin({ setModal, setLogin, modal }) {
   return (
     <Headerbody>
       <Headerimg src={Logo} alt="logo" />
@@ -147,7 +147,7 @@ function HeaderLogin({ setLogin, setModal }) {
       <Headericon>
         <Headericonbell
           onClick={() => {
-            setModal(true);
+            setModal(!modal);
           }}
         >
           <FaRegBell />

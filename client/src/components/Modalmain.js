@@ -44,6 +44,18 @@ const Modalbody = styled.div`
     height: 300px;
     width: 260px;
   }
+  @media (max-height: 1200px) {
+    height: 250px;
+    margin-top: 0rem;
+  }
+  @media (max-height: 800px) {
+    height: 220px;
+    margin-top: 0rem;
+  }
+  @media (max-height: 600px) {
+    height: 200px;
+    margin-top: 0rem;
+  }
 `;
 const Modaldiv = styled.div`
   display: flex;
@@ -118,6 +130,12 @@ const Modalword = styled.a`
   @media (max-width: 954px) {
     font-size: 2em;
     margin-top: 0.5rem;
+  }
+  @media (max-height: 800px) {
+    margin-top: 0.1rem;
+  }
+  @media (max-height: 600px) {
+    margin-top: 0rem;
   }
 `;
 // const Modaltriangle = styled.div`
