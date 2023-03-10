@@ -3,9 +3,11 @@ import { HeaderLogin, HeaderLogout } from './components/Header.js';
 import { useState } from 'react';
 import Footer from './components/Footer';
 // import Login from './page/LoginPage.js';
-import Signup from './page/SignupPage.js';
+// import Signup from './page/SignupPage.js';
 import Modalmain from './components/Modalmain.js';
 import Dm from './components/Dm.js';
+// import PostlistPage from './page/PostlistPage';
+import BoardAnswer from './components/BoardAnswer.js';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -20,7 +22,9 @@ function App() {
       {modal ? <Modalmain /> : null}
       {/* <Login /> */}
       <Dm />
-      <Signup />
+      {/* <PostlistPage /> */}
+      <BoardAnswer />
+      {/* <Signup /> */}
       <Footer />
     </div>
   );
