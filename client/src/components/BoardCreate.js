@@ -18,8 +18,10 @@ const ButtonContainer = styled.div`
   margin-top: 20px;
   width: 230px;
 `;
-
-const BoardButton = styled(Link)`
+const BoardButtonLink = styled(Link)`
+  text-decoration: none;
+`;
+const BoardButton = styled.button`
   width: 106px;
   height: 54px;
   text-align: center;
@@ -64,12 +66,12 @@ const BoardCreate = () => {
       </Title>
       <QuillEditor />
       <ButtonContainer>
-        <BoardButton className="delete" to="/PostlistPage">
-          취소
-        </BoardButton>
-        <BoardButton className="submit" to="/PostlistPage">
-          등록
-        </BoardButton>
+        <BoardButtonLink to="/PostlistPage">
+          <BoardButton className="delete"> 취소 </BoardButton>
+        </BoardButtonLink>
+        <BoardButtonLink to="/PostlistPage">
+          <BoardButton className="submit"> 등록 </BoardButton>
+        </BoardButtonLink>
       </ButtonContainer>
     </BoardForm>
   );

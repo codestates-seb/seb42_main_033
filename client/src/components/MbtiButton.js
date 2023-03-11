@@ -47,7 +47,10 @@ const StyledContainer = styled.div`
   bottom: 28%;
   left: 50%;
 `;
-const StyledButton = styled(Link)`
+const StyledButtonLink = styled(Link)`
+  text-decoration: none;
+`;
+const StyledButton = styled.button`
   text-decoration: none;
   background-color: #edf8de;
   border: none;
@@ -109,13 +112,19 @@ const MbtiButton = () => {
             {buttonRows.map((row, index) => (
               <StyledRow key={index}>
                 {row.map((button) => (
-                  <StyledButton
+                  <StyledButtonLink
                     to="PostlistPage"
                     key={button.id}
                     button={button}
                   >
-                    {button.text}
-                  </StyledButton>
+                    <StyledButton
+                      to="PostlistPage"
+                      key={button.id}
+                      button={button}
+                    >
+                      {button.text}
+                    </StyledButton>
+                  </StyledButtonLink>
                 ))}
               </StyledRow>
             ))}

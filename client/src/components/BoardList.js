@@ -29,7 +29,10 @@ const BoardList = () => {
     background-color: #fafafa;
     margin-top: 10px;
   `;
-  const WriteButton = styled(Link)`
+  const WriteButtonLink = styled(Link)`
+    text-decoration: none;
+  `;
+  const WriteButton = styled.button`
     width: 99px;
     height: 35px;
     margin-top: 10px;
@@ -65,7 +68,9 @@ const BoardList = () => {
       <BoardBox>
         <BoardCard>테스트</BoardCard>
       </BoardBox>
-      <WriteButton to="/postpage">글쓰기</WriteButton>
+      <WriteButtonLink to="/postpage">
+        <WriteButton>글쓰기</WriteButton>
+      </WriteButtonLink>
       <Search>
         <input placeholder="검색어를 입력해주세요." />
         <button>

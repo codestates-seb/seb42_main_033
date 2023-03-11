@@ -55,11 +55,12 @@ const Loginguestbody = styled.div`
   width: 600px;
   margin-left: 1%;
 `;
-const Loginguest = styled.a`
+const Loginguest = styled(Link)`
   display: flex;
   color: black;
   margin-top: 30px;
   font-size: 30px;
+  text-decoration: none;
 `;
 const Logingraybox = styled.div`
   height: 20px;
@@ -89,9 +90,9 @@ function Login() {
       </Logintextbox>
       <Loginbutton to="/"> 로그인 </Loginbutton>
       <Loginguestbody>
-        <Loginguest> 게스트 로그인 </Loginguest>
+        <Loginguest to="/"> 게스트 로그인 </Loginguest>
         <Logingraybox />
-        <Loginguest> 회원가입 </Loginguest>
+        <Loginguest to="/Signup"> 회원가입 </Loginguest>
       </Loginguestbody>
     </Loginbody>
   );
