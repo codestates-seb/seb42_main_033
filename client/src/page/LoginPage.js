@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Loginbody = styled.div`
   position: absolute;
@@ -33,7 +34,8 @@ const Logintextboxinput = styled.input`
   border: solid 3px gray;
   font-size: 30px;
 `;
-const Loginbutton = styled.button`
+const Loginbutton = styled(Link)`
+  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,7 +87,7 @@ function Login() {
           placeholder=" 비밀번호"
         ></Logintextboxinput>
       </Logintextbox>
-      <Loginbutton> 로그인 </Loginbutton>
+      <Loginbutton to="/"> 로그인 </Loginbutton>
       <Loginguestbody>
         <Loginguest> 게스트 로그인 </Loginguest>
         <Logingraybox />

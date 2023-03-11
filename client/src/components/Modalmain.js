@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FaRegUser, FaRegPaperPlane, FaPowerOff } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Modalbody = styled.div`
   position: fixed;
@@ -96,8 +97,9 @@ const Modallogout = styled(FaPowerOff)`
   margin-left: 0.5rem;
   color: #707070;
 `;
-const Modalword = styled.a`
+const Modalword = styled(Link)`
   width: 13rem;
+  text-decoration: none;
   font-size: 2.5em;
   margin-top: 0.5rem;
   color: #3a3a3a;
@@ -180,7 +182,7 @@ function Modal() {
             <Modaluser>
               <FaRegUser />
             </Modaluser>
-            <Modalword>마이페이지</Modalword>
+            <Modalword to="/MyComments">마이페이지</Modalword>
           </Modaldiv1>
           <Modaldiv1>
             <Modalmail>

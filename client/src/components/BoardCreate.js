@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import QuillEditor from './QuillEditor.js';
 
@@ -18,7 +19,7 @@ const ButtonContainer = styled.div`
   width: 230px;
 `;
 
-const BoardButton = styled.button`
+const BoardButton = styled(Link)`
   width: 106px;
   height: 54px;
   text-align: center;
@@ -28,6 +29,7 @@ const BoardButton = styled.button`
   border-radius: 10px;
   border: 0;
   letter-spacing: 7px;
+  text-decoration: none;
   &.delete {
     background-color: #a1a1a1;
   }
@@ -62,8 +64,12 @@ const BoardCreate = () => {
       </Title>
       <QuillEditor />
       <ButtonContainer>
-        <BoardButton className="delete"> 취소 </BoardButton>
-        <BoardButton className="submit"> 등록 </BoardButton>
+        <BoardButton className="delete" to="/PostlistPage">
+          취소
+        </BoardButton>
+        <BoardButton className="submit" to="/PostlistPage">
+          등록
+        </BoardButton>
       </ButtonContainer>
     </BoardForm>
   );
