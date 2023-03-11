@@ -12,7 +12,6 @@ const Modalbody = styled.div`
   padding: 30px;
   background-color: #f7f7f8;
   border-radius: 10px;
-  box-shadow: 0px 7px 10px 0px lightgray;
   transform: translateX(-0%) translateY(-0%);
   z-index: 1;
   @media (max-width: 2000px) {
@@ -194,7 +193,7 @@ function Modal() {
             <Modallogout>
               <Modallogout />
             </Modallogout>
-            <Modalword>로그아웃</Modalword>
+            <Modalword to="/">로그아웃</Modalword>
           </Modaldiv2>
         </Modaldiv>
       </Modalbody>
