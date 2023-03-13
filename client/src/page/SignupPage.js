@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Signupbody = styled.div`
@@ -33,6 +34,9 @@ const Signuptextboxinput = styled.input`
   border: solid 3px gray;
   font-size: 30px;
 `;
+const SignupbuttonLink = styled(Link)`
+  text-decoration: none;
+`;
 const Signupbutton = styled.button`
   display: block;
   align-items: center;
@@ -47,6 +51,7 @@ const Signupbutton = styled.button`
   margin: auto;
   margin-top: 10%;
   border: solid 10px #64b5ff;
+  text-decoration: none;
 `;
 function Signup() {
   return (
@@ -83,7 +88,9 @@ function Signup() {
           placeholder=" MBTI를 입력해주세요."
         />
       </Signuptextbox>
-      <Signupbutton> 회원가입 </Signupbutton>
+      <SignupbuttonLink to="/">
+        <Signupbutton> 회원가입 </Signupbutton>
+      </SignupbuttonLink>
     </Signupbody>
   );
 }

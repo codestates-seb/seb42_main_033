@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Loginbody = styled.div`
   position: absolute;
@@ -33,7 +34,8 @@ const Logintextboxinput = styled.input`
   border: solid 3px gray;
   font-size: 30px;
 `;
-const Loginbutton = styled.button`
+const Loginbutton = styled(Link)`
+  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,11 +55,12 @@ const Loginguestbody = styled.div`
   width: 600px;
   margin-left: 1%;
 `;
-const Loginguest = styled.a`
+const Loginguest = styled(Link)`
   display: flex;
   color: black;
   margin-top: 30px;
   font-size: 30px;
+  text-decoration: none;
 `;
 const Logingraybox = styled.div`
   height: 20px;
@@ -85,11 +88,11 @@ function Login() {
           placeholder=" 비밀번호"
         ></Logintextboxinput>
       </Logintextbox>
-      <Loginbutton> 로그인 </Loginbutton>
+      <Loginbutton to="/"> 로그인 </Loginbutton>
       <Loginguestbody>
-        <Loginguest> 게스트 로그인 </Loginguest>
+        <Loginguest to="/"> 게스트 로그인 </Loginguest>
         <Logingraybox />
-        <Loginguest> 회원가입 </Loginguest>
+        <Loginguest to="/Signup"> 회원가입 </Loginguest>
       </Loginguestbody>
     </Loginbody>
   );

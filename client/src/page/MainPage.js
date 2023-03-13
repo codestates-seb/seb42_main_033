@@ -1,4 +1,3 @@
-import React from 'react';
 import MainImg from '../images/Main.jpeg';
 import MbtiButton from '../components/MbtiButton';
 // import MbtiButton2 from './MbtiButton2';

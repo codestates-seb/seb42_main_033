@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const BoardCard = () => {
-  const CardLayout = styled.form`
+  const CardLayout = styled(Link)`
     display: flex;
     width: 908px;
     height: 111px;
@@ -10,10 +11,11 @@ const BoardCard = () => {
     align-items: center;
     margin-left: 10px;
     margin-top: 14px;
+    text-decoration: none;
   `;
   return (
     <div>
-      <CardLayout>!!테스트</CardLayout>
+      <CardLayout to="/PostviewPage">!!테스트</CardLayout>
       <CardLayout>!!테스트</CardLayout>
       <CardLayout>!!테스트</CardLayout>
       <CardLayout>!!테스트</CardLayout>

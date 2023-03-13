@@ -4,7 +4,7 @@ import { FaHeart, FaCommentAlt } from 'react-icons/fa';
 import PostModal from './PostModal';
 import { useState } from 'react';
 import BoardAnswer from './BoardAnswer';
-
+import { Link } from 'react-router-dom';
 const BoardCarddetail = () => {
   const Container = styled.div`
     display: flex;
@@ -112,6 +112,9 @@ const BoardCarddetail = () => {
     font-size: 20px;
     color: #64b5ff;
   `;
+  const ButtonLink = styled(Link)`
+    text-decoration: none;
+  `;
 
   return (
     <>
@@ -179,15 +182,17 @@ const BoardCarddetail = () => {
                   paddingLeft: '10px',
                 }}
               />
-              <button
-                style={{
-                  height: '40px',
-                  width: '70px',
-                  marginLeft: '10px',
-                }}
-              >
-                작성
-              </button>
+              <ButtonLink to="/PostlistPage">
+                <button
+                  style={{
+                    height: '40px',
+                    width: '70px',
+                    marginLeft: '10px',
+                  }}
+                >
+                  작성
+                </button>
+              </ButtonLink>
             </div>
           </div>
         </div>

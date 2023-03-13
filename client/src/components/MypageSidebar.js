@@ -8,6 +8,7 @@ import {
   faEnvelope,
   faCircleXmark,
 } from '@fortawesome/free-regular-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Sidebar = styled.div`
   * {
@@ -15,6 +16,7 @@ const Sidebar = styled.div`
     padding: 0;
   }
   nav {
+    margin-top: 20vh;
     width: 240px;
     height: 436px;
     box-shadow: 2px 2px 2px 2px rgb(194, 194, 194);
@@ -60,11 +62,11 @@ const MyPageSidebar = () => {
             </li>
             <li>
               <FontAwesomeIcon className="icon" icon={faFileClipboard} />
-              <span>내 게시글</span>
+              <Link to="/Mypost">내 게시글</Link>
             </li>
             <li>
               <FontAwesomeIcon className="icon" icon={faCommentDots} />
-              <span>내 댓글</span>
+              <Link to="/MyComments">내 댓글</Link>
             </li>
             <li>
               <FontAwesomeIcon className="icon" icon={faEnvelope} />

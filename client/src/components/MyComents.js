@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import MyPageSidebar from './MypageSidebar';
 
 const CommentPageContainer = styled.div`
   font-size: 1vw;
@@ -112,31 +113,33 @@ function MyComments() {
   };
 
   return (
-    <CommentPageContainer>
-      <StyledText>내 댓글</StyledText>
-
-      <CommentsContainer>
-        <HeaderContainer>선택</HeaderContainer>
-        <hr />
-        {comments
-          .slice()
-          .reverse()
-          .map((comment) => (
-            <CommentContainer key={comment.id}>
-              <input
-                type="checkbox"
-                id={`checkbox-${comment.id}`}
-                checked={selectedComments.includes(comment.id)}
-                onChange={() => handleCheckboxClick(comment.id)}
-              />
-              <CommentText htmlFor={`checkbox-${comment.id}`}>
-                <p>{comment.text}</p>
-              </CommentText>
-            </CommentContainer>
-          ))}
-      </CommentsContainer>
-      <DeleteButton>삭제</DeleteButton>
-    </CommentPageContainer>
+    <>
+      <MyPageSidebar />
+      <CommentPageContainer>
+        <StyledText>내 댓글</StyledText>
+        <CommentsContainer>
+          <HeaderContainer>선택</HeaderContainer>
+          <hr />
+          {comments
+            .slice()
+            .reverse()
+            .map((comment) => (
+              <CommentContainer key={comment.id}>
+                <input
+                  type="checkbox"
+                  id={`checkbox-${comment.id}`}
+                  checked={selectedComments.includes(comment.id)}
+                  onChange={() => handleCheckboxClick(comment.id)}
+                />
+                <CommentText htmlFor={`checkbox-${comment.id}`}>
+                  <p>{comment.text}</p>
+                </CommentText>
+              </CommentContainer>
+            ))}
+        </CommentsContainer>
+        <DeleteButton>삭제</DeleteButton>
+      </CommentPageContainer>
+    </>
   );
 }
 

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const buttons = [
   { id: 1, text: 'INFP' /*,  path: '/INFP'*/ },
@@ -21,12 +21,12 @@ const buttons = [
   { id: 16, text: 'ESTJ' },
 ];
 
-const images = {
-  INTP: require('./intp.png'),
-  INTJ: require('./intj.png'),
-  INFJ: require('./infj.png'),
-  ENTP: require('./entp.png'),
-};
+// const images = {
+//   INTP: require('./intp.png'),
+//   INTJ: require('./intj.png'),
+//   INFJ: require('./infj.png'),
+//   ENTP: require('./entp.png'),
+// };
 
 const StyledText = styled.div`
   font-size: 2vh;
@@ -47,7 +47,11 @@ const StyledContainer = styled.div`
   bottom: 28%;
   left: 50%;
 `;
+const StyledButtonLink = styled(Link)`
+  text-decoration: none;
+`;
 const StyledButton = styled.button`
+  text-decoration: none;
   background-color: #edf8de;
   border: none;
   color: black;
@@ -63,7 +67,6 @@ const StyledButton = styled.button`
 
   &:hover {
     cursor: pointer;
-    background-image: url(${(props) => images[props.button.text]});
     color: black;
     border: solid;
     border-color: black;
@@ -109,9 +112,19 @@ const MbtiButton = () => {
             {buttonRows.map((row, index) => (
               <StyledRow key={index}>
                 {row.map((button) => (
-                  <StyledButton key={button.id} button={button}>
-                    {button.text}
-                  </StyledButton>
+                  <StyledButtonLink
+                    to="PostlistPage"
+                    key={button.id}
+                    button={button}
+                  >
+                    <StyledButton
+                      to="PostlistPage"
+                      key={button.id}
+                      button={button}
+                    >
+                      {button.text}
+                    </StyledButton>
+                  </StyledButtonLink>
                 ))}
               </StyledRow>
             ))}

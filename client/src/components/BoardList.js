@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 import BoardCard from './BoardCard';
+import { Link } from 'react-router-dom';
 
 const BoardList = () => {
   const BoardLayout = styled.div`
@@ -28,6 +29,9 @@ const BoardList = () => {
     background-color: #fafafa;
     margin-top: 10px;
   `;
+  const WriteButtonLink = styled(Link)`
+    text-decoration: none;
+  `;
   const WriteButton = styled.button`
     width: 99px;
     height: 35px;
@@ -39,6 +43,7 @@ const BoardList = () => {
     color: #ff8686;
     font-size: 18px;
     font-weight: 500;
+    text-decoration: none;
   `;
   const Search = styled.div`
     display: flex;
@@ -63,7 +68,9 @@ const BoardList = () => {
       <BoardBox>
         <BoardCard>테스트</BoardCard>
       </BoardBox>
-      <WriteButton>글쓰기</WriteButton>
+      <WriteButtonLink to="/postpage">
+        <WriteButton>글쓰기</WriteButton>
+      </WriteButtonLink>
       <Search>
         <input placeholder="검색어를 입력해주세요." />
         <button>

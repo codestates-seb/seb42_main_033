@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Logo from './../Image/Logo.png';
+import Logo from './../images/Logo.png';
+import { Link } from 'react-router-dom';
 import { FaRegUserCircle, FaRegBell } from 'react-icons/fa';
-
 const Headerbody = styled.div`
   display: flex;
   position: fixed;
@@ -14,6 +14,8 @@ const Headerbody = styled.div`
   top: 0;
   z-index: 1;
 `;
+const Headerimgdiv = styled(Link)``;
+
 const Headerimg = styled.img`
   display: flex;
   width: 300px;
@@ -21,9 +23,11 @@ const Headerimg = styled.img`
   margin-top: 1.5rem;
   margin-left: 1%;
 `;
-const Headertext = styled.div`
+const Headertext = styled(Link)`
   display: block;
   width: auto;
+  text-decoration: none;
+  color: black;
   font-size: 2.5rem;
   font-weight: 400;
   margin-top: 10px;
@@ -45,8 +49,10 @@ const Headericonbell = styled(FaRegBell)`
   height: 7rem;
   margin-right: 70px;
 `;
-const Headertextlogin = styled.div`
+const Headertextlogin = styled(Link)`
   display: block;
+  color: black;
+  text-decoration: none;
   width: 150px;
   font-size: 2.5rem;
   font-weight: 400;
@@ -79,7 +85,7 @@ const Headerimglogin = styled.img`
   height: 160px;
   text-align: center;
   margin-top: 1.5rem;
-  margin-right: 18%;
+  margin-right: 20vw;
 `;
 const Headertextdiv = styled.div`
   display: flex;
@@ -104,9 +110,11 @@ const Headertextdiv = styled.div`
     vertical-align: baseline;
   }
 `;
-const Headertextleft = styled.div`
+const Headertextleft = styled(Link)`
   display: block;
   width: auto;
+  color: black;
+  text-decoration: none;
   font-size: 2.5rem;
   font-weight: 400;
   margin-top: 10px;
@@ -141,8 +149,10 @@ const Headerbox = styled.div`
 function HeaderLogin({ setModal, setLogin, modal }) {
   return (
     <Headerbody>
-      <Headerimg src={Logo} alt="logo" />
-      <Headertext>통합게시판</Headertext>
+      <Headerimgdiv to="/">
+        <Headerimg src={Logo} alt="logo" />
+      </Headerimgdiv>
+      <Headertext to="/PostlistPage">통합게시판</Headertext>
       <Headertext>MBTI TEST</Headertext>
       <Headericon>
         <Headericonbell
@@ -167,12 +177,15 @@ function HeaderLogout({ setLogin }) {
   return (
     <Headerbody>
       <Headertextdiv>
-        <Headertextleft>통합게시판</Headertextleft>
+        <Headertextleft to="/PostlistPage">통합게시판</Headertextleft>
         <Headerbox />
         <Headertextright>MBTI TEST</Headertextright>
       </Headertextdiv>
-      <Headerimglogin src={Logo} alt="logo" />
+      <Headerimgdiv to="/">
+        <Headerimglogin src={Logo} alt="logo" />
+      </Headerimgdiv>
       <Headertextlogin
+        to="/Login"
         onClick={() => {
           setLogin(false);
         }}
