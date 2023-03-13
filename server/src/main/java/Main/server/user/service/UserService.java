@@ -39,7 +39,7 @@ public class UserService {
         users.setPassword1(encryptedPassword);
 
         // Roles 저장 (이현수)
-        List<String> roles = authorityUtils.createRoles(users.getEmail());
+        List<String> roles = authorityUtils.createRoles(users.getEmail(), users.getMbti());
         users.setRoles(roles);
 
         Users createdUsers = userRepository.save(users);

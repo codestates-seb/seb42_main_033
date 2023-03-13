@@ -24,12 +24,12 @@ public class JwtTokenizer {
     private String secretKey;
 
     @Getter
-    @Value("{jwt.access-token-expiration-minutes}")
-    private String accessTokenExpirationMinutes;
+    @Value("${jwt.access-token-expiration-minutes}")
+    private int accessTokenExpirationMinutes;
 
     @Getter
-    @Value("{jwt.refresh-token-expiration-minutes}")
-    private String refreshTokenExpirationMinutes;
+    @Value("${jwt.refresh-token-expiration-minutes}")
+    private int refreshTokenExpirationMinutes;
 
     //인코딩
     public String encodeBase64SecretKey(String secretKey){
@@ -92,13 +92,10 @@ public class JwtTokenizer {
     }
 
     // 만료시간 얻기
-    public Date getTokenExpiration(String expirationMinutes){
-        int expirationMinutesChange = Integer.parseInt(expirationMinutes);
-
-        System.out.println(expirationMinutesChange);
+    public Date getTokenExpiration(int expirationMinutes){
 
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, expirationMinutesChange);
+        calendar.add(Calendar.MINUTE, expirationMinutes);
         Date expiration = calendar.getTime();
 
         return expiration;

@@ -7,10 +7,9 @@ import Main.server.user.entity.Users;
 import Main.server.user.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -39,6 +38,8 @@ public class MemberDetailsService implements UserDetailsService{
             setEmail(users.getEmail());
             setPassword1(users.getPassword1());
             setPassword2(users.getPassword2());
+            setRoles(users.getRoles());
+            setMbti(users.getMbti());
         }
 
         @Override
@@ -48,7 +49,7 @@ public class MemberDetailsService implements UserDetailsService{
 
         @Override
         public String getPassword() {
-            return null;
+            return getPassword1();
         }
 
         @Override
@@ -58,17 +59,17 @@ public class MemberDetailsService implements UserDetailsService{
 
         @Override
         public boolean isAccountNonExpired() {
-            return false;
+            return true;
         }
 
         @Override
         public boolean isAccountNonLocked() {
-            return false;
+            return true;
         }
 
         @Override
         public boolean isCredentialsNonExpired() {
-            return false;
+            return true;
         }
 
         @Override
@@ -76,6 +77,4 @@ public class MemberDetailsService implements UserDetailsService{
             return true;
         }
     }
-
-
 }
