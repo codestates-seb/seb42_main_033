@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-09T16:09:53+0900",
+    date = "2023-03-13T14:21:10+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -66,6 +66,9 @@ public class BoardIntegratedMapperImpl implements BoardIntegratedMapper {
         }
         if ( post.getViewCount() != null ) {
             response.setViewCount( post.getViewCount() );
+        }
+        if ( post.getLikeCount() != null ) {
+            response.setLikeCount( post.getLikeCount() );
         }
         response.setCreatedAt( post.getCreatedAt() );
         response.setModifiedAt( post.getModifiedAt() );

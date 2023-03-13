@@ -36,6 +36,7 @@ public class BoardIntegratedDto {
         String tag;
         long commentCount;
         long viewCount;
+        long likeCount;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy년 MM월 dd일 HH:mm", timezone = "Asia/Seoul")
         LocalDateTime createdAt;

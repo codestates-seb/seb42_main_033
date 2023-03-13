@@ -67,12 +67,13 @@ public class UserService {
             throw new BusinessLogicalException(ExceptionCode.EMAIL_ALREADY_EXIST);
     }
     public Users loadExistedUser(long userId) {
-        Users findUsers = userRepository.findById(userId);
+        Users findUsers = userRepository.findById(userId).orElse(null);
         if(findUsers == null) {
             throw new BusinessLogicalException(ExceptionCode.MEMBER_NOT_FOUND);
         }
         return findUsers;
     }
+
     // 존재하는 닉네임인지 확인
     public void verifyExistedUserNickName(String nickName) {
         Optional<Users> foundUserName = userRepository.findByNickName(nickName);
