@@ -14,6 +14,8 @@ import PostviewPage from './page/PostviewPage.js';
 import MainPage from './page/MainPage';
 import MyComments from './components/MyComents';
 import MyPost from './components/MyPost.js';
+import EditProfilePage from './page/EditProfilePage';
+import SignoutPage from './page/SignoutPage';
 
 const Dev = styled.div`
   display: flex;
@@ -45,6 +47,8 @@ function App() {
         <Route path="/Dm" element={<Dm />} />
         <Route path="/MyComments" element={<MyComments />} />
         <Route path="/MyPost" element={<MyPost />} />
+        <Route path="/EditProfile" element={<EditProfilePage />} />
+        <Route path="/Signout" element={<SignoutPage />} />
       </Routes>
       {modal ? <Modalmain /> : null}
       <Footer />
