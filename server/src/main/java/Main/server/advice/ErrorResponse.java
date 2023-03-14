@@ -1,6 +1,7 @@
 package Main.server.advice;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 
@@ -33,6 +34,11 @@ public class ErrorResponse {
     }
     public static ErrorResponse of(ExceptionCode exceptionCode) {
         return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());
+    }
+
+    // 인증 실패시 에러응답 작성 (이현수)
+    public static ErrorResponse of(HttpStatus httpStatus){
+        return new ErrorResponse(401, "Unauthorized");
     }
     public static ErrorResponse of(BindingResult bindingResult) {
         return new ErrorResponse(FieldError.of(bindingResult), null);

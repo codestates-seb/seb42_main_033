@@ -50,4 +50,8 @@ public class Users {
         this.password2 = password2;
         this.mbti = mbti;
     }
+
+    public Users(String email){
+        this.email = email;
+    }
 }
