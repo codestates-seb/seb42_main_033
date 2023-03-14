@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const PostModal = ({ onClose, isOpen }) => {
   const handleSubmit = (event) => {
@@ -12,7 +13,9 @@ const PostModal = ({ onClose, isOpen }) => {
       {isOpen && (
         <Container>
           <form onSubmit={handleSubmit}>
-            <Button type="submit">수정하기</Button>
+            <ButtonLink to="/PostPage">
+              <Button type="submit">수정하기</Button>
+            </ButtonLink>
             <Button onClick={onClose}>삭제하기</Button>
           </form>
         </Container>
@@ -49,6 +52,9 @@ const Button = styled.button`
   &:first-child {
     border-bottom: 1px solid #ccc;
   }
+`;
+const ButtonLink = styled(Link)`
+  text-decoration: none;
 `;
 
 export default PostModal;

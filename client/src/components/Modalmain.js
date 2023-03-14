@@ -181,7 +181,7 @@ function Modal() {
             <Modaluser>
               <FaRegUser />
             </Modaluser>
-            <Modalword to="/MyComments">마이페이지</Modalword>
+            <Modalword to="/EditProfile">마이페이지</Modalword>
           </Modaldiv1>
           <Modaldiv1>
             <Modalmail>

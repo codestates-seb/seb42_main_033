@@ -1,4 +1,4 @@
-import SignoutContent from './EditProfile';
+import SignoutContent from './../components/SignoutContent';
 function SignoutPage() {
   return <SignoutContent></SignoutContent>;
 }

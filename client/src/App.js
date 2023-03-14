@@ -39,16 +39,27 @@ function App() {
       )}
       <Routes>
         <Route path="/" element={<MainPage />} />
+        {/* 홈화면 */}
         <Route path="/PostviewPage" element={<PostviewPage />} />
+        {/* 게시글 화면 */}
         <Route path="/Login" element={<Login />} />
+        {/* 로그인 */}
         <Route path="/Signup" element={<Signup />} />
-        <Route path="/PostlistPage" element={<PostlistPage />} />
-        <Route path="/PostPage" element={<PostPage />} />
-        <Route path="/Dm" element={<Dm />} />
-        <Route path="/MyComments" element={<MyComments />} />
-        <Route path="/MyPost" element={<MyPost />} />
-        <Route path="/EditProfile" element={<EditProfilePage />} />
+        {/* 회원가입 */}
         <Route path="/Signout" element={<SignoutPage />} />
+        {/* 회원탈퇴 */}
+        <Route path="/PostlistPage" element={<PostlistPage />} />
+        {/* 게시판 */}
+        <Route path="/PostPage" element={<PostPage />} />
+        {/* 글쓰기 */}
+        <Route path="/Dm" element={<Dm />} />
+        {/* 쪽지보내기 */}
+        <Route path="/MyComments" element={<MyComments />} />
+        {/* 내댓글 */}
+        <Route path="/MyPost" element={<MyPost />} />
+        {/* 내 게시글 */}
+        <Route path="/EditProfile" element={<EditProfilePage />} />
+        {/* 내정보 수정하기 */}
       </Routes>
       {modal ? <Modalmain /> : null}
       <Footer />

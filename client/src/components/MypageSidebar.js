@@ -59,7 +59,7 @@ const MyPageSidebar = () => {
               {/* <a href="#">
                 내 정보 수정</a> 링크 추가할 것*/}
               <FontAwesomeIcon className="icon" icon={faUser} />
-              <span>내 정보 수정</span>
+              <Link to="/EditProfile">내 정보 수정</Link>
             </li>
             <li>
               <FontAwesomeIcon className="icon" icon={faFileClipboard} />
@@ -75,7 +75,7 @@ const MyPageSidebar = () => {
             </li>
             <li>
               <FontAwesomeIcon className="icon" icon={faCircleXmark} />
-              <span>회원 탈퇴</span>
+              <Link to="/Signout">회원 탈퇴</Link>
             </li>
           </ul>
         </nav>
