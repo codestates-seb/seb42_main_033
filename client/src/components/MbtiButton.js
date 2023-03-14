@@ -53,8 +53,9 @@ const StyledButtonLink = styled(Link)`
 const StyledButton = styled.button`
   text-decoration: none;
   background-color: #edf8de;
+  /* background-color: #eff1de; */
   border: none;
-  color: black;
+  color: #676767;
 
   margin: 2vh 5vw;
 

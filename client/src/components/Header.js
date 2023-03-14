@@ -18,9 +18,9 @@ const Headerimgdiv = styled(Link)``;
 
 const Headerimg = styled.img`
   display: flex;
-  width: 300px;
-  height: 160px;
-  margin-top: 1.5rem;
+  width: 180px;
+  height: 80px;
+  /* margin-top: 1.5rem; */
   margin-left: 1%;
 `;
 const Headertext = styled(Link)`
@@ -28,7 +28,7 @@ const Headertext = styled(Link)`
   width: auto;
   text-decoration: none;
   color: black;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 400;
   margin-top: 10px;
   :hover {
@@ -36,25 +36,26 @@ const Headertext = styled(Link)`
   }
 `;
 const Headericon = styled.div`
-  width: 20rem;
+  width: 15rem;
   height: 7rem;
-  margin-right: 10px;
+  margin-right: 5px;
+  padding-top: 40px;
 `;
 const Headericonuser = styled(FaRegUserCircle)`
-  width: 4rem;
-  height: 7rem;
+  width: 2rem;
+  height: 5rem;
 `;
 const Headericonbell = styled(FaRegBell)`
-  width: 4rem;
-  height: 7rem;
-  margin-right: 70px;
+  width: 2rem;
+  height: 5rem;
+  margin-right: 40px;
 `;
 const Headertextlogin = styled(Link)`
   display: block;
   color: black;
   text-decoration: none;
-  width: 150px;
-  font-size: 2.5rem;
+  width: 100px;
+  font-size: 1.5rem;
   font-weight: 400;
   margin-top: 10px;
   margin-right: 2.5rem;
@@ -70,7 +71,7 @@ const Headertextlogin = styled(Link)`
     flex-wrap: wrap;
     margin-bottom: 10px;
     width: auto;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 400;
     margin-top: 10px;
     margin-right: 2.5rem;
@@ -81,10 +82,10 @@ const Headertextlogin = styled(Link)`
 `;
 const Headerimglogin = styled.img`
   display: flex;
-  width: 300px;
-  height: 160px;
+  width: 180px;
+  height: 80px;
   text-align: center;
-  margin-top: 1.5rem;
+  /* margin-top: 1.5rem; */
   margin-right: 20vw;
 `;
 const Headertextdiv = styled.div`
@@ -115,7 +116,7 @@ const Headertextleft = styled(Link)`
   width: auto;
   color: black;
   text-decoration: none;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 400;
   margin-top: 10px;
   margin-left: 30px;
@@ -126,21 +127,21 @@ const Headertextleft = styled(Link)`
 const Headertextright = styled.div`
   display: block;
   width: auto;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 400;
   margin-top: 10px;
   :hover {
     font-weight: 700;
   }
   @media (max-width: 1740px) {
-    margin-top: 30px;
+    /* margin-top: 30px; */
     margin-left: 30px;
   }
 `;
 const Headerbox = styled.div`
   height: 35px;
   width: 1%;
-  margin-top: 15px;
+  margin-top: 10px;
   background-color: lightgray;
   @media (max-width: 1740px) {
     background-color: rgba(0, 0, 0, 0);
