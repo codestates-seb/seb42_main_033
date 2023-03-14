@@ -28,7 +28,7 @@ const Dev = styled.div`
   justify-content: center;
 `;
 function App() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   const [modal, setModal] = useState(false);
   return (
     <Dev className="App">
