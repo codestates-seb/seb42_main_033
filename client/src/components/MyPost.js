@@ -133,8 +133,8 @@ function MyPost() {
 
   return (
     <>
-      <MyPageSidebar />
       <CommentPageContainer>
+        <MyPageSidebar />
         <StyledText>내 게시글</StyledText>
 
         <CommentsContainer>
@@ -158,7 +158,7 @@ function MyPost() {
               </CommentContainer>
             ))}
         </CommentsContainer>
-        <DeleteButton>삭제</DeleteButton>
+        <DeleteButton> 삭제 </DeleteButton>
       </CommentPageContainer>
     </>
   );

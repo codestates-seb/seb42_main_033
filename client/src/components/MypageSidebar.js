@@ -16,7 +16,8 @@ const Sidebar = styled.div`
     padding: 0;
   }
   nav {
-    margin-top: 20vh;
+    right: 120%;
+    bottom: 50%;
     width: 240px;
     height: 436px;
     box-shadow: 2px 2px 2px 2px rgb(194, 194, 194);
