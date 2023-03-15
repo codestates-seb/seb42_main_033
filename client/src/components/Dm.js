@@ -30,47 +30,47 @@ const Dmdiv = styled.div`
   flex-direction: column;
 `;
 const Dmtext = styled.div`
-  font-size: 50px;
-  font-weight: 600;
+  font-size: 30px;
+  font-weight: 500;
   text-align: left;
   margin-left: 10%;
-  margin-top: 10%;
 `;
 const Dmtextbox = styled.div`
   display: flex;
   position: relative;
   justify-content: center;
-  height: 3%;
   width: 100%;
+  font-size: 1rem;
   border-radius: 10px;
-  margin-bottom: 3%;
+  margin-bottom: 0.8%;
 `;
 const Dmtextboxinput = styled.input`
   display: flex;
-  height: 3rem;
+  height: 2.5rem;
   width: 80%;
   color: black;
   border-radius: 10px;
-  border: solid 3px gray;
-  font-size: 30px;
+  border: solid 1.5px gray;
+  font-size: 1rem;
   margin-top: 2%;
 `;
 const Dmsubtitle = styled.div`
-  font-size: 30px;
+  font-size: 1.5em;
   font-weight: 600;
   text-align: left;
-  margin-bottom: 2%;
+  margin-bottom: 1%;
   margin-left: 10%;
   color: #8c8c8c;
 `;
 const Dmtextboxinput2 = styled.input`
   display: flex;
-  height: 35rem;
+  height: 20rem;
   width: 80%;
   color: black;
   border-radius: 10px;
-  border: solid 3px gray;
-  font-size: 30px;
+  border: solid 1.5px gray;
+  font-size: 1rem;
+  margin-bottom: 3%;
 `;
 const Dmbuttons = styled.div`
   display: flex;
@@ -80,10 +80,10 @@ const Dmsendbutton = styled.button`
   display: block;
   color: white;
   background-color: #64b5ff;
-  border: solid 0px rgba(0, 0, 0, 0);
-  height: 5rem;
-  width: 13rem;
-  font-size: 35px;
+  border: rgba(0, 0, 0, 0);
+  height: 3rem;
+  width: 9rem;
+  font-size: 1.5rem;
   font-weight: 600;
   border-radius: 8%;
 `;
@@ -91,10 +91,10 @@ const Dmcancelbutton = styled.button`
   display: block;
   color: white;
   background-color: #a1a1a1;
-  border: solid 0px rgba(0, 0, 0, 0);
-  height: 5rem;
-  width: 13rem;
-  font-size: 35px;
+  border: rgba(0, 0, 0, 0);
+  height: 3rem;
+  width: 9rem;
+  font-size: 1.5rem;
   font-weight: 600;
   border-radius: 8%;
 `;
