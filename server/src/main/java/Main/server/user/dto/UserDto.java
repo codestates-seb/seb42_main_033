@@ -25,7 +25,6 @@ public class UserDto {
         String password2;
         @NotBlank
         String mbti;
-
     }
     @Getter
     @Setter
