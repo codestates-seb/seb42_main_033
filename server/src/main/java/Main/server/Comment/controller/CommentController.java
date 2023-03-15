@@ -26,7 +26,7 @@ public class CommentController {
     }
 
     @PostMapping("/{post-id}")
-    public ResponseEntity postComment(@PathVariable("board-id") Long boardId,
+    public ResponseEntity postComment(@PathVariable("post-id") Long boardId,
                                       @RequestBody Main.server.Comment.dto.CommentPostDto postDto) {
 
         Comment createComment = commentService.createComment(commentMapper.commentPostDtoToComment(postDto), postDto.getUserId(), boardId);
@@ -39,8 +39,8 @@ public class CommentController {
     }
 
     @GetMapping("/{post-id}/comment/{comment-id}")
-    public ResponseEntity getComment(@PathVariable("board-id") long boardId,
-                                     @PathVariable("answer-id") long commentId) {
+    public ResponseEntity getComment(@PathVariable("post-id") long boardId,
+                                     @PathVariable("comment-id") long commentId) {
 
         Comment comment = commentService.findVerifiedComment(commentId);
         CommentResponseDto result = commentMapper.commentToCommentResponseDto(comment);
@@ -53,13 +53,13 @@ public class CommentController {
 
     // 전체 질문 가져오기
     @GetMapping("/{post-id}/comment")
-    public ResponseEntity getAnswers() {
+    public ResponseEntity getComments() {
         List<Comment> comments = commentService.findComments();
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     @PatchMapping("/{post-id}/comment/{comment-id}")
-    public ResponseEntity patchComment(@PathVariable("board-id") Long boardId,
+    public ResponseEntity patchComment(@PathVariable("post-id") Long boardId,
                                        @PathVariable("comment-id") Long commentId,
                                        @RequestBody CommentPatchDto patchDto) {
         Comment comment = commentMapper.commentPatchDtoToComment(patchDto);
@@ -75,8 +75,8 @@ public class CommentController {
     }
 
     @DeleteMapping("/{post-id}/comment/{comment-id}")
-    public ResponseEntity deleteComment(@PathVariable("board-id") long boardId,
-                                        @PathVariable("answer-id") long commentId) {
+    public ResponseEntity deleteComment(@PathVariable("post-id") long boardId,
+                                        @PathVariable("comment-id") long commentId) {
 
         commentService.deleteComment(commentId);
 
