@@ -8,6 +8,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
     show-sql: true
   security:
     oauth2:
@@ -19,12 +20,11 @@ spring:
             scope:
               - email
               - profile
-
 jwt:
   key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
-
 mail:
   address:
     admin: fkdltj1@gmail.com
+    show-sql: true
