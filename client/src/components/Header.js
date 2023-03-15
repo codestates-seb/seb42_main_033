@@ -32,12 +32,12 @@ const Headertext2 = styled.div`
   width: 50%;
   height: 7vh;
 `;
-const Headertext = styled(Link)`
+const Headertext = styled.a`
   display: flex;
   width: auto;
   text-decoration: none;
   color: black;
-  font-size: 2.4em;
+  font-size: 2.4rem;
   font-weight: 400;
   margin-top: 2vh;
   :hover {

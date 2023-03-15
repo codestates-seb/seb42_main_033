@@ -6,11 +6,11 @@ const Modalbody = styled.div`
   position: fixed;
   box-sizing: border-box;
   left: 85%;
-  top: 10vh;
+  top: 7%;
   height: 22vh;
   width: 14vw;
   padding: 30px;
-  background-color: #f7f7f8;
+  background-color: #fcfcfc;
   border-radius: 10px;
   transform: translateX(-0%) translateY(-0%);
   z-index: 1;
