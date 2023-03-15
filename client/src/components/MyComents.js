@@ -11,6 +11,7 @@ const CommentPageContainer = styled.div`
   justify-content: center;
   position: absolute;
   top: 15%;
+
   left: 55%;
   transform: translate(-50%, 20%);
 `;
@@ -57,7 +58,9 @@ const DeleteButton = styled.button`
   border-radius: 5px;
   position: absolute;
   right: 10%;
+
   bottom: -15%;
+
   cursor: pointer;
 `;
 
