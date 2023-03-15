@@ -36,10 +36,6 @@ public class BoardIntegrated extends Auditable {
 
     private Long likeCount;
 
-//    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-//    @JsonBackReference
-//    private List<Comment> answers = new ArrayList<>();
-//
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private Users users;

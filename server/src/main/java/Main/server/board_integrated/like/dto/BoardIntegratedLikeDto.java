@@ -14,9 +14,4 @@ public class BoardIntegratedLikeDto {
     private Long userId;
 
     private Long postId;
-
-//    public BoardIntegratedLikeDto(Long userId, Long postId) {
-//        this.userId = userId;
-//        this.postId = postId;
-//    }
 }

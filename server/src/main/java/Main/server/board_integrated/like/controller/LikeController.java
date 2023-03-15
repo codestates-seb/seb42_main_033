@@ -37,11 +37,4 @@ public class LikeController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @DeleteMapping("/{post-id}")
-    public void delete(@PathVariable("post-id") long postId,
-                       @RequestBody BoardIntegratedLikeDto likeDto) throws Exception {
-        likeService.delete(likeDto);
-        boardService.removeLike(postId);
-    }
 }

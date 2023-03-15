@@ -1,5 +1,6 @@
 package Main.server.user.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Email;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Users {
 
     @Id
@@ -33,13 +35,4 @@ public class Users {
     @Column(nullable = false)
     private String mbti;
 
-    // test
-    public Users(long userId, String nickName, String email, String password1, String password2, String mbti) {
-        this.userId = userId;
-        this.nickName = nickName;
-        this.email = email;
-        this.password1 = password1;
-        this.password2 = password2;
-        this.mbti = mbti;
-    }
 }
