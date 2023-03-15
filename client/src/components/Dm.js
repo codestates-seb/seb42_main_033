@@ -1,12 +1,13 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Dmbody = styled.div`
   position: absolute;
+  display: none;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: none;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 4;
 `;
@@ -97,6 +98,9 @@ const Dmcancelbutton = styled.button`
   font-weight: 600;
   border-radius: 8%;
 `;
+const Dmlink = styled(Link)`
+  text-decoration: none;
+`;
 function Dm() {
   return (
     <Dmbody>
@@ -119,8 +123,12 @@ function Dm() {
             />
           </Dmtextbox>
           <Dmbuttons>
-            <Dmcancelbutton> 취소 </Dmcancelbutton>
-            <Dmsendbutton> 보내기 </Dmsendbutton>
+            <Dmlink to="/PostviewPage">
+              <Dmcancelbutton> 취소 </Dmcancelbutton>
+            </Dmlink>
+            <Dmlink to="/PostviewPage">
+              <Dmsendbutton> 보내기 </Dmsendbutton>
+            </Dmlink>
           </Dmbuttons>
         </Dmdiv>
       </Dmmodal>
