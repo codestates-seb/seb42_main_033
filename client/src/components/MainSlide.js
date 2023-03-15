@@ -13,15 +13,23 @@ const MainSlide = () => {
   };
 
   const Container = styled.div`
+    margin-top: 30px;
     width: 300vw;
-    height: 470px;
+    height: 500px;
     transition: transform 0.5s ease-in-out;
     transform: translateX(-${(currentSlide - 1) * 100}vw);
+    overflow: hidden;
     div.inner {
       width: 100vw;
       float: left;
     }
+    div.Img {
+      width: 100vw;
+      object-fit: none;
+      /* position: absolute; */
+    }
   `;
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === 3 ? 1 : prev + 1));
@@ -52,6 +60,7 @@ const MainSlide = () => {
 `;
   const Img = styled.img`
     animation: ${slideAnimation} 0.5s ease-in-out;
+    height: 50vh;
   `;
 
   return (
