@@ -13,9 +13,9 @@ const MainSlide = () => {
   };
 
   const Container = styled.div`
-    margin-top: 30px;
+    /* margin-top: 30px; */
     width: 300vw;
-    height: 500px;
+    /* height: 500px; */
     transition: transform 0.5s ease-in-out;
     transform: translateX(-${(currentSlide - 1) * 100}vw);
     overflow: hidden;
