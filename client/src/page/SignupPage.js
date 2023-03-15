@@ -10,7 +10,7 @@ const Signupbody = styled.div`
 `;
 const Signuptext = styled.div`
   position: relative;
-  font-size: 50px;
+  font-size: 30px;
   font-weight: 600;
   display: block;
   text-align: center;
@@ -22,17 +22,16 @@ const Signuptextbox = styled.div`
   height: 2%;
   width: 100%;
   border-radius: 5px;
-  margin-top: 50px;
-  margin-bottom: 90px;
+  margin-top: 14%;
 `;
 const Signuptextboxinput = styled.input`
   display: flex;
-  height: 75px;
-  width: 600px;
+  height: 45px;
+  width: 400px;
   color: black;
-  border-radius: 10px;
-  border: solid 3px gray;
-  font-size: 30px;
+  border-radius: 3px;
+  border: solid 1px gray;
+  font-size: 1rem;
 `;
 const SignupbuttonLink = styled(Link)`
   text-decoration: none;
@@ -41,17 +40,21 @@ const Signupbutton = styled.button`
   display: block;
   align-items: center;
   justify-content: center;
-  height: 75px;
-  width: 280px;
+  height: 55px;
+  width: 160px;
   border-radius: 5px;
   color: white;
   background-color: #64b5ff;
-  font-size: 30px;
+  font-size: 1.5rem;
   font-weight: 600;
   margin: auto;
-  margin-top: 10%;
+  margin-top: 15%;
   border: solid 10px #64b5ff;
   text-decoration: none;
+  :hover {
+    background-color: #79bfff;
+    border: solid 10px #79bfff;
+  }
 `;
 function Signup() {
   return (

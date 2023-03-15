@@ -10,7 +10,7 @@ const Loginbody = styled.div`
 `;
 const Logintext = styled.div`
   position: relative;
-  font-size: 50px;
+  font-size: 35px;
   font-weight: 600;
   display: block;
   text-align: center;
@@ -23,25 +23,25 @@ const Logintextbox = styled.div`
   width: 100%;
   border-radius: 10px;
   margin-top: 5%;
-  margin-bottom: 13%;
+  margin-bottom: 10%;
 `;
 const Logintextboxinput = styled.input`
   display: flex;
-  height: 75px;
-  width: 600px;
+  height: 55px;
+  width: 430px;
   color: black;
-  border-radius: 10px;
-  border: solid 3px gray;
-  font-size: 30px;
+  border-radius: 30px;
+  border: solid 1px gray;
+  font-size: 20px;
 `;
 const Loginbutton = styled(Link)`
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 75px;
-  width: 610px;
-  border-radius: 10px;
+  height: 50px;
+  width: 410px;
+  border-radius: 5px;
   color: white;
   background-color: #64b5ff;
   margin: auto;
@@ -50,24 +50,24 @@ const Loginbutton = styled(Link)`
   border: solid 10px #64b5ff;
 `;
 const Loginguestbody = styled.div`
+  width: 450px;
   display: flex;
-  justify-content: space-evenly;
   width: 600px;
-  margin-left: 1%;
 `;
 const Loginguest = styled(Link)`
   display: flex;
   color: black;
   margin-top: 30px;
-  font-size: 30px;
+  margin-left: 18%;
+  font-size: 20px;
   text-decoration: none;
 `;
 const Logingraybox = styled.div`
   height: 20px;
   width: 4px;
-  margin-top: 38px;
-  margin-left: 20px;
-  margin-right: 75px;
+  margin-top: 30px;
+  margin-left: 80px;
+  margin-right: 15px;
   background-color: lightgray;
 `;
 function Login() {
@@ -78,14 +78,15 @@ function Login() {
         <Logintextboxinput
           type="text"
           name="userid"
-          placeholder=" 아이디"
+          placeholder="  아이디"
         ></Logintextboxinput>
       </Logintextbox>
       <Logintextbox>
         <Logintextboxinput
           type="text"
           name="userid"
-          placeholder=" 비밀번호"
+          placeholder="  비밀번호"
+          font-size="10rem"
         ></Logintextboxinput>
       </Logintextbox>
       <Loginbutton to="/"> 로그인 </Loginbutton>

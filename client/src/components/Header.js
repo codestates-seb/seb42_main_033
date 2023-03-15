@@ -32,12 +32,12 @@ const Headertext2 = styled.div`
   width: 50%;
   height: 7vh;
 `;
-const Headertext = styled.a`
+const Headertext = styled(Link)`
   display: flex;
   width: auto;
   text-decoration: none;
   color: black;
-  font-size: 2.4rem;
+  font-size: 1.3em;
   font-weight: 400;
   margin-top: 2vh;
   :hover {
@@ -45,7 +45,7 @@ const Headertext = styled.a`
   }
 `;
 const Headericon = styled.div`
-  width: 15rem;
+  width: 10rem;
   height: 7rem;
   margin-right: 5px;
 `;
@@ -63,7 +63,7 @@ const Headertextlogin = styled(Link)`
   color: black;
   text-decoration: none;
   width: 100px;
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: 400;
   margin-top: 10px;
   margin-right: 2.5rem;
@@ -129,9 +129,10 @@ const Headertextleft = styled(Link)`
   width: auto;
   text-decoration: none;
   color: black;
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: 400;
   margin-top: 10px;
+  padding-left: 20px;
   :hover {
     font-weight: 700;
   }
@@ -139,7 +140,7 @@ const Headertextleft = styled(Link)`
 const Headertextright = styled.div`
   display: block;
   width: auto;
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: 400;
   margin-top: 10px;
   :hover {
