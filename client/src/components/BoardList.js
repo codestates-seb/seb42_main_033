@@ -9,6 +9,7 @@ const BoardList = () => {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 300px;
   `;
 
   const BoardHead = styled.div`

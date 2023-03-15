@@ -1,7 +1,8 @@
-import MainImg from '../images/Main.jpeg';
+// import MainImg from '../images/Main.jpeg';
 import MbtiButton from '../components/MbtiButton';
 // import MbtiButton2 from './MbtiButton2';
 import styled from 'styled-components';
+import MainSlide from '../components/MainSlide';
 
 const MainContainer = styled.main`
   width: 100%;
@@ -9,12 +10,6 @@ const MainContainer = styled.main`
   margin-top: 10vh;
   display: flex;
   flex-direction: column;
-  background-image: url(${MainImg});
-  background-size: center;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-position-y: top;
-  background-size: 95% 56vh;
 `;
 
 const ButtonContainer = styled.div`
@@ -28,6 +23,7 @@ const ButtonContainer = styled.div`
 function MainPage() {
   return (
     <MainContainer>
+      <MainSlide />
       <hr />
       <ButtonContainer>
         <MbtiButton />
