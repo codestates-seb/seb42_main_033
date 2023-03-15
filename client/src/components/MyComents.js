@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import MyPageSidebar from './MypageSidebar';
-
+/*121212*/
 const CommentPageContainer = styled.div`
   font-size: 1vw;
   display: flex;

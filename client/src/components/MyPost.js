@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import MyPageSidebar from './MypageSidebar.js';
-
+/*121212*/
 const PageContainer = styled.div`
   display: flex;
 `;
