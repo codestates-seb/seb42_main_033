@@ -35,7 +35,7 @@ public class SecurityConfiguration {
     private final CustomAuthorityUtils authorityUtils;
     private final UserService userService;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils,@Lazy UserService userService) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, @Lazy UserService userService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.userService = userService;
