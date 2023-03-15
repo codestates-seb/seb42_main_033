@@ -3,20 +3,28 @@ import styled from 'styled-components';
 import QuillEditor from './QuillEditor.js';
 
 const BoardForm = styled.form`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
-  font-size: 40px;
-  gap: 10px;
+  @media only screen and (min-width: 1441px) {
+    //해상도 1440보다 큰 모니터
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 90vh;
+    font-size: 40px;
+    gap: 10px;
+  }
+  @media only screen and (max-width: 1440px) {
+    height: 800px;
+    font-size: 20px;
+  }
 `;
+
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-left: 600px;
   margin-top: 20px;
-  width: 230px;
+  width: 220px;
 `;
 const BoardButtonLink = styled(Link)`
   text-decoration: none;

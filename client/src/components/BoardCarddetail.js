@@ -7,17 +7,31 @@ import BoardAnswer from './BoardAnswer';
 import { Link } from 'react-router-dom';
 const BoardCarddetail = () => {
   const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 800px;
-    height: 800px;
-    left: 50%;
-    position: absolute;
-    left: 50%;
-    top: 53%;
-    transform: translate(-50%, -50%);
-    box-sizing: border-box;
+    @media only screen and (min-width: 1441px) {
+      //해상도 1440보다 큰 모니터
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 800px;
+      height: 1000px;
+      left: 50%;
+      position: absolute;
+      top: 65%;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+    }
+    @media only screen and (max-width: 1440px) {
+      //해상도 1440이하 모니터
+      position: absolute;
+      display: flex;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin-top: 100px;
+      width: 800px;
+      height: 1100px;
+      margin-bottom: 700px;
+    }
 
     div.boardheader {
       height: 70px;
