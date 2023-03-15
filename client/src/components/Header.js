@@ -8,20 +8,23 @@ const Headerbody = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 10%;
+  height: 120px;
   background-color: rgb(255, 255, 255);
   left: 0;
   top: 0;
   z-index: 1;
 `;
-const Headerimgdiv = styled(Link)``;
+const Headerimgdiv = styled(Link)`
+  text-decoration: none;
+  display: flex;
+  width: 10%;
+  height: 100%;
+`;
 
 const Headerimg = styled.img`
   display: flex;
-  width: 180px;
-  height: 80px;
-  /* margin-top: 1.5rem; */
-  margin-left: 1%;
+  width: auto;
+  height: auto;
 `;
 const Headertext = styled(Link)`
   display: block;
@@ -39,15 +42,14 @@ const Headericon = styled.div`
   width: 15rem;
   height: 7rem;
   margin-right: 5px;
-  padding-top: 40px;
 `;
 const Headericonuser = styled(FaRegUserCircle)`
-  width: 2rem;
-  height: 5rem;
+  width: 20%;
+  height: 100%;
 `;
 const Headericonbell = styled(FaRegBell)`
-  width: 2rem;
-  height: 5rem;
+  width: 20%;
+  height: 100%;
   margin-right: 40px;
 `;
 const Headertextlogin = styled(Link)`
@@ -55,7 +57,7 @@ const Headertextlogin = styled(Link)`
   color: black;
   text-decoration: none;
   width: 100px;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 400;
   margin-top: 10px;
   margin-right: 2.5rem;
@@ -80,13 +82,18 @@ const Headertextlogin = styled(Link)`
     vertical-align: baseline;
   }
 `;
+const Headerimgdivlink = styled(Link)`
+  text-decoration: none;
+  display: flex;
+  margin-right: 18vw;
+  width: 10%;
+  height: 100%;
+`;
 const Headerimglogin = styled.img`
   display: flex;
-  width: 180px;
-  height: 80px;
-  text-align: center;
-  /* margin-top: 1.5rem; */
-  margin-right: 20vw;
+  width: auto;
+  height: auto;
+  margin-right: 100vw;
 `;
 const Headertextdiv = styled.div`
   display: flex;
@@ -114,12 +121,11 @@ const Headertextdiv = styled.div`
 const Headertextleft = styled(Link)`
   display: block;
   width: auto;
-  color: black;
   text-decoration: none;
-  font-size: 1.5rem;
+  color: black;
+  font-size: 2rem;
   font-weight: 400;
   margin-top: 10px;
-  margin-left: 30px;
   :hover {
     font-weight: 700;
   }
@@ -127,15 +133,11 @@ const Headertextleft = styled(Link)`
 const Headertextright = styled.div`
   display: block;
   width: auto;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 400;
   margin-top: 10px;
   :hover {
     font-weight: 700;
-  }
-  @media (max-width: 1740px) {
-    /* margin-top: 30px; */
-    margin-left: 30px;
   }
 `;
 const Headerbox = styled.div`
@@ -182,9 +184,9 @@ function HeaderLogout({ setLogin }) {
         <Headerbox />
         <Headertextright>MBTI TEST</Headertextright>
       </Headertextdiv>
-      <Headerimgdiv to="/">
+      <Headerimgdivlink to="/">
         <Headerimglogin src={Logo} alt="logo" />
-      </Headerimgdiv>
+      </Headerimgdivlink>
       <Headertextlogin
         to="/Login"
         onClick={() => {
