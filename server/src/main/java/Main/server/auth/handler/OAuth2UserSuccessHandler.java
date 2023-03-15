@@ -32,7 +32,6 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         this.userService = userService;
     }
 
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {

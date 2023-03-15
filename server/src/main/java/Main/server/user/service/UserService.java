@@ -5,6 +5,7 @@ import Main.server.advice.ExceptionCode;
 import Main.server.auth.utils.CustomAuthorityUtils;
 import Main.server.user.entity.Users;
 import Main.server.user.repository.UserRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

@@ -1,6 +1,5 @@
 package Main.server.auth.config;
 
-
 import Main.server.auth.JwtTokenizer;
 import Main.server.auth.filter.JwtAuthenticationFilter;
 import Main.server.auth.filter.JwtverificationFilter;
@@ -9,6 +8,7 @@ import Main.server.auth.utils.CustomAuthorityUtils;
 import Main.server.user.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,7 +35,7 @@ public class SecurityConfiguration {
     private final CustomAuthorityUtils authorityUtils;
     private final UserService userService;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, UserService userService) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils,@Lazy UserService userService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.userService = userService;
@@ -106,8 +106,8 @@ public class SecurityConfiguration {
 
             JwtverificationFilter jwtverificationFilter = new JwtverificationFilter(jwtTokenizer, authorityUtils);
 
-            builder.addFilter(jwtAuthenticationFilter)
-                    .addFilterAfter(jwtverificationFilter, JwtverificationFilter.class)
+            builder
+//                   .addFilterAfter(jwtverificationFilter, JwtverificationFilter.class)
                     .addFilterAfter(jwtverificationFilter, OAuth2LoginAuthenticationFilter.class);
         }
     }
