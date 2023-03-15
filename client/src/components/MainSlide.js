@@ -31,14 +31,14 @@ const MainSlide = () => {
 
   const LeftIcon = styled(MdKeyboardArrowLeft)`
     position: absolute;
-    top: 35%;
+    top: 40%;
     left: 15%;
     transform: translateY(-50%);
   `;
 
   const RightIcon = styled(MdKeyboardArrowRight)`
     position: absolute;
-    top: 35%;
+    top: 40%;
     right: 15%;
     transform: translateY(-50%);
   `;
