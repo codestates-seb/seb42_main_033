@@ -6,56 +6,14 @@ const Modalbody = styled.div`
   position: fixed;
   box-sizing: border-box;
   left: 85%;
-  top: 10vh;
+  top: 7%;
   height: 22vh;
-  width: 14vw;
-  padding: 30px;
-  background-color: #f7f7f8;
+  width: 13vw;
+  padding: 8px;
+  background-color: #fcfcfc;
   border-radius: 10px;
   transform: translateX(-0%) translateY(-0%);
   z-index: 1;
-  @media (max-width: 2000px) {
-    left: 82%;
-    height: 300px;
-    width: 17vw;
-  }
-  @media (max-width: 1740px) {
-    left: 78%;
-    height: 300px;
-    width: 20vw;
-  }
-  @media (max-width: 1580px) {
-    left: 78%;
-    height: 300px;
-    width: 21vw;
-  }
-  @media (max-width: 1340px) {
-    left: 74%;
-    height: 300px;
-    width: 23vw;
-  }
-  @media (max-width: 1250px) {
-    left: 74%;
-    height: 300px;
-    width: 24vw;
-  }
-  @media (max-width: 1170px) {
-    left: 74%;
-    height: 300px;
-    width: 260px;
-  }
-  @media (max-height: 1200px) {
-    height: 250px;
-    margin-top: 0rem;
-  }
-  @media (max-height: 800px) {
-    height: 220px;
-    margin-top: 0rem;
-  }
-  @media (max-height: 600px) {
-    height: 200px;
-    margin-top: 0rem;
-  }
 `;
 const Modaldiv = styled.div`
   display: flex;
@@ -69,7 +27,7 @@ const Modaldiv1 = styled.div`
   height: 5vh;
   width: 100%;
   margin-top: 1rem;
-  border-bottom: solid 4px #a1a1a1;
+  border-bottom: solid 1.5px #a1a1a1;
 `;
 const Modaldiv2 = styled.div`
   display: flex;
@@ -99,43 +57,49 @@ const Modallogout = styled(FaPowerOff)`
 const Modalword = styled(Link)`
   width: 13rem;
   text-decoration: none;
-  font-size: 2.5em;
+  font-size: 2rem;
   margin-top: 0.5rem;
   color: #3a3a3a;
   @media (max-width: 1740px) {
     width: 13rem;
-    font-size: 2em;
+    font-size: 1.7rem;
     margin-top: 0.5rem;
   }
   @media (max-width: 1580px) {
     width: 100%;
-    font-size: 2em;
+    font-size: 1.7rem;
     margin-top: 0.5rem;
   }
   @media (max-width: 1340px) {
-    font-size: 2em;
+    font-size: 1.3rem;
     margin-top: 0.5rem;
   }
   @media (max-width: 1250px) {
-    font-size: 2em;
+    font-size: 1.3rem;
     margin-top: 0.5rem;
   }
   @media (max-width: 1170px) {
-    font-size: 2em;
+    font-size: 1.3rem;
     margin-top: 0.5rem;
   }
   @media (max-width: 1044px) {
-    font-size: 2em;
+    font-size: 1.3rem;
     margin-top: 0.5rem;
   }
   @media (max-width: 954px) {
-    font-size: 2em;
+    font-size: 1.3rem;
     margin-top: 0.5rem;
   }
   @media (max-height: 800px) {
+    font-size: 1.2rem;
     margin-top: 0.1rem;
   }
+  @media (max-height: 700px) {
+    font-size: 1.1rem;
+    margin-top: 0rem;
+  }
   @media (max-height: 600px) {
+    font-size: 1rem;
     margin-top: 0rem;
   }
 `;

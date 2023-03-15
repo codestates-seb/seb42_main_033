@@ -37,7 +37,7 @@ const Headertext = styled(Link)`
   width: auto;
   text-decoration: none;
   color: black;
-  font-size: 1.3rem;
+  font-size: 1.3em;
   font-weight: 400;
   margin-top: 2vh;
   :hover {

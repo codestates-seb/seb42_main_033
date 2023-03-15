@@ -4,7 +4,7 @@ const Footerbody = styled.div`
   display: flex;
   background-color: #9bcbf8;
   width: 100%;
-  height: 5%;
+  height: 4vh;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -12,9 +12,9 @@ const Footerbody = styled.div`
 `;
 const Footermain = styled.div`
   color: white;
-  font-size: 1.8rem;
+  font-size: 1rem;
   margin-left: 30px;
-  margin-top: 15px;
+  margin-top: 4px;
   font-weight: 500;
   bottom: 0;
 `;
