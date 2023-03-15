@@ -2,6 +2,7 @@ import './App.css';
 import { HeaderLogin, HeaderLogout } from './components/Header.js';
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import styled from 'styled-components';
 import Footer from './components/Footer';
 import Login from './page/LoginPage.js';
 import Signup from './page/SignupPage.js';
@@ -16,21 +17,21 @@ import MyPost from './components/MyPost.js';
 import EditProfilePage from './page/EditProfilePage';
 import SignoutPage from './page/SignoutPage';
 
-// const Dev = styled.div`
-//   display: flex;
-//   width: 100%;
-//   height: 100%;
-//   background: none;
-//   /* max-width: 1264px; */
-//   padding-top: 50px;
-//   /* position: relative; */
-//   justify-content: center;
-// `;
+const Dev = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: none;
+  /* max-width: 1264px; */
+  padding-top: 50px;
+  /* position: relative; */
+  justify-content: center;
+`;
 function App() {
   const [login, setLogin] = useState(true);
   const [modal, setModal] = useState(false);
   return (
-    <div className="App">
+    <Dev className="App">
       {login ? (
         <HeaderLogout setLogin={setLogin} login={login} />
       ) : (
@@ -62,7 +63,7 @@ function App() {
       </Routes>
       {modal ? <Modalmain /> : null}
       <Footer />
-    </div>
+    </Dev>
   );
 }
 
