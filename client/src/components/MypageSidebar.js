@@ -1,4 +1,3 @@
-// import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -11,28 +10,29 @@ import {
 import { Link } from 'react-router-dom';
 
 const Sidebar = styled.div`
-  * {
-    margin: 0;
-    padding: 0;
-  }
   nav {
-    right: 80%;
-    bottom: 50%;
-    width: 240px;
-    height: 436px;
+    right: 79%;
+    bottom: 24%;
+    width: 170px;
+    height: 350px;
     box-shadow: 2px 2px 2px 2px rgb(194, 194, 194);
     border-radius: 5px;
     background-color: #f4f4f4;
     position: fixed;
+    padding: 10px;
+    text-align: left;
+  }
+  ul {
+    padding: 0;
   }
   .first-li {
-    margin-top: 45px;
+    margin-top: 38px;
   }
   li {
     list-style-type: none;
-    margin-bottom: 50px;
-    margin-left: 35px;
-    font-size: 20px;
+    margin-left: 20px;
+    margin-bottom: 40px;
+    font-size: 18px;
     font-weight: bold;
   }
 
@@ -58,24 +58,32 @@ const MyPageSidebar = () => {
             <li className="first-li">
               {/* <a href="#">
                 내 정보 수정</a> 링크 추가할 것*/}
-              <FontAwesomeIcon className="icon" icon={faUser} />
-              <Link to="/EditProfile">내 정보 수정</Link>
+              <Link to="/EditProfile">
+                <FontAwesomeIcon className="icon" icon={faUser} />
+                <span>내 정보 수정</span>
+              </Link>
             </li>
             <li>
-              <FontAwesomeIcon className="icon" icon={faFileClipboard} />
-              <Link to="/Mypost">내 게시글</Link>
+              <Link to="/Mypost">
+                <FontAwesomeIcon className="icon" icon={faFileClipboard} />
+                <span>내 게시글</span>
+              </Link>
             </li>
             <li>
-              <FontAwesomeIcon className="icon" icon={faCommentDots} />
-              <Link to="/MyComments">내 댓글</Link>
+              <Link to="/MyComments">
+                <FontAwesomeIcon className="icon" icon={faCommentDots} />
+                <span>내 댓글</span>
+              </Link>
             </li>
             <li>
               <FontAwesomeIcon className="icon" icon={faEnvelope} />
               <span>쪽지함</span>
             </li>
             <li>
-              <FontAwesomeIcon className="icon" icon={faCircleXmark} />
-              <Link to="/Signout">회원 탈퇴</Link>
+              <Link to="/Signout">
+                <FontAwesomeIcon className="icon" icon={faCircleXmark} />
+                <span>회원 탈퇴</span>
+              </Link>
             </li>
           </ul>
         </nav>
