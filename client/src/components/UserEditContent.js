@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 import Button from './Button';
+import MyPageSidebar from './MypageSidebar';
 
-const Section = styled.section`
+const Title = styled.div`
+  position: relative;
+  font-size: 30px;
+  font-weight: bold;
+  display: block;
   text-align: center;
-
-  div {
-    font-size: 30px;
-    font-weight: bold;
-    margin: 50px;
-  }
 `;
 
 const Input = styled.input`
@@ -24,7 +23,7 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 50px;
 `;
 
 const BtnWrapper = styled.div`
@@ -32,25 +31,34 @@ const BtnWrapper = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  min-height: 10rem;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 function UserEditContent() {
   return (
     <>
-      <Section>
-        <div>내 정보 수정하기</div>
-      </Section>
-      <InputWrapper>
-        <Input type="text" placeholder="닉네임" />
-        <Input type="text" placeholder="MBTI" />
-        <Input type="password" placeholder="비밀번호" />
-        <Input type="password" placeholder="비밀번호 확인" />
-      </InputWrapper>
-      <BtnWrapper>
-        <Button background="#D9D9D9">취소</Button>
-        <Button>수정</Button>
-      </BtnWrapper>
+      <MyPageSidebar />
+      <Container>
+        <Title>내 정보 수정하기</Title>
+        <InputWrapper>
+          <Input type="text" placeholder="닉네임" />
+          <Input type="text" placeholder="MBTI" />
+          <Input type="password" placeholder="비밀번호" />
+          <Input type="password" placeholder="비밀번호 확인" />
+        </InputWrapper>
+        <BtnWrapper>
+          <Button background="#D9D9D9">취소</Button>
+          <Button>수정</Button>
+        </BtnWrapper>
+      </Container>
     </>
   );
 }
