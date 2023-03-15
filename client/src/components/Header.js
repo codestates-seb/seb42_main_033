@@ -8,7 +8,7 @@ const Headerbody = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 120px;
+  height: 7vh;
   background-color: rgb(255, 255, 255);
   left: 0;
   top: 0;
@@ -26,14 +26,20 @@ const Headerimg = styled.img`
   width: auto;
   height: auto;
 `;
+const Headertext2 = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+  height: 7vh;
+`;
 const Headertext = styled(Link)`
-  display: block;
+  display: flex;
   width: auto;
   text-decoration: none;
   color: black;
-  font-size: 2rem;
+  font-size: 2.4em;
   font-weight: 400;
-  margin-top: 10px;
+  margin-top: 2vh;
   :hover {
     font-weight: 700;
   }
@@ -155,8 +161,10 @@ function HeaderLogin({ setModal, setLogin, modal }) {
       <Headerimgdiv to="/">
         <Headerimg src={Logo} alt="logo" />
       </Headerimgdiv>
-      <Headertext to="/PostlistPage">통합게시판</Headertext>
-      <Headertext>MBTI TEST</Headertext>
+      <Headertext2>
+        <Headertext to="/PostlistPage">통합게시판</Headertext>
+        <Headertext>MBTI TEST</Headertext>
+      </Headertext2>
       <Headericon>
         <Headericonbell
           onClick={() => {
