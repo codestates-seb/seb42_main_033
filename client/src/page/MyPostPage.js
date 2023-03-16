@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import MyPageSidebar from './MypageSidebar';
+import MyPageSidebar from '../components/MypageSidebar.js';
+/*121212*/
+const PageContainer = styled.div`
+  display: flex;
+`;
 
 const CommentPageContainer = styled.div`
   font-size: 1vw;
@@ -10,7 +14,7 @@ const CommentPageContainer = styled.div`
 
   justify-content: center;
   position: absolute;
-  top: 30%;
+  top: 15%;
   left: 55%;
   transform: translate(-50%, 20%);
 `;
@@ -57,20 +61,39 @@ const DeleteButton = styled.button`
   border-radius: 5px;
   position: absolute;
   right: 10%;
-  bottom: -30%;
+  bottom: -15%;
   cursor: pointer;
 `;
 
 const CommentText = styled.label`
   margin-left: 5vw;
   margin-top: 0px;
+  position: relative;
+
+  & p:last-child {
+    color: orange;
+    position: absolute;
+    left: 100%;
+    bottom: 0;
+  }
 `;
 
 const comments = [
   {
     id: 1,
     text: '안녕',
+    comments: [
+      {
+        id: 1,
+        text: '반가워요!',
+      },
+      {
+        id: 2,
+        text: '안녕하세요!',
+      },
+    ],
   },
+
   {
     id: 2,
     text: '하세요',
@@ -101,7 +124,7 @@ const comments = [
   },
 ];
 
-function MyComments() {
+function MyPostPage() {
   const [selectedComments, setSelectedComments] = useState([]);
 
   const handleCheckboxClick = (id) => {
@@ -114,33 +137,37 @@ function MyComments() {
 
   return (
     <>
-      <MyPageSidebar />
-      <CommentPageContainer>
-        <StyledText>내 댓글</StyledText>
-        <CommentsContainer>
-          <HeaderContainer>선택</HeaderContainer>
-          <hr />
-          {comments
-            .slice()
-            .reverse()
-            .map((comment) => (
-              <CommentContainer key={comment.id}>
-                <input
-                  type="checkbox"
-                  id={`checkbox-${comment.id}`}
-                  checked={selectedComments.includes(comment.id)}
-                  onChange={() => handleCheckboxClick(comment.id)}
-                />
-                <CommentText htmlFor={`checkbox-${comment.id}`}>
-                  <p>{comment.text}</p>
-                </CommentText>
-              </CommentContainer>
-            ))}
-        </CommentsContainer>
-        <DeleteButton>삭제</DeleteButton>
-      </CommentPageContainer>
+      <PageContainer>
+        <MyPageSidebar />
+        <CommentPageContainer>
+          <StyledText>내 게시글</StyledText>
+
+          <CommentsContainer>
+            <HeaderContainer>선택</HeaderContainer>
+            <hr />
+            {comments
+              .slice()
+              .reverse()
+              .map((comment) => (
+                <CommentContainer key={comment.id}>
+                  <input
+                    type="checkbox"
+                    id={`checkbox-${comment.id}`}
+                    checked={selectedComments.includes(comment.id)}
+                    onChange={() => handleCheckboxClick(comment.id)}
+                  />
+                  <CommentText htmlFor={`checkbox-${comment.id}`}>
+                    <p>{comment.text}</p>
+                    <p>({comment.comments ? comment.comments.length : 0})</p>
+                  </CommentText>
+                </CommentContainer>
+              ))}
+          </CommentsContainer>
+          <DeleteButton> 삭제 </DeleteButton>
+        </CommentPageContainer>
+      </PageContainer>
     </>
   );
 }
 
-export default MyComments;
+export default MyPostPage;

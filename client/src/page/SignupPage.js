@@ -57,7 +57,8 @@ const Signupbutton = styled.button`
     border: solid 10px #79bfff;
   }
 `;
-function Signup() {
+
+function SignupPage() {
   const signUpPost = async () => {
     axios.post(
       `ec2-3-34-51-204.ap-northeast-2.compute.amazonaws.com:8080/v1/members`,
@@ -122,4 +123,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default SignupPage;
