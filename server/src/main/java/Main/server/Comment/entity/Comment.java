@@ -2,6 +2,7 @@ package Main.server.Comment.entity;
 
 import Main.server.audit.Auditable;
 import Main.server.board_integrated.entity.BoardIntegrated;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +27,8 @@ public class Comment extends Auditable {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JsonManagedReference
-    @JoinColumn(name = "Board_ID")
+    @JoinColumn(name = "BOARD_ID")
+    @JsonIgnore
     private BoardIntegrated Board;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

@@ -51,7 +51,6 @@ public class CommentController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    // 전체 질문 가져오기
     @GetMapping("/{post-id}/comment")
     public ResponseEntity getComments() {
         List<Comment> comments = commentService.findComments();

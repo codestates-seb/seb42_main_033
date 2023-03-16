@@ -55,7 +55,7 @@ public class CommentService {
         return commentRepository.findById(commentId).orElse(null);
     }
 
-    public List<Main.server.Comment.entity.Comment> findComments() {
+    public List<Comment> findComments() {
         return commentRepository.findAll();
     }
 
