@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import QuillEditor from './QuillEditor.js';
+// import axios from 'axios';
+import { useState } from 'react';
+// import BoardCard from './BoardCard';
 
 const BoardForm = styled.form`
   @media only screen and (min-width: 1441px) {
@@ -65,22 +68,49 @@ const Title = styled.div`
 `;
 
 const BoardCreate = () => {
+  const [TitleValue, setTitleValue] = useState('');
+  const [ContentValue, setContentValue] = useState('');
+  const onTitleChange = (event) => {
+    setTitleValue(event.currentTarget.value);
+  };
+  console.log(TitleValue);
+
+  const onContentChange = (event) => {
+    setContentValue(event.currentTarget.value);
+  };
+  console.log(ContentValue);
+
   return (
-    <BoardForm>
-      <Title className="title">
+    <BoardForm onSubmit>
+      <Title className="titlediv">
         <p>글쓰기</p>
-        <input placeholder=" 글 제목" />
+        <input
+          placeholder=" 글 제목"
+          type="text"
+          name="title"
+          value={TitleValue}
+          onChange={onTitleChange}
+          defaultValue={TitleValue}
+        />
         <hr />
       </Title>
-      <QuillEditor />
+      <QuillEditor
+        name="contents"
+        value={ContentValue}
+        onChange={onContentChange}
+        defaultValue={ContentValue}
+      />
       <ButtonContainer>
         <BoardButtonLink to="/PostlistPage">
           <BoardButton className="delete"> 취소 </BoardButton>
         </BoardButtonLink>
         <BoardButtonLink to="/PostlistPage">
-          <BoardButton className="submit"> 등록 </BoardButton>
+          <BoardButton type="submit" className="submit" onClick>
+            등록
+          </BoardButton>
         </BoardButtonLink>
       </ButtonContainer>
+      {/* <BoardCard title={title} contents={contents} /> */}
     </BoardForm>
   );
 };
