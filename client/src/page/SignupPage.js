@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Signupbody = styled.div`
   position: absolute;
@@ -57,6 +58,17 @@ const Signupbutton = styled.button`
   }
 `;
 function Signup() {
+  const signUpPost = async () => {
+    axios.post(
+      `ec2-3-34-51-204.ap-northeast-2.compute.amazonaws.com:8080/v1/members`,
+      {
+        ID: 'abc1234',
+        PASSWORD: 'pw1234',
+        NICKNAME: 'hello',
+        MBTI: 'ISFP',
+      }
+    );
+  };
   return (
     <Signupbody>
       <Signuptext> 회원가입 </Signuptext>
@@ -68,13 +80,19 @@ function Signup() {
         />
       </Signuptextbox>
       <Signuptextbox>
-        <Signuptextboxinput type="text" name="userid" placeholder=" 아이디" />
+        <Signuptextboxinput
+          type="text"
+          name="userid"
+          placeholder=" 아이디"
+          id="userid"
+        />
       </Signuptextbox>
       <Signuptextbox>
         <Signuptextboxinput
-          type="text"
+          type="password"
           name="userpassword"
           placeholder=" 비밀번호"
+          id="signupPassword"
         />
       </Signuptextbox>
       <Signuptextbox>
@@ -92,7 +110,13 @@ function Signup() {
         />
       </Signuptextbox>
       <SignupbuttonLink to="/">
-        <Signupbutton> 회원가입 </Signupbutton>
+        <Signupbutton
+          onClick={() => {
+            signUpPost;
+          }}
+        >
+          회원가입
+        </Signupbutton>
       </SignupbuttonLink>
     </Signupbody>
   );

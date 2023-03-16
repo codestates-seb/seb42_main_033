@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const Dmbody = styled.div`
   position: absolute;
-  display: none;
   top: 0;
   left: 0;
   width: 100%;
