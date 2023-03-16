@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import MyPageSidebar from './MypageSidebar.js';
+import MyPageSidebar from '../components/MypageSidebar.js';
 /*121212*/
 const PageContainer = styled.div`
   display: flex;
@@ -124,7 +124,7 @@ const comments = [
   },
 ];
 
-function MyPost() {
+function MyPostPage() {
   const [selectedComments, setSelectedComments] = useState([]);
 
   const handleCheckboxClick = (id) => {
@@ -170,4 +170,4 @@ function MyPost() {
   );
 }
 
-export default MyPost;
+export default MyPostPage;

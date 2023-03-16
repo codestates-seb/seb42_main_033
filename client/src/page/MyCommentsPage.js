@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import MyPageSidebar from './MypageSidebar';
+import MyPageSidebar from '../components/MypageSidebar';
 /*123*/
 const CommentPageContainer = styled.div`
   font-size: 1vw;
@@ -101,7 +101,7 @@ const comments = [
   },
 ];
 
-function MyComments() {
+function MyCommentsPage() {
   const [selectedComments, setSelectedComments] = useState([]);
 
   const handleCheckboxClick = (id) => {
@@ -143,4 +143,4 @@ function MyComments() {
   );
 }
 
-export default MyComments;
+export default MyCommentsPage;

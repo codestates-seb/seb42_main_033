@@ -70,7 +70,7 @@ const Logingraybox = styled.div`
   margin-right: 15px;
   background-color: lightgray;
 `;
-function Login() {
+function LoginPage() {
   return (
     <Loginbody>
       <Logintext>로그인</Logintext>
@@ -98,4 +98,4 @@ function Login() {
     </Loginbody>
   );
 }
-export default Login;
+export default LoginPage;

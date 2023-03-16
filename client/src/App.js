@@ -4,16 +4,16 @@ import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from './components/Footer';
-import Login from './page/LoginPage.js';
-import Signup from './page/SignupPage.js';
+import LoginPage from './page/LoginPage.js';
+import SignupPage from './page/SignupPage.js';
 import Modalmain from './components/Modalmain.js';
-import Dm from './components/Dm.js';
+import SendDm from './page/SendDm.js';
 import PostlistPage from './page/PostlistPage';
 import PostPage from './page/PostPage.js';
 import PostviewPage from './page/PostviewPage.js';
 import MainPage from './page/MainPage';
-import MyComments from './components/MyComents';
-import MyPost from './components/MyPost.js';
+import MyCommentsPage from './page/MyCommentsPage';
+import MyPostPage from './page/MyPostPage.js';
 import EditProfilePage from './page/EditProfilePage';
 import SignoutPage from './page/SignoutPage';
 
@@ -42,9 +42,9 @@ function App() {
         {/* 홈화면 */}
         <Route path="/PostviewPage" element={<PostviewPage />} />
         {/* 게시글 화면 */}
-        <Route path="/Login" element={<Login />} />
+        <Route path="/Login" element={<LoginPage />} />
         {/* 로그인 */}
-        <Route path="/Signup" element={<Signup />} />
+        <Route path="/Signup" element={<SignupPage />} />
         {/* 회원가입 */}
         <Route path="/Signout" element={<SignoutPage />} />
         {/* 회원탈퇴 */}
@@ -52,11 +52,11 @@ function App() {
         {/* 게시판 */}
         <Route path="/PostPage" element={<PostPage />} />
         {/* 글쓰기 */}
-        <Route path="/Dm" element={<Dm />} />
+        <Route path="/Dm" element={<SendDm />} />
         {/* 쪽지보내기 */}
-        <Route path="/MyComments" element={<MyComments />} />
+        <Route path="/MyComments" element={<MyCommentsPage />} />
         {/* 내댓글 */}
-        <Route path="/MyPost" element={<MyPost />} />
+        <Route path="/MyPost" element={<MyPostPage />} />
         {/* 내 게시글 */}
         <Route path="/EditProfile" element={<EditProfilePage />} />
         {/* 내정보 수정하기 */}

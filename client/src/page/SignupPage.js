@@ -56,7 +56,7 @@ const Signupbutton = styled.button`
     border: solid 10px #79bfff;
   }
 `;
-function Signup() {
+function SignupPage() {
   return (
     <Signupbody>
       <Signuptext> 회원가입 </Signuptext>
@@ -98,4 +98,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default SignupPage;

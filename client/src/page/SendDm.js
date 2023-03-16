@@ -101,7 +101,7 @@ const Dmcancelbutton = styled.button`
 const Dmlink = styled(Link)`
   text-decoration: none;
 `;
-function Dm() {
+function SendDm() {
   return (
     <Dmbody>
       <Dmmodal>
@@ -135,4 +135,4 @@ function Dm() {
     </Dmbody>
   );
 }
-export default Dm;
+export default SendDm;
