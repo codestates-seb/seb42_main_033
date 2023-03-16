@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import MyPageSidebar from './MypageSidebar';
-
+/*123*/
 const CommentPageContainer = styled.div`
   font-size: 1vw;
   display: flex;
@@ -10,7 +10,7 @@ const CommentPageContainer = styled.div`
 
   justify-content: center;
   position: absolute;
-  top: 30%;
+  top: 15%;
   left: 55%;
   transform: translate(-50%, 20%);
 `;
@@ -57,7 +57,7 @@ const DeleteButton = styled.button`
   border-radius: 5px;
   position: absolute;
   right: 10%;
-  bottom: -30%;
+  bottom: -15%;
   cursor: pointer;
 `;
 
