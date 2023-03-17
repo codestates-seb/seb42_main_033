@@ -1,5 +1,6 @@
 package Main.server.user.entity;
 
+import Main.server.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import javax.validation.constraints.Email;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Users {
+public class Users extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

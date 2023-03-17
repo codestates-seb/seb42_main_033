@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public Users updateUser(Users users) throws Exception {
-        Users findUsers = loadExistedUser(users.getUserId());
+        Users findUsers = findVerifiedUser(users.getUserId());
         verifyExistedUserNickName(users.getNickName());
 
         Optional.ofNullable(users.getNickName())
@@ -46,7 +46,7 @@ public class UserService {
     }
 
     public Users getUser(long userId) {
-        return loadExistedUser(userId);
+        return findVerifiedUser(userId);
     }
 
     public Page<Users> getUsers(int page) {
@@ -57,7 +57,7 @@ public class UserService {
     }
 
     public void deleteUser(long userId) {
-        Users deleteUsers = loadExistedUser(userId);
+        Users deleteUsers = findVerifiedUser(userId);
         userRepository.delete(deleteUsers);
     }
 
@@ -66,17 +66,18 @@ public class UserService {
         if(foundEmail.isPresent())
             throw new BusinessLogicalException(ExceptionCode.EMAIL_ALREADY_EXIST);
     }
-    public Users loadExistedUser(long userId) {
-        Users findUsers = userRepository.findById(userId);
-        if(findUsers == null) {
-            throw new BusinessLogicalException(ExceptionCode.MEMBER_NOT_FOUND);
-        }
+    public Users findVerifiedUser(long userId) {
+        Optional<Users> optionalUsers =
+                userRepository.findById(userId);
+        Users findUsers =
+                optionalUsers.orElseThrow(()->
+                        new BusinessLogicalException(ExceptionCode.MEMBER_NOT_FOUND));
         return findUsers;
     }
     // 존재하는 닉네임인지 확인
     public void verifyExistedUserNickName(String nickName) {
-        Optional<Users> foundUserName = userRepository.findByNickName(nickName);
-        if(foundUserName.isPresent())
+        Users foundUserName = userRepository.findByNickName(nickName);
+        if(foundUserName != null)
             throw new BusinessLogicalException(ExceptionCode.NICKNAME_ALREADY_EXIST);
     }
 

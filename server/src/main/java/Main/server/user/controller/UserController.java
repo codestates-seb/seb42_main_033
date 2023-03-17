@@ -63,7 +63,7 @@ public class UserController {
         PageInfo pageInfo = new PageInfo(userPage.getNumber(), userPage.getSize(), userPage.getTotalElements(), userPage.getTotalPages());
         List<Users> users = userPage.getContent();
         List<UserDto.Response> responses = mapper.usersToUserDtoResponse(users);
-        responses.stream().forEach(s -> s.setUrl(url + s.getUrl()));
+        responses.stream().forEach(s -> s.setUrl(url + s.getUserId()));
         return new ResponseEntity<>(
                 new MultiResponse<>(responses, pageInfo), HttpStatus.OK);
     }
