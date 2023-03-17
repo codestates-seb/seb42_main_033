@@ -72,17 +72,22 @@ public class SecurityConfiguration {
                 )
                 .oauth2Login(oauth2 -> oauth2.successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService)));
 
+        http.logout()
+                .logoutUrl("/users/logout")
+                .logoutSuccessUrl("/")
+                .deleteCookies("JSESSIONID", "remember-me");
+
         return http.build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder(){
+            return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource(){
-        CorsConfiguration configuration = new CorsConfiguration();
+        @Bean
+        CorsConfigurationSource corsConfigurationSource(){
+            CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
 
@@ -106,8 +111,8 @@ public class SecurityConfiguration {
 
             JwtverificationFilter jwtverificationFilter = new JwtverificationFilter(jwtTokenizer, authorityUtils);
 
-            builder
-//                   .addFilterAfter(jwtverificationFilter, JwtverificationFilter.class)
+            builder.addFilter(jwtAuthenticationFilter)
+//                    .addFilterAfter(jwtverificationFilter, JwtverificationFilter.class)
                     .addFilterAfter(jwtverificationFilter, OAuth2LoginAuthenticationFilter.class);
         }
     }
