@@ -5,7 +5,6 @@ import Main.server.advice.ExceptionCode;
 import Main.server.auth.utils.CustomAuthorityUtils;
 import Main.server.user.entity.Users;
 import Main.server.user.repository.UserRepository;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -48,7 +47,7 @@ public class UserService {
     }
 
     public Users updateUser(Users users) throws Exception {
-        Users findUsers = loadExistedUser(users.getUserId());
+        Users findUsers = findVerifiedUser(users.getUserId());
         verifyExistedUserNickName(users.getNickName());
 
         Optional.ofNullable(users.getNickName())
@@ -66,7 +65,7 @@ public class UserService {
     }
 
     public Users getUser(long userId) {
-        return loadExistedUser(userId);
+        return findVerifiedUser(userId);
     }
 
     public Page<Users> getUsers(int page) {
@@ -77,7 +76,7 @@ public class UserService {
     }
 
     public void deleteUser(long userId) {
-        Users deleteUsers = loadExistedUser(userId);
+        Users deleteUsers = findVerifiedUser(userId);
         userRepository.delete(deleteUsers);
     }
 
@@ -86,6 +85,16 @@ public class UserService {
         if(foundEmail.isPresent())
             throw new BusinessLogicalException(ExceptionCode.EMAIL_ALREADY_EXIST);
     }
+
+    public Users findVerifiedUser(long userId) {
+        Optional<Users> optionalUsers =
+                userRepository.findById(userId);
+        Users findUsers =
+                optionalUsers.orElseThrow(() ->
+                        new BusinessLogicalException(ExceptionCode.MEMBER_NOT_FOUND));
+        return findUsers;
+    }
+
     public Users loadExistedUser(long userId) {
         Users findUsers = userRepository.findById(userId).orElse(null);
         if(findUsers == null) {
@@ -96,8 +105,8 @@ public class UserService {
 
     // 존재하는 닉네임인지 확인
     public void verifyExistedUserNickName(String nickName) {
-        Optional<Users> foundUserName = userRepository.findByNickName(nickName);
-        if(foundUserName.isPresent())
+        Users foundUserName = userRepository.findByNickName(nickName);
+        if(foundUserName != null)
             throw new BusinessLogicalException(ExceptionCode.NICKNAME_ALREADY_EXIST);
     }
 
