@@ -1,4 +1,7 @@
 spring:
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
   h2:
     console:
       enabled: true
@@ -8,4 +11,23 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com
+            clientSecret: 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
+            scope:
+              - email
+              - profile
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420
+mail:
+  address:
+    admin: fkdltj1@gmail.com
     show-sql: true
+

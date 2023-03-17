@@ -1,12 +1,16 @@
 package Main.server.user.entity;
 
 import Main.server.audit.Auditable;
+import lombok.AllArgsConstructor;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,6 +38,11 @@ public class Users extends Auditable {
     @Column(nullable = false)
     private String mbti;
 
+
+    // 권한 부여용 추가 (이현수)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
     // test
     public Users(long userId, String nickName, String email, String password1, String password2, String mbti) {
         this.userId = userId;
@@ -42,5 +51,9 @@ public class Users extends Auditable {
         this.password1 = password1;
         this.password2 = password2;
         this.mbti = mbti;
+    }
+
+    public Users(String email){
+        this.email = email;
     }
 }
