@@ -1,7 +1,5 @@
 package Main.server.board_integrated.like.controller;
 
-import Main.server.board_integrated.dto.BoardIntegratedDto;
-import Main.server.board_integrated.entity.BoardIntegrated;
 import Main.server.board_integrated.like.dto.BoardIntegratedLikeDto;
 import Main.server.board_integrated.like.service.BoardIntegratedLikeService;
 import Main.server.board_integrated.mapper.BoardIntegratedMapper;
@@ -11,14 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/board/like")
-public class LikeController {
+@RequestMapping("/board/integrated/like")
+public class BoardIntegratedLikeController {
 
     private final BoardIntegratedLikeService likeService;
     private final BoardIntegratedService boardService;
     private final BoardIntegratedMapper mapper;
 
-    public LikeController(BoardIntegratedLikeService likeService, BoardIntegratedService boardService, BoardIntegratedMapper mapper) {
+    public BoardIntegratedLikeController(BoardIntegratedLikeService likeService, BoardIntegratedService boardService, BoardIntegratedMapper mapper) {
         this.likeService = likeService;
         this.boardService = boardService;
         this.mapper = mapper;

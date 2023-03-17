@@ -1,13 +1,12 @@
-package Main.server.board_integrated.dto;
+package Main.server.board_infj.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-public class BoardIntegratedDto {
+public class BoardInfjDto {
     @Getter
     @Setter
     public static class Post {
@@ -30,7 +29,7 @@ public class BoardIntegratedDto {
     public static class Response {
         long id;
         long userId;
-        String title;
+        String username;
         String content;
         String tag;
         long commentCount;
@@ -42,7 +41,5 @@ public class BoardIntegratedDto {
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy년 MM월 dd일 HH:mm", timezone = "Asia/Seoul")
         LocalDateTime modifiedAt;
-
-//        private List<CommentResponseDto> comments;
     }
 }

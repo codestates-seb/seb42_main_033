@@ -1,6 +1,6 @@
-package Main.server.board_integrated.like.entity;
+package Main.server.board_infj.like.entity;
 
-import Main.server.board_integrated.entity.BoardIntegrated;
+import Main.server.board_infj.entity.BoardInfj;
 import Main.server.user.entity.Users;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class BoardIntegratedLike {
+public class BoardInfjLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,10 +24,10 @@ public class BoardIntegratedLike {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     @JsonBackReference
-    private BoardIntegrated post;
+    private BoardInfj post;
 
     @Builder
-    public BoardIntegratedLike(Users users, BoardIntegrated post) {
+    public BoardInfjLike(Users users, BoardInfj post) {
         this.users = users;
         this.post = post;
     }

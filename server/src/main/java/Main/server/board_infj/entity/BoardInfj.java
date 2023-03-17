@@ -1,6 +1,5 @@
-package Main.server.board_integrated.entity;
+package Main.server.board_infj.entity;
 
-import Main.server.Comment.entity.Comment;
 import Main.server.audit.Auditable;
 import Main.server.board_integrated.like.entity.BoardIntegratedLike;
 import Main.server.user.entity.Users;
@@ -19,7 +18,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class BoardIntegrated extends Auditable {
+public class BoardInfj extends Auditable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,9 +41,6 @@ public class BoardIntegrated extends Auditable {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     @JsonBackReference
     private List<BoardIntegratedLike> like = new ArrayList<>();
-
-    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
-    private List<Comment> comment = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
