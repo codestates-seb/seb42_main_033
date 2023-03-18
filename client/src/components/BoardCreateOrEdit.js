@@ -2,6 +2,45 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import QuillEditor from './QuillEditor.js';
 
+const BoardCreateOrEdit = (props) => {
+  return (
+    <BoardForm onSubmit>
+      <Title className="titlediv">
+        <p>글쓰기</p>
+        <input
+          placeholder=" 글 제목"
+          type="text"
+          name="title"
+          value={props.TitleValue}
+          onChange={props.handleTitleChange}
+          // defaultValue={props.TitleValue}
+        />
+        <hr />
+      </Title>
+      <QuillEditor
+        name="contents"
+        value={props.ContentValue}
+        onChange={props.handleContentChange}
+        // defaultValue={props.ContentValue}
+      />
+      <ButtonContainer>
+        <BoardButtonLink to="/PostlistPage">
+          <BoardButton className="delete"> 취소 </BoardButton>
+        </BoardButtonLink>
+        <BoardButtonLink to="/PostviewPage">
+          <BoardButton
+            type="submit"
+            className="submit"
+            onClick={props.handleSubmit}
+          >
+            {/* {props.updateRequest ? '수정' : '등록'} */}
+            등록
+          </BoardButton>
+        </BoardButtonLink>
+      </ButtonContainer>
+    </BoardForm>
+  );
+};
 const BoardForm = styled.form`
   @media only screen and (min-width: 1441px) {
     //해상도 1440보다 큰 모니터
@@ -63,26 +102,4 @@ const Title = styled.div`
     padding-left: 10px;
   }
 `;
-
-const BoardCreate = () => {
-  return (
-    <BoardForm>
-      <Title className="title">
-        <p>글쓰기</p>
-        <input placeholder=" 글 제목" />
-        <hr />
-      </Title>
-      <QuillEditor />
-      <ButtonContainer>
-        <BoardButtonLink to="/PostlistPage">
-          <BoardButton className="delete"> 취소 </BoardButton>
-        </BoardButtonLink>
-        <BoardButtonLink to="/PostlistPage">
-          <BoardButton className="submit"> 등록 </BoardButton>
-        </BoardButtonLink>
-      </ButtonContainer>
-    </BoardForm>
-  );
-};
-
-export default BoardCreate;
+export default BoardCreateOrEdit;

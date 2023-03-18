@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 const Modalbody = styled.div`
   position: fixed;
   box-sizing: border-box;
-  left: 85%;
-  top: 7%;
+  left: 73%;
+  top: 8%;
   height: 22vh;
   width: 13vw;
   padding: 8px;

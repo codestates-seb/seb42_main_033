@@ -7,6 +7,10 @@ const PostModal = ({ onClose, isOpen }) => {
     event.preventDefault();
     onClose();
   };
+  PostModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+  };
 
   return (
     <>
@@ -23,10 +27,7 @@ const PostModal = ({ onClose, isOpen }) => {
     </>
   );
 };
-PostModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
+
 const Container = styled.div`
   position: absolute;
   top: 85px;
