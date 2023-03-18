@@ -1,4 +1,4 @@
-package Main.server.Comment.entity;
+package Main.server.comment.entity;
 
 import Main.server.audit.Auditable;
 import Main.server.board_integrated.entity.BoardIntegrated;

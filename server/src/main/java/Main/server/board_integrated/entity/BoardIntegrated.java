@@ -1,6 +1,6 @@
 package Main.server.board_integrated.entity;
 
-import Main.server.Comment.entity.Comment;
+import Main.server.comment.entity.Comment;
 import Main.server.audit.Auditable;
 import Main.server.board_integrated.like.entity.BoardIntegratedLike;
 import Main.server.user.entity.Users;

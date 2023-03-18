@@ -1,4 +1,4 @@
-package Main.server.Comment.dto;
+package Main.server.comment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,13 +12,13 @@ import javax.validation.constraints.Positive;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentPostDto {
+public class CommentPatchDto {
     @Positive
     private Long userId;
 
-    @NotBlank
-    String content;
+    @Positive
+    private Long commentId;
 
     @NotBlank
-    String username;
+    private String content;
 }
