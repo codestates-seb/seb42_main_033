@@ -1,8 +1,6 @@
 package Main.server.board_integrated.service;
 
 import Main.server.board_integrated.entity.BoardIntegrated;
-import Main.server.board_integrated.like.entity.BoardIntegratedLike;
-import Main.server.board_integrated.like.repository.BoardIntegratedLikeRepository;
 import Main.server.board_integrated.repository.BoardIntegratedRepository;
 import Main.server.user.entity.Users;
 import Main.server.user.repository.UserRepository;
@@ -11,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -26,7 +23,6 @@ public class BoardIntegratedService {
         this.boardIntegratedRepository = boardIntegratedRepository;
         this.userRepository = userRepository;
     }
-
 
     @Transactional
     public BoardIntegrated createPost(BoardIntegrated post, long userId) {
@@ -57,18 +53,13 @@ public class BoardIntegratedService {
     public BoardIntegrated readPost(long id) {
         BoardIntegrated post = findPost(id);
         post.setViewCount(post.getViewCount() + 1);
-        return boardIntegratedRepository.save(post);
+        return post;
+//        return boardIntegratedRepository.save(post);
     }
 
     public BoardIntegrated addLike(long id) {
         BoardIntegrated post = findPost(id);
         post.setLikeCount(post.getLikeCount() + 1);
-        return boardIntegratedRepository.save(post);
-    }
-
-    public BoardIntegrated removeLike(long id) {
-        BoardIntegrated post = findPost(id);
-        post.setLikeCount(post.getLikeCount() - 1);
         return boardIntegratedRepository.save(post);
     }
 

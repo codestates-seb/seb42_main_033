@@ -1,9 +1,9 @@
-package Main.server.board_integrated.mapper;
+package Main.server.board_infj.mapper;
 
-import Main.server.board_integrated.dto.BoardIntegratedDto.Patch;
-import Main.server.board_integrated.dto.BoardIntegratedDto.Post;
-import Main.server.board_integrated.dto.BoardIntegratedDto.Response;
-import Main.server.board_integrated.entity.BoardIntegrated;
+import Main.server.board_infj.dto.BoardInfjDto.Patch;
+import Main.server.board_infj.dto.BoardInfjDto.Post;
+import Main.server.board_infj.dto.BoardInfjDto.Response;
+import Main.server.board_infj.entity.BoardInfj;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -15,40 +15,40 @@ import org.springframework.stereotype.Component;
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
-public class BoardIntegratedMapperImpl implements BoardIntegratedMapper {
+public class BoardInfjMapperImpl implements BoardInfjMapper {
 
     @Override
-    public BoardIntegrated postDtoToBoardIntegrated(Post postDto) {
+    public BoardInfj postDtoToBoardInfj(Post postDto) {
         if ( postDto == null ) {
             return null;
         }
 
-        BoardIntegrated boardIntegrated = new BoardIntegrated();
+        BoardInfj boardInfj = new BoardInfj();
 
-        boardIntegrated.setTitle( postDto.getTitle() );
-        boardIntegrated.setContent( postDto.getContent() );
-        boardIntegrated.setTag( postDto.getTag() );
+        boardInfj.setTitle( postDto.getTitle() );
+        boardInfj.setContent( postDto.getContent() );
+        boardInfj.setTag( postDto.getTag() );
 
-        return boardIntegrated;
+        return boardInfj;
     }
 
     @Override
-    public BoardIntegrated patchDtoToBoardIntegrated(Patch patchDto) {
+    public BoardInfj patchDtoToBoardInfj(Patch patchDto) {
         if ( patchDto == null ) {
             return null;
         }
 
-        BoardIntegrated boardIntegrated = new BoardIntegrated();
+        BoardInfj boardInfj = new BoardInfj();
 
-        boardIntegrated.setTitle( patchDto.getTitle() );
-        boardIntegrated.setContent( patchDto.getContent() );
-        boardIntegrated.setTag( patchDto.getTag() );
+        boardInfj.setTitle( patchDto.getTitle() );
+        boardInfj.setContent( patchDto.getContent() );
+        boardInfj.setTag( patchDto.getTag() );
 
-        return boardIntegrated;
+        return boardInfj;
     }
 
     @Override
-    public Response boardIntegratedToResponseDto(BoardIntegrated post) {
+    public Response boardInfjToResponseDto(BoardInfj post) {
         if ( post == null ) {
             return null;
         }
@@ -58,7 +58,6 @@ public class BoardIntegratedMapperImpl implements BoardIntegratedMapper {
         if ( post.getId() != null ) {
             response.setId( post.getId() );
         }
-        response.setTitle( post.getTitle() );
         response.setContent( post.getContent() );
         response.setTag( post.getTag() );
         if ( post.getCommentCount() != null ) {
@@ -77,14 +76,14 @@ public class BoardIntegratedMapperImpl implements BoardIntegratedMapper {
     }
 
     @Override
-    public List<Response> boardIntegratedToResponseDtos(List<BoardIntegrated> posts) {
+    public List<Response> boardInfjToResponseDtos(List<BoardInfj> posts) {
         if ( posts == null ) {
             return null;
         }
 
         List<Response> list = new ArrayList<Response>( posts.size() );
-        for ( BoardIntegrated boardIntegrated : posts ) {
-            list.add( boardIntegratedToResponseDto( boardIntegrated ) );
+        for ( BoardInfj boardInfj : posts ) {
+            list.add( boardInfjToResponseDto( boardInfj ) );
         }
 
         return list;

@@ -1,6 +1,6 @@
 package Main.server.user;
 
-import Main.server.user.entity.controller.UserController;
+import Main.server.user.controller.UserController;
 import Main.server.user.dto.UserDto;
 import Main.server.user.entity.Users;
 import Main.server.user.mapper.UserMapper;

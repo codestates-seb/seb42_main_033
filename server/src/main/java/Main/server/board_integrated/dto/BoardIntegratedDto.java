@@ -30,7 +30,6 @@ public class BoardIntegratedDto {
     public static class Response {
         long id;
         long userId;
-        String username;
         String title;
         String content;
         String tag;

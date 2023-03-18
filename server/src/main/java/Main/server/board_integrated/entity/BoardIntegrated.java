@@ -1,6 +1,8 @@
 package Main.server.board_integrated.entity;
 
+import Main.server.Comment.entity.Comment;
 import Main.server.audit.Auditable;
+import Main.server.board_integrated.like.entity.BoardIntegratedLike;
 import Main.server.user.entity.Users;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
@@ -35,6 +37,13 @@ public class BoardIntegrated extends Auditable {
     private Long viewCount;
 
     private Long likeCount;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @JsonBackReference
+    private List<BoardIntegratedLike> like = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+    private List<Comment> comment = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")

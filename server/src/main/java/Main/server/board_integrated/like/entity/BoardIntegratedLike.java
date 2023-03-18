@@ -2,6 +2,7 @@ package Main.server.board_integrated.like.entity;
 
 import Main.server.board_integrated.entity.BoardIntegrated;
 import Main.server.user.entity.Users;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class BoardIntegratedLike {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
+    @JsonBackReference
     private BoardIntegrated post;
 
     @Builder
