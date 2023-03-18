@@ -1,6 +1,7 @@
 package Main.server.security;
 
 
+import Main.server.auth.JwtTokenizer;
 import Main.server.user.entity.Users;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -20,13 +21,16 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultHandler;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -37,6 +41,9 @@ public class SecurityConfigTest {
     PasswordEncoder passwordEncoder;
     @Autowired
     Gson gson;
+    @Autowired
+    JwtTokenizer jwtTokenizer;
+
     JsonObject obj = new JsonObject();
 
     @BeforeEach
@@ -64,10 +71,10 @@ public class SecurityConfigTest {
 
         JsonObject obj1 = new JsonObject();
 
-        String email = "fkdltj2@gmail.com";
+        String email1 = "fkdltj2@gmail.com";
         String password1 = "1111";
 
-        obj1.addProperty("email", email);
+        obj1.addProperty("email", email1);
         obj1.addProperty("password1", password1);
 
         mockMvc.perform(post("/users/login")
@@ -76,5 +83,4 @@ public class SecurityConfigTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
-
 }

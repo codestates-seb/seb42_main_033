@@ -60,9 +60,7 @@ public class UserService {
         Optional.ofNullable(users.getMbti())
                 .ifPresent(findUsers::setMbti);
 
-
         return userRepository.save(findUsers);
-
     }
 
     public Users getUser(long userId) {
