@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(final CorsRegistry registry){
-        registry.addMapping("/http://seb42-main-033-bucket.s3-website.ap-northeast-2.amazonaws.com")
+        registry.addMapping("/**")
                 .allowedMethods(ALLOWED_METHOD_NAME.split(","));
     }
 }
