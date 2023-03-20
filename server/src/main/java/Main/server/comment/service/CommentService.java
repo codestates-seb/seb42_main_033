@@ -1,6 +1,6 @@
-package Main.server.Comment.service;
+package Main.server.comment.service;
 
-import Main.server.Comment.entity.Comment;
+import Main.server.comment.entity.Comment;
 import Main.server.board_integrated.entity.BoardIntegrated;
 import Main.server.board_integrated.repository.BoardIntegratedRepository;
 import Main.server.user.entity.Users;
@@ -13,11 +13,11 @@ import java.util.Optional;
 
 @Service
 public class CommentService {
-    private final Main.server.Comment.repository.CommentRepository commentRepository;
+    private final Main.server.comment.repository.CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final BoardIntegratedRepository boardIntegratedRepository;
 
-    public CommentService(Main.server.Comment.repository.CommentRepository commentRepository, UserRepository userRepository, BoardIntegratedRepository boardIntegratedRepository) {
+    public CommentService(Main.server.comment.repository.CommentRepository commentRepository, UserRepository userRepository, BoardIntegratedRepository boardIntegratedRepository) {
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
         this.boardIntegratedRepository = boardIntegratedRepository;

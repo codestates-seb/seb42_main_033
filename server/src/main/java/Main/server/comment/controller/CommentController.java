@@ -1,11 +1,11 @@
-package Main.server.Comment.controller;
+package Main.server.comment.controller;
 
-import Main.server.Comment.dto.CommentPatchDto;
-import Main.server.Comment.dto.CommentPostDto;
-import Main.server.Comment.dto.CommentResponseDto;
-import Main.server.Comment.entity.Comment;
-import Main.server.Comment.mapper.CommentMapper;
-import Main.server.Comment.service.CommentService;
+import Main.server.comment.dto.CommentPatchDto;
+import Main.server.comment.dto.CommentPostDto;
+import Main.server.comment.dto.CommentResponseDto;
+import Main.server.comment.entity.Comment;
+import Main.server.comment.mapper.CommentMapper;
+import Main.server.comment.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

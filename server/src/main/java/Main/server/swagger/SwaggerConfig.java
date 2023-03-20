@@ -17,7 +17,6 @@
 //public class SwaggerConfig {
 //    private String title;
 //    private String description;
-//
 //    @Bean
 //    public Docket UserApi(){
 //

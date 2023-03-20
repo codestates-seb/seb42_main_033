@@ -6,10 +6,7 @@ import Main.server.board_infj.mapper.BoardInfjMapper;
 import Main.server.board_infj.service.BoardInfjService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/board/infj/like")
@@ -25,6 +22,7 @@ public class BoardInfjLikeController {
         this.mapper = mapper;
     }
 
+    @PostMapping("/{post-id}")
     public ResponseEntity insert(@PathVariable("post-id") long postId,
                                  @RequestBody BoardInfjLikeDto likeDto) throws Exception {
         if(postId == likeDto.getUserId()) {

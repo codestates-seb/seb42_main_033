@@ -1,9 +1,9 @@
-package Main.server.Comment.mapper;
+package Main.server.comment.mapper;
 
-import Main.server.Comment.dto.CommentPatchDto;
-import Main.server.Comment.dto.CommentPostDto;
-import Main.server.Comment.dto.CommentResponseDto;
-import Main.server.Comment.entity.Comment;
+import Main.server.comment.dto.CommentPatchDto;
+import Main.server.comment.dto.CommentPostDto;
+import Main.server.comment.dto.CommentResponseDto;
+import Main.server.comment.entity.Comment;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
