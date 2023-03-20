@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import QuillEditor from './QuillEditor.js';
+import QuillEditor from './QuillEditor.jsx';
 
 const BoardCreateOrEdit = (props) => {
   return (

@@ -1,12 +1,12 @@
 import './App.css';
-import { HeaderLogin, HeaderLogout } from './components/Header.js';
+import { HeaderLogin, HeaderLogout } from './components/Header.jsx';
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import Footer from './components/Footer';
+import Footer from './components/Footer.jsx';
 import LoginPage from './page/LoginPage.js';
 import SignupPage from './page/SignupPage.js';
-import Modalmain from './components/Modalmain.js';
+import Modalmain from './components/Modalmain.jsx';
 import SendDm from './page/SendDm.js';
 import PostlistPage from './page/PostlistPage';
 import PostPage from './page/PostPage.js';

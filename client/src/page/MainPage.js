@@ -1,8 +1,8 @@
 // import MainImg from '../images/Main.jpeg';
-import MbtiButton from '../components/MbtiButton';
+import MbtiButton from '../components/MbtiButton.jsx';
 // import MbtiButton2 from './MbtiButton2';
 import styled from 'styled-components';
-import MainSlide from '../components/MainSlide';
+import MainSlide from '../components/MainSlide.jsx';
 
 const MainContainer = styled.main`
   width: 100%;
