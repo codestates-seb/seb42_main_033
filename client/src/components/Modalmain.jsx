@@ -2,11 +2,41 @@ import styled from 'styled-components';
 import { FaRegUser, FaRegPaperPlane, FaPowerOff } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+function Modal() {
+  return (
+    <>
+      {/* <Modaltriangle /> */}
+      <Modalbody>
+        <Modaldiv>
+          <Modaldiv1>
+            <Modaluser>
+              <FaRegUser />
+            </Modaluser>
+            <Modalword to="/EditProfile">마이페이지</Modalword>
+          </Modaldiv1>
+          <Modaldiv1>
+            <Modalmail>
+              <FaRegPaperPlane />
+            </Modalmail>
+            <Modalword>쪽지함 가기</Modalword>
+          </Modaldiv1>
+          <Modaldiv2>
+            <Modallogout>
+              <Modallogout />
+            </Modallogout>
+            <Modalword to="/">로그아웃</Modalword>
+          </Modaldiv2>
+        </Modaldiv>
+      </Modalbody>
+    </>
+  );
+}
+
 const Modalbody = styled.div`
   position: fixed;
   box-sizing: border-box;
-  left: 85%;
-  top: 7%;
+  left: 77%;
+  top: 8%;
   height: 22vh;
   width: 13vw;
   padding: 8px;
@@ -135,33 +165,4 @@ const Modalword = styled(Link)`
 //   } */
 // `;
 
-function Modal() {
-  return (
-    <>
-      {/* <Modaltriangle /> */}
-      <Modalbody>
-        <Modaldiv>
-          <Modaldiv1>
-            <Modaluser>
-              <FaRegUser />
-            </Modaluser>
-            <Modalword to="/EditProfile">마이페이지</Modalword>
-          </Modaldiv1>
-          <Modaldiv1>
-            <Modalmail>
-              <FaRegPaperPlane />
-            </Modalmail>
-            <Modalword>쪽지함 가기</Modalword>
-          </Modaldiv1>
-          <Modaldiv2>
-            <Modallogout>
-              <Modallogout />
-            </Modallogout>
-            <Modalword to="/">로그아웃</Modalword>
-          </Modaldiv2>
-        </Modaldiv>
-      </Modalbody>
-    </>
-  );
-}
 export default Modal;

@@ -1,6 +1,99 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
+function LoginPage() {
+  const [userId, setUserId] = useState('');
+  const [confirmID, setConfirmId] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [guest, setGuest] = useState('');
+  const navigate = useNavigate();
+  const LoginSubit = async (event) => {
+    event.preventDefault();
+    if (userId === '') {
+      setConfirmId('Id cannot be empty.');
+    } else {
+      setConfirmId('');
+    }
+    if (password === '') {
+      setConfirmPassword('Password cannot be empty.');
+    } else {
+      setConfirmPassword('');
+    }
+    try {
+      const response = await axios.post(
+        `http://ec2-13-125-117-103.ap-northeast-2.compute.amazonaws.com:8080/user/login`,
+        {
+          email: userId,
+          password1: password,
+        }
+      );
+      console.log(response);
+      const accessToken = response.headers.authorization;
+      localStorage.setItem('acces_token', accessToken);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const Guestlogin = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        `http://ec2-13-125-117-103.ap-northeast-2.compute.amazonaws.com:8080/user/login/guest`,
+        {
+          email: guest,
+          // 게스트 상태에 guest
+          password1: guest,
+          // guest
+        }
+      );
+      console.log(response);
+      setGuest('guest');
+      if (response.status === 200) {
+        navigate('/');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return (
+    <Loginbody>
+      <Logintext>로그인</Logintext>
+      {console.log(confirmPassword)}
+      {console.log(confirmID)}
+      <form onSubmit={LoginSubit}>
+        <Logintextbox>
+          <Logintextboxinput
+            type="text"
+            name="userid"
+            placeholder="  아이디"
+            onChange={(e) => setUserId(e.target.value)}
+          ></Logintextboxinput>
+          {console.log(userId)}
+          {console.log(password)}
+        </Logintextbox>
+        <Logintextbox>
+          <Logintextboxinput
+            type="password"
+            name="userid"
+            placeholder="  비밀번호"
+            font-size="10rem"
+            onChange={(e) => setPassword(e.target.value)}
+          ></Logintextboxinput>
+        </Logintextbox>
+        <Loginbutton type="submit"> 로그인 </Loginbutton>
+      </form>
+      <Loginguestbody>
+        <form onSubmit={Guestlogin}>
+          <Loginguest> 게스트 로그인 </Loginguest>
+        </form>
+        <ToSigup to="/Signup"> 회원가입 </ToSigup>
+      </Loginguestbody>
+    </Loginbody>
+  );
+}
 const Loginbody = styled.div`
   position: absolute;
   height: 100%;
@@ -34,7 +127,22 @@ const Logintextboxinput = styled.input`
   border: solid 1px gray;
   font-size: 20px;
 `;
-const Loginbutton = styled(Link)`
+// const Loginbuttonlink = styled(Link)`
+//   text-decoration: none;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   height: 50px;
+//   width: 410px;
+//   border-radius: 5px;
+//   color: white;
+//   background-color: #64b5ff;
+//   margin: auto;
+//   font-size: 30px;
+//   font-weight: 600;
+//   border: solid 10px #64b5ff;
+// `;
+const Loginbutton = styled.button`
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -50,52 +158,26 @@ const Loginbutton = styled(Link)`
   border: solid 10px #64b5ff;
 `;
 const Loginguestbody = styled.div`
-  width: 450px;
   display: flex;
-  width: 600px;
+  justify-content: space-evenly;
 `;
-const Loginguest = styled(Link)`
+const Loginguest = styled.button`
   display: flex;
   color: black;
   margin-top: 30px;
   margin-left: 18%;
+  width: 15vw;
+  font-size: 20px;
+  background-color: rgba(0, 0, 0, 0);
+  border: solid 0px rgba(0, 0, 0, 0);
+`;
+const ToSigup = styled(Link)`
+  display: flex;
+  color: black;
+  margin-top: 30px;
+  margin-left: 20%;
+  margin-right: 10%;
   font-size: 20px;
   text-decoration: none;
 `;
-const Logingraybox = styled.div`
-  height: 20px;
-  width: 4px;
-  margin-top: 30px;
-  margin-left: 80px;
-  margin-right: 15px;
-  background-color: lightgray;
-`;
-function LoginPage() {
-  return (
-    <Loginbody>
-      <Logintext>로그인</Logintext>
-      <Logintextbox>
-        <Logintextboxinput
-          type="text"
-          name="userid"
-          placeholder="  아이디"
-        ></Logintextboxinput>
-      </Logintextbox>
-      <Logintextbox>
-        <Logintextboxinput
-          type="text"
-          name="userid"
-          placeholder="  비밀번호"
-          font-size="10rem"
-        ></Logintextboxinput>
-      </Logintextbox>
-      <Loginbutton to="/"> 로그인 </Loginbutton>
-      <Loginguestbody>
-        <Loginguest to="/"> 게스트 로그인 </Loginguest>
-        <Logingraybox />
-        <Loginguest to="/Signup"> 회원가입 </Loginguest>
-      </Loginguestbody>
-    </Loginbody>
-  );
-}
 export default LoginPage;

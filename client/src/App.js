@@ -30,9 +30,11 @@ const Dev = styled.div`
 function App() {
   const [login, setLogin] = useState(true);
   const [modal, setModal] = useState(false);
+  const token = localStorage.getItem('access_token');
   return (
     <Dev className="App">
-      {login ? (
+      {console.log(token)}
+      {token ? (
         <HeaderLogout setLogin={setLogin} login={login} />
       ) : (
         <HeaderLogin setLogin={setLogin} setModal={setModal} modal={modal} />
