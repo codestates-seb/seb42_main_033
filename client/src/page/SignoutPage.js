@@ -1,4 +1,4 @@
-import SignoutContent from './../components/SignoutContent';
+import SignoutContent from './../components/SignoutContent.jsx';
 function SignoutPage() {
   return <SignoutContent></SignoutContent>;
 }

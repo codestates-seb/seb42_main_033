@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import MyPageSidebar from '../components/MypageSidebar';
+import MyPageSidebar from '../components/MypageSidebar.jsx';
 /*123*/
 const CommentPageContainer = styled.div`
   font-size: 1vw;

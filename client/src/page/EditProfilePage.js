@@ -1,4 +1,4 @@
-import UserEditContent from '../components/UserEditContent';
+import UserEditContent from '../components/UserEditContent.jsx';
 
 function EditProfilePage() {
   return <UserEditContent></UserEditContent>;

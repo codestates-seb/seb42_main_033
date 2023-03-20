@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { AiOutlineEllipsis } from 'react-icons/ai';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
-import PostModal from './PostModal'
+import PostModal from './PostModal.jsx';
 import { useState } from 'react';
-import BoardAnswer from './BoardAnswer';
+import BoardAnswer from './BoardAnswer.jsx';
 import { Link } from 'react-router-dom';
 
 const BoardCarddetail = (props) => {

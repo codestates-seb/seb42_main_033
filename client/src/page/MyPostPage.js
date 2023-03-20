@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import MyPageSidebar from '../components/MypageSidebar.js';
+import MyPageSidebar from '../components/MypageSidebar.jsx';
 /*121212*/
 const PageContainer = styled.div`
   display: flex;
