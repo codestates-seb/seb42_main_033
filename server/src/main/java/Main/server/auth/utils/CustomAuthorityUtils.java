@@ -63,7 +63,9 @@ public class CustomAuthorityUtils {
     public List<GrantedAuthority> createAuthorities(String email) {
         if (email.equals(adminMailAddress)) {
             return ADMIN_ROLES;
-        }else if(email != null){
+        }else if(email.contains("guest")){
+            return GUEST_ROLES;
+        } else{
             return USER_ROLES;
         }
 //        }else if(mbti.toUpperCase().equals("ENFP")){
@@ -99,7 +101,6 @@ public class CustomAuthorityUtils {
 //        }else if(mbti.toUpperCase().equals("ISTJ")){
 //            return ISTJ_ROLES;
 //        }
-        return GUEST_ROLES;
     }
 
     // DB에 저장된 Role을 기반으로 권한 정보 생성
@@ -114,7 +115,9 @@ public class CustomAuthorityUtils {
     public List<String> createRoles(String email) {
         if (email.equals(adminMailAddress)) {
             return ADMIN_ROLES_STRING;
-        }else if(email != null){
+        }else if(email.contains("guest")){
+            return GUEST_ROLES_STRING;
+        }else{
             return USER_ROLES_STRING;
         }
 //        }else if(mbti.toUpperCase().equals("ENFP")){
@@ -150,6 +153,5 @@ public class CustomAuthorityUtils {
 //        }else if(mbti.toUpperCase().equals("ISTJ")){
 //            return ISTJ_ROLES_STRING;
 //        }
-        return GUEST_ROLES_STRING;
     }
 }

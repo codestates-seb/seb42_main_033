@@ -6,11 +6,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    public static final String ALLOWED_METHOD_NAME = "GET,HEAD,POST,PUT,DELETE,TRACE,OPTIONS,PATCH";
+    public static final String ALLOWED_METHOD_NAME = "GET,HEAD,POST,PUT,DELETE,OPTIONS,PATCH";
 
     @Override
-    public void addCorsMappings(final CorsRegistry registry){
+    public void addCorsMappings(CorsRegistry registry){
         registry.addMapping("/**")
-                .allowedMethods(ALLOWED_METHOD_NAME.split(","));
+                .allowedOrigins("http://ec2-52-78-241-208.ap-northeast-2.compute.amazonaws.com:8080/user/login",
+                        "http://seb42-main-033-bucket.s3-website.ap-northeast-2.amazonaws.com")
+                .allowedMethods(ALLOWED_METHOD_NAME.split(","))
+                .allowCredentials(true)
+                .maxAge(3000);
     }
 }
