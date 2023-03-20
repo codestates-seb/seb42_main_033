@@ -11,6 +11,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher
 
   security:
     oauth2:
@@ -30,4 +33,3 @@ mail:
   address:
     admin: fkdltj1@gmail.com
     show-sql: true
-

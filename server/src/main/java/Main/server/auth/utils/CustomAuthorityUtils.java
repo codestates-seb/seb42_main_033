@@ -16,9 +16,9 @@ public class CustomAuthorityUtils {
     @Value("${mail.address.admin}")
     private String adminMailAddress;
 
-    private final List<GrantedAuthority> ADMIN_ROLES = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER", "ROLE_GUEST");
-    private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_GUEST");
-//    private final List<GrantedAuthority> ADMIN_ROLES = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_ENFP", "ROLE_ENFJ", "ROLE_ENTP", "ROLE_ENTJ", "ROLE_ESFP", "ROLE_ESFJ", "ROLE_ESTP", "ROLE_ESTJ", "ROLE_INFP",
+    private final List<GrantedAuthority> ADMIN_ROLES = AuthorityUtils.createAuthorityList("ROLE_ADMIN");
+    private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");
+    //    private final List<GrantedAuthority> ADMIN_ROLES = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_ENFP", "ROLE_ENFJ", "ROLE_ENTP", "ROLE_ENTJ", "ROLE_ESFP", "ROLE_ESFJ", "ROLE_ESTP", "ROLE_ESTJ", "ROLE_INFP",
 //            "ROLE_INFJ", "ROLE_INTP", "ROLE_INTJ", "ROLE_ISFP", "ROLE_ISFJ", "ROLE_ISTP", "ROLE_ISTJ", "ROLE_GUEST");
 //    private final List<GrantedAuthority> ENFP_ROLES = AuthorityUtils.createAuthorityList("ROLE_ENFP", "ROLE_GUEST");
 //    private final List<GrantedAuthority> ENFJ_ROLES = AuthorityUtils.createAuthorityList("ROLE_ENFJ", "ROLE_GUEST");
@@ -38,7 +38,7 @@ public class CustomAuthorityUtils {
 //    private final List<GrantedAuthority> ISTJ_ROLES = AuthorityUtils.createAuthorityList("ROLE_ISTJ", "ROLE_GUEST");
     private final List<GrantedAuthority> GUEST_ROLES = AuthorityUtils.createAuthorityList("ROLE_GUEST");
 
-    private final List<String> ADMIN_ROLES_STRING = List.of("ADMIN", "USER", "GUEST");
+    private final List<String> ADMIN_ROLES_STRING = List.of("ADMIN");
 //    private final List<String> ADMIN_ROLES_STRING = List.of("ADMIN", "GUEST", "ENFP", "ENFJ", "ENTP", "ENTJ", "ESFP", "ESFJ", "ESTP", "ESTJ", "INFP", "INFJ", "INTP", "INTJ", "ISFP", "ISFJ", "ISTP", "ISTJ");
 //    private final List<String> ENFP_ROLES_STRING = List.of("ENFP", "GUEST");
 //    private final List<String> ENFJ_ROLES_STRING = List.of("ENFJ", "GUEST");
@@ -56,7 +56,7 @@ public class CustomAuthorityUtils {
 //    private final List<String> ISFJ_ROLES_STRING = List.of("ISFJ", "GUEST");
 //    private final List<String> ISTP_ROLES_STRING = List.of("ISTP", "GUEST");
 //    private final List<String> ISTJ_ROLES_STRING = List.of("ISTJ", "GUEST");
-    private final List<String> USER_ROLES_STRING = List.of("USER", "GUEST");
+    private final List<String> USER_ROLES_STRING = List.of("USER");
     private final List<String> GUEST_ROLES_STRING = List.of("GUEST");
 
     // 메모리 상의 Role을 기반으로 권한 정보 생성.

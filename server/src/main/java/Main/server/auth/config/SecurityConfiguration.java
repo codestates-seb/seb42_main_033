@@ -30,7 +30,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final UserService userService;
@@ -72,16 +71,23 @@ public class SecurityConfiguration {
                 )
                 .oauth2Login(oauth2 -> oauth2.successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService)));
 
+        http.logout()
+                .logoutUrl("/users/logout")
+                .logoutSuccessUrl("/")
+                .permitAll()
+                .deleteCookies("JSESSIONID", "remember-me");
+
         return http.build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder(){
+            return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource(){
+        @Bean
+        CorsConfigurationSource corsConfigurationSource(){
+
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
@@ -92,9 +98,7 @@ public class SecurityConfiguration {
         return source;
     }
 
-
     public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity>{
-
         @Override
         public void configure(HttpSecurity builder) throws Exception{
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
@@ -106,8 +110,8 @@ public class SecurityConfiguration {
 
             JwtverificationFilter jwtverificationFilter = new JwtverificationFilter(jwtTokenizer, authorityUtils);
 
-            builder
-//                   .addFilterAfter(jwtverificationFilter, JwtverificationFilter.class)
+            builder.addFilter(jwtAuthenticationFilter)
+//                    .addFilterAfter(jwtverificationFilter, JwtverificationFilter.class)
                     .addFilterAfter(jwtverificationFilter, OAuth2LoginAuthenticationFilter.class);
         }
     }
