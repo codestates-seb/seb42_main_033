@@ -26,7 +26,7 @@ spring:
               - email
               - profile
 jwt:
-  key: ${JWT_SECRET_KEY}
+  key: lee56810374571982374987151235787843451123
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
 mail:
