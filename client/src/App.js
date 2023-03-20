@@ -33,6 +33,7 @@ function App() {
   const token = localStorage.getItem('access_token');
   return (
     <Dev className="App">
+      {console.log(token)}
       {token ? (
         <HeaderLogout setLogin={setLogin} login={login} />
       ) : (

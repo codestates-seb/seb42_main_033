@@ -7,6 +7,7 @@ function LoginPage() {
   const [confirmID, setConfirmId] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [guest, setGuest] = useState('');
   const navigate = useNavigate();
   const LoginSubit = async (event) => {
     event.preventDefault();
@@ -22,10 +23,10 @@ function LoginPage() {
     }
     try {
       const response = await axios.post(
-        `http://ec2-54-180-158-124.ap-northeast-2.compute.amazonaws.com:8080/user/login`,
+        `http://ec2-13-125-117-103.ap-northeast-2.compute.amazonaws.com:8080/user/login`,
         {
-          ID: userId,
-          PASSWORD: password,
+          email: userId,
+          password1: password,
         }
       );
       console.log(response);
@@ -40,14 +41,19 @@ function LoginPage() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        `http://ec2-54-180-158-124.ap-northeast-2.compute.amazonaws.com:8080/user/login/guest`,
+        `http://ec2-13-125-117-103.ap-northeast-2.compute.amazonaws.com:8080/user/login/guest`,
         {
-          ID: userId,
-          PASSWORD: password,
+          email: guest,
+          // 게스트 상태에 guest
+          password1: guest,
+          // guest
         }
       );
       console.log(response);
-      navigate('/');
+      setGuest('guest');
+      if (response.status === 200) {
+        navigate('/');
+      }
     } catch (error) {
       console.log(error);
     }

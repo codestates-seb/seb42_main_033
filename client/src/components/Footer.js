@@ -12,7 +12,7 @@ function Footer() {
         ·백엔드:
         <Footera href="https://github.com/5selny">박세련</Footera>,
         <Footera href="https://github.com/klouxia">박철우</Footera>,
-        <Footera>정순원</Footera>,
+        <Footera href="https://github.com/sunwjung">정순원</Footera>,
         <Footera href="https://github.com/p1Zzal">이현수</Footera>
       </Footermain>
     </Footerbody>

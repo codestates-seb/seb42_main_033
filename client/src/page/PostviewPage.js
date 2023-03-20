@@ -11,7 +11,7 @@ const PostviewPage = () => {
   useEffect(() => {
     axios
       .get(
-        `http://ec2-54-180-158-124.ap-northeast-2.compute.amazonaws.com/board/integrated/${userId}`
+        `http://ec2-13-125-117-103.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${userId}`
       )
       .then((response) => {
         console.log(response);
