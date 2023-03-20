@@ -6,13 +6,14 @@ import { useState } from 'react';
 import BoardAnswer from './BoardAnswer';
 import { Link } from 'react-router-dom';
 
-const BoardCarddetail = ({ post }) => {
+const BoardCarddetail = (props) => {
   let [like, setLike] = useState(0);
   let [count, setCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
     setIsModalOpen(!isModalOpen);
   };
+
   return (
     <>
       <Container>
@@ -21,7 +22,7 @@ const BoardCarddetail = ({ post }) => {
           <div className="boardview">
             <div className="boardheader">
               <div className="title">
-                {post.title}
+                {props.title}
                 <ModalContainer onClick={handleClick}>
                   <EditDelete />
                 </ModalContainer>
@@ -29,13 +30,17 @@ const BoardCarddetail = ({ post }) => {
                   <PostModal
                     onClose={() => setIsModalOpen(false)}
                     isOpen={isModalOpen}
+                    id={props.id}
+                    title={props.title}
+                    content={props.content}
                   />
                 )}
               </div>
-              <div className="nickname">{post.nickname}</div>
+              <div className="nickname">{props.username}</div>
+              <div className="createdate">{props.createdAt}</div>
             </div>
             <div className="boardcontent">
-              <div className="content">{post.contents}</div>
+              <div className="content">{props.content}</div>
               <>
                 <div className="like">
                   <span>
@@ -127,7 +132,7 @@ const Container = styled.div`
     .title {
       height: 40px;
       display: flex;
-      align-items: center;
+      /* align-items: center; */
       font-size: 22px;
     }
     .nickname {
@@ -136,6 +141,10 @@ const Container = styled.div`
       margin-top: 5px;
       color: #959595;
       font-weight: 700;
+    }
+    .createdate {
+      position: absolute;
+      right: 0;
     }
   }
   div.boardcontent {
