@@ -4,23 +4,23 @@ import QuillEditor from './QuillEditor.js';
 
 const BoardCreateOrEdit = (props) => {
   return (
-    <BoardForm onSubmit>
+    <BoardForm onSubmit={props.handleSubmit}>
       <Title className="titlediv">
         <p>글쓰기</p>
         <input
           placeholder=" 글 제목"
           type="text"
           name="title"
-          value={props.TitleValue}
-          onChange={props.handleTitleChange}
+          value={props.title}
+          onChange={props.handleRegisterChange}
           // defaultValue={props.TitleValue}
         />
         <hr />
       </Title>
       <QuillEditor
         name="contents"
-        value={props.ContentValue}
-        onChange={props.handleContentChange}
+        value={props.content}
+        onChange={props.handleRegisterChange}
         // defaultValue={props.ContentValue}
       />
       <ButtonContainer>
@@ -33,7 +33,6 @@ const BoardCreateOrEdit = (props) => {
             className="submit"
             onClick={props.handleSubmit}
           >
-            {/* {props.updateRequest ? '수정' : '등록'} */}
             등록
           </BoardButton>
         </BoardButtonLink>

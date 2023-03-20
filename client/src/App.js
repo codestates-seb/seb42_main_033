@@ -42,7 +42,9 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         {/* 홈화면 */}
-        <Route path="/PostviewPage" element={<PostviewPage />} />
+        <Route path="/PostviewPage">
+          <Route path=":id" element={<PostviewPage />} />
+        </Route>
         {/* 게시글 화면 */}
         <Route path="/Login" element={<LoginPage />} />
         {/* 로그인 */}
@@ -51,7 +53,7 @@ function App() {
         <Route path="/Signout" element={<SignoutPage />} />
         {/* 회원탈퇴 */}
         <Route path="/PostlistPage" element={<PostlistPage />} />
-        {/* 게시판 */}
+        {/* 통합게시판 */}
         <Route path="/PostPage" element={<PostPage />} />
         {/* 글쓰기 */}
         <Route path="/Dm" element={<SendDm />} />

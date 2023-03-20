@@ -122,6 +122,8 @@ function SendDm() {
             />
           </Dmtextbox>
           <Dmbuttons>
+            {/* 보낸페이지에 계속 남게 */}
+            {/* 보내기 창 말고 다른곳 누르면 닫히게 */}
             <Dmlink to="/PostviewPage">
               <Dmcancelbutton> 취소 </Dmcancelbutton>
             </Dmlink>
