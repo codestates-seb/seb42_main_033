@@ -3,7 +3,7 @@ import Logo from './../images/Logo.png';
 import { Link } from 'react-router-dom';
 import { FaRegUserCircle, FaRegBell } from 'react-icons/fa';
 
-function HeaderLogin({ setModal, setLogin, modal }) {
+function HeaderLogin({ setModal, modal }) {
   return (
     <Headerbody>
       <Headerimgdiv to="/">
@@ -25,7 +25,7 @@ function HeaderLogin({ setModal, setLogin, modal }) {
         </Headericonbell>
         <Headericonuser
           onClick={() => {
-            setLogin(true);
+            setModal(!modal);
           }}
         >
           <FaRegUserCircle />

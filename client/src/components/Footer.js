@@ -7,7 +7,7 @@ function Footer() {
         ©Copyright ⓒ 2023·MBTI=Science·프론트:
         <Footera href="https://github.com/yeojuyeong">여주영</Footera>,
         <Footera href="https://github.com/hyeonhyeon-K">김재현</Footera>,
-        <Footera>김준경</Footera>,
+        <Footera href="https://velog.io/@mikjk0530">김준경</Footera>,
         <Footera href="https://github.com/ByeongminBRO">안병민</Footera>
         ·백엔드:
         <Footera href="https://github.com/5selny">박세련</Footera>,

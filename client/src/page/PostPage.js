@@ -38,11 +38,14 @@ const PostPage = () => {
     console.log(post);
 
     axios
-      .post('http://localhost:8080/board/integrated', {
-        userId: 1, // userId는 임시 값으로 1로 설정
-        title: post.title,
-        content: post.contents,
-      })
+      .post(
+        'http://ec2-54-180-158-124.ap-northeast-2.compute.amazonaws.com/board/integrated',
+        {
+          userId: 1, // userId는 임시 값으로 1로 설정
+          title: post.title,
+          content: post.contents,
+        }
+      )
       .then((response) => {
         // console.log(post.title);
         // console.log( post.contents);

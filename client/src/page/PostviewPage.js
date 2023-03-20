@@ -10,7 +10,9 @@ const PostviewPage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/board/integrated/${userId}`)
+      .get(
+        `http://ec2-54-180-158-124.ap-northeast-2.compute.amazonaws.com/board/integrated/${userId}`
+      )
       .then((response) => {
         console.log(response);
         setPost(response.data);
