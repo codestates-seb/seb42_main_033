@@ -1,6 +1,7 @@
 package Main.server.notification.controller;
 
 import Main.server.notification.SseEmitters;
+import Main.server.notification.service.SseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,24 +15,16 @@ import java.io.IOException;
 @RestController
 public class SseController {
     private final SseEmitters sseEmitters;
+    private final SseService sseService;
 
-    public SseController(SseEmitters sseEmitters) {
+    public SseController(SseEmitters sseEmitters, SseService sseService) {
         this.sseEmitters = sseEmitters;
+        this.sseService = sseService;
     }
 
     @GetMapping(value = "/connect", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> connect(){
-        SseEmitter emitter = new SseEmitter(60 * 1000L);
-        sseEmitters.add(emitter);
-
-        try{
-            emitter.send(SseEmitter.event()
-                    .name("connect") // 해당 이벤트 이름 지정
-                    .data("연결완료!")); // 503 에러 방지
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
-
+        SseEmitter emitter = sseService.connectSse();
         return ResponseEntity.ok(emitter);
     }
 }

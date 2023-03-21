@@ -2,6 +2,7 @@ package Main.server.security;
 
 
 import Main.server.auth.JwtTokenizer;
+import Main.server.auth.filter.JwtAuthenticationFilter;
 import Main.server.user.entity.Users;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -77,7 +78,7 @@ public class SecurityConfigTest {
         obj1.addProperty("email", email1);
         obj1.addProperty("password1", password1);
 
-        mockMvc.perform(post("/users/login")
+        mockMvc.perform(post("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(obj1.toString()))
                 .andExpect(status().isOk())
