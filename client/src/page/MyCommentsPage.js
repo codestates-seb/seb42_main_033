@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import MyPageSidebar from '../components/MypageSidebar.jsx';
+/*123*/
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 /*123*/
 const CommentPageContainer = styled.div`
   font-size: 1vw;
@@ -66,43 +69,91 @@ const CommentText = styled.label`
   margin-top: 0px;
 `;
 
-const comments = [
-  {
-    id: 1,
-    text: '안녕',
-  },
-  {
-    id: 2,
-    text: '하세요',
-  },
-  {
-    id: 3,
-    text: '오오오오오',
-  },
-  {
-    id: 4,
-    text: '오오오오오',
-  },
-  {
-    id: 5,
-    text: '오오오오오',
-  },
-  {
-    id: 6,
-    text: '오오오오오',
-  },
-  {
-    id: 7,
-    text: '오오오오오',
-  },
-  {
-    id: 8,
-    text: '오오오오오',
-  },
-];
+// const comments = [
+//   {
+//     id: 1,
+//     text: '안녕',
+//   },
+//   {
+//     id: 2,
+//     text: '하세요',
+//   },
+//   {
+//     id: 3,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 4,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 5,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 6,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 7,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 8,
+//     text: '오오오오오',
+//   },
+// ];
 
-function MyCommentsPage() {
+function MyComments() {
+  const [comments, setComments] = useState([]);
   const [selectedComments, setSelectedComments] = useState([]);
+
+  // const userId = useParams();
+  // const token = localStorage.getItem('access_token');
+
+  // const getComments = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://ec2-3-34-51-204.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/1/comment/${userId.id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(response);
+  //     setComments(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getComments();
+  // }, []);
+
+  // const deleteComment = async () => {
+  //   try {
+  //     const deletePromises = selectedComments.map((commentId) => {
+  //       return axios.delete(
+  //         `http://ec2-3-34-51-204.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/1/comment/${commentId}`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //     });
+  //     await Promise.all(deletePromises);
+  //     setComments(
+  //       comments.filter(
+  //         (comment) => !selectedComments.includes(comment.content)
+  //       )
+  //     );
+  //     setSelectedComments([]);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleCheckboxClick = (id) => {
     if (selectedComments.includes(id)) {
@@ -123,24 +174,24 @@ function MyCommentsPage() {
           {comments
             .slice()
             .reverse()
-            .map((comment) => (
-              <CommentContainer key={comment.id}>
+            .map((comment, index) => (
+              <CommentContainer key={index}>
                 <input
                   type="checkbox"
-                  id={`checkbox-${comment.id}`}
-                  checked={selectedComments.includes(comment.id)}
-                  onChange={() => handleCheckboxClick(comment.id)}
+                  id={`checkbox-${index}`}
+                  checked={selectedComments.includes(index)}
+                  onChange={() => handleCheckboxClick(index)}
                 />
-                <CommentText htmlFor={`checkbox-${comment.id}`}>
-                  <p>{comment.text}</p>
+                <CommentText htmlFor={`checkbox-${index}`}>
+                  <p>{comment.content}</p>
                 </CommentText>
               </CommentContainer>
             ))}
         </CommentsContainer>
-        <DeleteButton>삭제</DeleteButton>
+        <DeleteButton onClick={deleteComment}> 삭제 </DeleteButton>
       </CommentPageContainer>
     </>
   );
 }
 
-export default MyCommentsPage;
+export default MyComments;

@@ -68,7 +68,7 @@ const StyledButton = styled.button`
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    transform: scale(2, 3);
+    /* transform: scale(2, 3); */
 
     /* transition: transform 0.1s; */
   }
