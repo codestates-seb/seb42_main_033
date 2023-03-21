@@ -1,4 +1,4 @@
-package Main.server.board_integrated.like.entity;
+package Main.server.like.entity;
 
 import Main.server.board_integrated.entity.BoardIntegrated;
 import Main.server.user.entity.Users;
@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class BoardIntegratedLike {
+@Table(name = "LIKE_TABLE")
+public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,10 +26,13 @@ public class BoardIntegratedLike {
     @JoinColumn(name = "post_id")
     @JsonBackReference
     private BoardIntegrated post;
+    
+    private String category;
 
     @Builder
-    public BoardIntegratedLike(Users users, BoardIntegrated post) {
+    public Like(Users users, BoardIntegrated post, String category) {
         this.users = users;
         this.post = post;
+        this.category = category;
     }
 }

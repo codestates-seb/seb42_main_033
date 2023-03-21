@@ -2,7 +2,7 @@ package Main.server.board_integrated.entity;
 
 import Main.server.comment.entity.Comment;
 import Main.server.audit.Auditable;
-import Main.server.board_integrated.like.entity.BoardIntegratedLike;
+import Main.server.like.entity.Like;
 import Main.server.user.entity.Users;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
@@ -30,6 +30,8 @@ public class BoardIntegrated extends Auditable {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
+    private String category;
+
     private String tag;
 
     private Long commentCount;
@@ -38,9 +40,9 @@ public class BoardIntegrated extends Auditable {
 
     private Long likeCount;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    @JsonBackReference
-    private List<BoardIntegratedLike> like = new ArrayList<>();
+//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+//    @JsonBackReference
+//    private List<Like> like = new ArrayList<>();
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<Comment> comment = new ArrayList<>();

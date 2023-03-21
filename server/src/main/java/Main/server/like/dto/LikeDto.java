@@ -1,4 +1,4 @@
-package Main.server.board_integrated.like.dto;
+package Main.server.like.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardIntegratedLikeDto {
+public class LikeDto {
 
     private Long userId;
 
     private Long postId;
+
+    private String category;
 }

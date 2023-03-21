@@ -1,7 +1,7 @@
 package Main.server.board_infj.entity;
 
 import Main.server.audit.Auditable;
-import Main.server.board_integrated.like.entity.BoardIntegratedLike;
+import Main.server.like.entity.Like;
 import Main.server.user.entity.Users;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
@@ -40,7 +40,7 @@ public class BoardInfj extends Auditable {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     @JsonBackReference
-    private List<BoardIntegratedLike> like = new ArrayList<>();
+    private List<Like> like = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
