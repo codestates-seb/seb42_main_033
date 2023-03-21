@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import MyPageSidebar from '../components/MypageSidebar.jsx';
 /*121212*/
+
 const PageContainer = styled.div`
   display: flex;
 `;
@@ -78,54 +81,103 @@ const CommentText = styled.label`
   }
 `;
 
-const comments = [
-  {
-    id: 1,
-    text: '안녕',
-    comments: [
-      {
-        id: 1,
-        text: '반가워요!',
-      },
-      {
-        id: 2,
-        text: '안녕하세요!',
-      },
-    ],
-  },
+// const comments = [
+//   {
+//     id: 1,
+//     text: '안녕',
+//     comments: [
+//       {
+//         id: 1,
+//         text: '반가워요!',
+//       },
+//       {
+//         id: 2,
+//         text: '안녕하세요!',
+//       },
+//     ],
+//   },
 
-  {
-    id: 2,
-    text: '하세요',
-  },
-  {
-    id: 3,
-    text: '오오오오오',
-  },
-  {
-    id: 4,
-    text: '오오오오오',
-  },
-  {
-    id: 5,
-    text: '오오오오오',
-  },
-  {
-    id: 6,
-    text: '오오오오오',
-  },
-  {
-    id: 7,
-    text: '오오오오오',
-  },
-  {
-    id: 8,
-    text: '오오오오오',
-  },
-];
+//   {
+//     id: 2,
+//     text: '하세요',
+//   },
+//   {
+//     id: 3,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 4,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 5,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 6,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 7,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 8,
+//     text: '오오오오오',
+//   },
+// ];
 
-function MyPostPage() {
+function MyPost() {
+  const [post, setPost] = useState([]);
   const [selectedComments, setSelectedComments] = useState([]);
+
+  // const userId = useParams();
+  // const token = localStorage.getItem('access_token');
+
+  // const getPost = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://ec2-3-34-51-204.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${userId.id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(response);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // const deletePosts = async () => {
+  //   try {
+  //     const deletePromises = selectedComments.map((postId) => {
+  //       return axios.delete(
+  //         `http://ec2-3-34-51-204.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //     });
+  //     await Promise.all(deletePromises);
+  //     setPost(
+  //       post.filter((postItem) => !selectedComments.includes(postItem.id))
+  //     );
+  //     setSelectedComments([]);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getPost().then((data) => {
+  //     setPost(data);
+  //   });
+  // }, []);
 
   const handleCheckboxClick = (id) => {
     if (selectedComments.includes(id)) {
@@ -145,29 +197,29 @@ function MyPostPage() {
           <CommentsContainer>
             <HeaderContainer>선택</HeaderContainer>
             <hr />
-            {comments
+            {post
               .slice()
               .reverse()
-              .map((comment) => (
-                <CommentContainer key={comment.id}>
+              .map((postItem) => (
+                <CommentContainer key={postItem.id}>
                   <input
                     type="checkbox"
-                    id={`checkbox-${comment.id}`}
-                    checked={selectedComments.includes(comment.id)}
-                    onChange={() => handleCheckboxClick(comment.id)}
+                    id={`checkbox-${postItem.id}`}
+                    checked={selectedComments.includes(postItem.id)}
+                    onChange={() => handleCheckboxClick(postItem.id)}
                   />
-                  <CommentText htmlFor={`checkbox-${comment.id}`}>
-                    <p>{comment.text}</p>
-                    <p>({comment.comments ? comment.comments.length : 0})</p>
+                  <CommentText htmlFor={`checkbox-${postItem.id}`}>
+                    <p>{postItem.title}</p>
+                    <p>({postItem.commentCount})</p>
                   </CommentText>
                 </CommentContainer>
               ))}
           </CommentsContainer>
-          <DeleteButton> 삭제 </DeleteButton>
+          <DeleteButton onClick={deletePosts}> 삭제 </DeleteButton>
         </CommentPageContainer>
       </PageContainer>
     </>
   );
 }
 
-export default MyPostPage;
+export default MyPost;
