@@ -29,9 +29,9 @@ public class Comment extends Auditable {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JsonManagedReference
-    @JoinColumn(name = "BOARD_ID")
+    @JoinColumn(name = "POST_ID")
     @JsonIgnore
-    private BoardIntegrated board;
+    private BoardIntegrated post;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "USER_ID")

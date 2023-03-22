@@ -13,6 +13,8 @@ public class CommentDto {
         @Positive
         private Long userId;
 
+        private Long postId;
+
         @NotBlank
         String content;
 
@@ -41,5 +43,6 @@ public class CommentDto {
         private Long boardId;
         private String content;
         private String username;
+        private String category;
     }
 }

@@ -2,6 +2,8 @@ package Main.server.board_integrated;
 
 import Main.server.advice.errors.DuplicateResourceException;
 import Main.server.advice.errors.NotFoundException;
+import Main.server.comment.Comment;
+import Main.server.comment.CommentRepository;
 import Main.server.like.LikeDto;
 import Main.server.like.Like;
 import Main.server.like.LikeRepository;
@@ -23,11 +25,15 @@ public class BoardIntegratedService {
     private final BoardIntegratedRepository boardIntegratedRepository;
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
+    private final CommentRepository commentRepository;
 
-    public BoardIntegratedService(BoardIntegratedRepository boardIntegratedRepository, UserRepository userRepository, LikeRepository likeRepository) {
+    public BoardIntegratedService(BoardIntegratedRepository boardIntegratedRepository,
+                                  UserRepository userRepository, LikeRepository likeRepository,
+                                  CommentRepository commentRepository) {
         this.boardIntegratedRepository = boardIntegratedRepository;
         this.userRepository = userRepository;
         this.likeRepository = likeRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Transactional
@@ -116,9 +122,6 @@ public class BoardIntegratedService {
     public void deletePost(long id) {
         BoardIntegrated post = findPost(id);
 
-//        List<Like> likes = likeRepository.findByIdAndCategory(id, "integrated")
-//                .stream().collect(Collectors.toList());
-
         List<Like> likes = likeRepository.findAll();
 
         while (post.getLikeCount() != 0) {
@@ -127,6 +130,18 @@ public class BoardIntegratedService {
                 if(like.getCategory().equals("integrated") && like.getPost().getId() == id) {
                     likeRepository.delete(like);
                     deleteLike(id);
+                }
+            }
+        }
+
+        List<Comment> comments = commentRepository.findAll();
+
+        while (post.getCommentCount() != 0) {
+            for(int i = 0; i < comments.size(); i++) {
+                Comment comment = comments.get(i);
+                if(comment.getCategory().equals("integrated") && comment.getPost().getId() == id) {
+                    commentRepository.delete(comment);
+                    post.setCommentCount(post.getCommentCount()-1);
                 }
             }
         }

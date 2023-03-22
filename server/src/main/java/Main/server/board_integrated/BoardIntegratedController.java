@@ -1,5 +1,9 @@
 package Main.server.board_integrated;
 
+import Main.server.comment.Comment;
+import Main.server.comment.CommentDto;
+import Main.server.comment.CommentMapper;
+import Main.server.comment.CommentService;
 import Main.server.like.LikeDto;
 import Main.server.like.LikeMapper;
 import Main.server.like.LikeRepository;
@@ -19,15 +23,21 @@ public class BoardIntegratedController {
     private final BoardIntegratedMapper mapper;
     private final LikeMapper likeMapper;
     private final LikeRepository likeRepository;
+    private final CommentService commentService;
+    private final CommentMapper commentMapper;
 
     public BoardIntegratedController(BoardIntegratedService service,
                                      BoardIntegratedMapper mapper,
                                      LikeMapper likeMapper,
-                                     LikeRepository likeRepository) {
+                                     LikeRepository likeRepository,
+                                     CommentService commentService,
+                                     CommentMapper commentMapper) {
         this.service = service;
         this.mapper = mapper;
         this.likeMapper = likeMapper;
         this.likeRepository = likeRepository;
+        this.commentService = commentService;
+        this.commentMapper = commentMapper;
     }
 
     //게시글 등록
@@ -112,6 +122,74 @@ public class BoardIntegratedController {
         else {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    //답변 등록
+    @PostMapping("/{post-id}")
+    public ResponseEntity postComment(@PathVariable("post-id") Long postId,
+                                      @RequestBody CommentDto.Post postDto) {
+
+        if(postId == postDto.getPostId()) {
+            Comment createComment = commentService.createComment(commentMapper.commentPostDtoToComment(postDto), postDto.getUserId(), postId);
+            CommentDto.Response result = commentMapper.commentToCommentResponseDto(createComment);
+            result.setUserId(createComment.getUser().getUserId());
+            result.setUsername(createComment.getUser().getNickName());
+            result.setBoardId(createComment.getPost().getId());
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    //전체 답변 조회
+    @GetMapping("/{post-id}/comment")
+    public ResponseEntity getComments() {
+        List<Comment> comments = commentService.findComments();
+        return new ResponseEntity<>(comments, HttpStatus.OK);
+    }
+
+    //답변 조회
+    @GetMapping("/{post-id}/comment/{comment-id}")
+    public ResponseEntity getComment(@PathVariable("post-id") long postId,
+                                     @PathVariable("comment-id") long commentId) {
+
+        Comment comment = commentService.findVerifiedComment(commentId);
+        CommentDto.Response result = commentMapper.commentToCommentResponseDto(comment);
+        result.setUserId(comment.getUser().getUserId());
+        result.setUsername(comment.getUser().getNickName());
+        result.setBoardId(comment.getPost().getId());
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    //답변 수정
+    @PatchMapping("/{post-id}/comment/{comment-id}")
+    public ResponseEntity patchComment(@PathVariable("post-id") Long postId,
+                                       @PathVariable("comment-id") Long commentId,
+                                       @RequestBody CommentDto.Patch patchDto) {
+        Comment comment = commentMapper.commentPatchDtoToComment(patchDto);
+        comment.setId(commentId);
+
+        Comment patchComment = commentService.updateComment(comment);
+        CommentDto.Response result = commentMapper.commentToCommentResponseDto(patchComment);
+        result.setUserId(patchComment.getUser().getUserId());
+        result.setUsername(patchComment.getUser().getNickName());
+        result.setBoardId(postId);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    //답변 삭제
+    @DeleteMapping("/{post-id}/comment/{comment-id}")
+    public ResponseEntity deleteComment(@PathVariable("post-id") long postId,
+                                        @PathVariable("comment-id") long commentId) {
+
+        commentService.deleteComment(commentId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     //test

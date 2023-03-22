@@ -5,6 +5,7 @@ import Main.server.board_integrated.BoardIntegratedRepository;
 import Main.server.user.entity.Users;
 import Main.server.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,15 +23,18 @@ public class CommentService {
         this.boardIntegratedRepository = boardIntegratedRepository;
     }
 
-    public Comment createComment(Comment comment, long userId, long BoardId) {
+    @Transactional
+    public Comment createComment(Comment comment, long userId, long postId) {
         Users findUser = getUserFromId(userId);
-        BoardIntegrated findBoard = getBoardIntegratedFromId(BoardId);
-        findBoard.setCommentCount(findBoard.getCommentCount()+1);
+        BoardIntegrated findPost = getBoardIntegratedFromId(postId);
+        findPost.setCommentCount(findPost.getCommentCount()+1);
         comment.setUser(findUser);
-        comment.setBoard(findBoard);
+        comment.setPost(findPost);
+        comment.setCategory("integrated");
         return commentRepository.save(comment);
     }
 
+    @Transactional
     public Comment updateComment(Comment comment) {
         Comment findComment = findVerifiedComment(comment.getId());
         Optional.ofNullable(comment.getContent()).ifPresent(content -> findComment.setContent(content));
@@ -39,12 +43,12 @@ public class CommentService {
         return commentRepository.save(findComment);
     }
 
+    @Transactional
     public void deleteComment(long commentId) {
         Comment findComment = findVerifiedComment(commentId);
-        BoardIntegrated board = findComment.getBoard();
-        board.setCommentCount(board.getCommentCount()-1);
+        BoardIntegrated post = findComment.getPost();
         commentRepository.deleteById(commentId);
-
+        post.setCommentCount(post.getCommentCount()-1);
         //answerRepository.delete(findAnswer);
     }
 
@@ -60,8 +64,8 @@ public class CommentService {
         return userRepository.findById(userId).get();
     }
 
-    public BoardIntegrated getBoardIntegratedFromId(Long boardId) {
-        return boardIntegratedRepository.findById(boardId).get();
+    public BoardIntegrated getBoardIntegratedFromId(Long postId) {
+        return boardIntegratedRepository.findById(postId).get();
     }
 
 }

@@ -42,8 +42,8 @@ public class BoardIntegrated extends Auditable {
 //    @JsonBackReference
 //    private List<Like> like = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
-    private List<Comment> comment = new ArrayList<>();
+//    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+//    private List<Comment> comment = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
