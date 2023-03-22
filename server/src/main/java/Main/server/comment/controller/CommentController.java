@@ -6,6 +6,7 @@ import Main.server.comment.dto.CommentResponseDto;
 import Main.server.comment.entity.Comment;
 import Main.server.comment.mapper.CommentMapper;
 import Main.server.comment.service.CommentService;
+import Main.server.notification.service.SseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,12 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
+    private final SseService sseService;
 
-    public CommentController(CommentService commentService, CommentMapper commentMapper) {
+    public CommentController(CommentService commentService, CommentMapper commentMapper, SseService sseService) {
         this.commentService = commentService;
         this.commentMapper = commentMapper;
+        this.sseService = sseService;
     }
 
     @PostMapping("/{post-id}")
@@ -33,6 +36,8 @@ public class CommentController {
         result.setUserId(createComment.getUser().getUserId());
         result.setUsername(createComment.getUser().getNickName());
         result.setBoardId(createComment.getBoard().getId());
+
+        sseService.AddCommentEvent(boardId);
 
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }

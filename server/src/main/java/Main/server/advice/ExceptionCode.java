@@ -13,8 +13,8 @@ public enum ExceptionCode {
     EMAIL_NOT_FOUND(404, "email not found"),
     NULL_POINT_ERROR(404,"field not found"),
     METHOD_NOT_ALLOWED(405, "method not allowed"),
-    VALUES_NOT_MATCH(405,"values not match");
-
+    VALUES_NOT_MATCH(405,"values not match"),
+    COMMENT_NOT_FOUND(404, "comment not found");
 
     @Getter
     int status;

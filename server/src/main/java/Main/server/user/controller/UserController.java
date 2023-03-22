@@ -29,6 +29,15 @@ public class UserController {
         this.mapper = mapper;
     }
 
+    @PostMapping("/user/guest/login")
+    public ResponseEntity<UserDto.Response> postGuestUser(@RequestBody @Valid UserDto.Post post) throws Exception{
+        Users users = mapper.userDtoPostToUser(post);
+        Users createdUsers = userService.createUser(users);
+        UserDto.Response response = mapper.userToUserDtoResponse(createdUsers);
+        response.setUrl(url + response.getUserId());
+        return new ResponseEntity(response, HttpStatus.CREATED);
+    }
+
     @PostMapping
     public ResponseEntity postUser(@RequestBody @Valid UserDto.Post post) throws Exception {
         Users users = mapper.userDtoPostToUser(post);
