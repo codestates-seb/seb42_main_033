@@ -40,7 +40,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         {/* 홈화면 */}
-        <Route path="/PostviewPage">
+        <Route path="/PostviewPage" element={<PostviewPage />}>
           <Route path=":id" element={<PostviewPage />} />
         </Route>
         {/* 게시글 화면 */}

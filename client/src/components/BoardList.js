@@ -1,29 +1,78 @@
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 import BoardCard from './BoardCard';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
+import axios from 'axios';
+import api from '../utils/api';
+import moment from 'moment';
+import { Pagination } from '@mui/material';
 
-const BoardList = (props) => {
-  console.log(props.board);
+const BoardList = () => {
+  const [pageCount, setPageCount] = useState(0);
+  const [boardList, setBoardList] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  // 렌더링 되고 한번만 전체 게시물 갯수 가져와서 페이지 카운트 구하기
+  // 렌더링 되고 한번만 페이지에 해당하는 게시물 가져오기
+  useEffect(() => {
+    // 페이지에 해당하는 게시물 가져오기
+    const getBoardList = async () => {
+      const id = searchParams.get('id');
+      const { data } = await axios.get(`/api/board/integrated/${id}`);
+      return data;
+    };
+    // 현재 페이지에 해당하는 게시물로 상태 변경하기
+    getBoardList().then((result) => setBoardList(result));
+    // 게시물 전체 갯수 구하기
+    const getTotalBoard = async () => {
+      const { data } = await axios.get('/api/board/integrated/${id}');
+      return data.total;
+    };
+    // 페이지 카운트 구하기: (전체 board 갯수) / (한 페이지 갯수) 결과 올림
+    getTotalBoard().then((result) => setPageCount(Math.ceil(result / 4)));
+  }, []);
 
   return (
     <BoardLayout>
       <BoardHead>게시판</BoardHead>
       <BoardBox>
-        {props.board.map((post) => (
-          <Link key={post.id} to={`/board/integrated/${post.id}`}>
-            <BoardCard
-              key={post.id}
-              title={post.title}
-              content={post.contents}
-              nickname={post.nickname}
-            />
-          </Link>
+        {boardList.map((item, index) => (
+          <BoardCard
+            key={item.id}
+            username={item.user.username}
+            createdAt={moment(item.created).add(9, 'hour').format('YYYY-MM-DD')}
+            title={item.title}
+            content={item.content}
+            postId={item.id}
+            likeCount={item.likeCount}
+            viewCount={item.viewCount}
+            commentCount={item.commentCount}
+          />
         ))}
+        <BoardCard />
+        <BoardCard />
+        <BoardCard />
+        <BoardCard />
+        <BoardCard />
       </BoardBox>
-      <WriteButtonLink to="/postpage">
-        <WriteButton>글쓰기</WriteButton>
-      </WriteButtonLink>
+      <div>
+        <WriteButtonLink to="/postpage">
+          <WriteButton>글쓰기</WriteButton>
+        </WriteButtonLink>
+        {/* 페이지네이션: count에 페이지 카운트, page에 페이지 번호 넣기 */}
+        <Pagination
+          variant="outlined"
+          color="primary"
+          page={Number(searchParams.get('page'))}
+          count={pageCount}
+          size="large"
+          onChange={(e, value) => {
+            window.location.href = `/api/board/integrated/${value}`;
+          }}
+          showFirstButton
+          showLastButton
+        />
+      </div>
       <Search>
         <input placeholder="검색어를 입력해주세요." />
         <button>
@@ -69,7 +118,8 @@ const WriteButton = styled.button`
   margin-top: 10px;
   margin-left: -830px;
   background-color: #ffffff;
-  border-color: #a1a1a1;
+  border-color: rgba(161, 161, 161, 1);
+  border-radius: 4px;
   border-width: thin;
   color: #ff8686;
   font-size: 18px;

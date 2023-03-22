@@ -2,7 +2,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useMemo } from 'react';
 
-const QuillEditor = ({ value, onChange }) => {
+const QuillEditor = ({ name, value, onChange }) => {
   const modules = useMemo(
     () => ({
       toolbar: {
@@ -23,7 +23,8 @@ const QuillEditor = ({ value, onChange }) => {
     []
   );
   const handleEditorChange = (content, delta, source, editor) => {
-    onChange(editor.getHTML());
+    const html = editor.getHTML();
+    onChange(html !== undefined ? html : '');
   };
 
   return (
@@ -37,6 +38,7 @@ const QuillEditor = ({ value, onChange }) => {
           marginBottom: '60px',
           width: '840px',
         }}
+        name={name}
         value={value}
         onChange={handleEditorChange}
       />
