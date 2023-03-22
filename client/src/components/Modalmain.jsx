@@ -1,30 +1,61 @@
 import styled from 'styled-components';
 import { FaRegUser, FaRegPaperPlane, FaPowerOff } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-
-function Modal() {
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+function Modal({ setModal, modal }) {
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    localStorage.clear();
+    navigate('/');
+  };
+  const Logout = async () => {
+    try {
+      const response = await axios.post(
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/user/logout`
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
-      {/* <Modaltriangle /> */}
       <Modalbody>
         <Modaldiv>
           <Modaldiv1>
             <Modaluser>
               <FaRegUser />
             </Modaluser>
-            <Modalword to="/EditProfile">마이페이지</Modalword>
+            <ModalLink to="/EditProfile">
+              <Modalword>마이페이지</Modalword>
+            </ModalLink>
           </Modaldiv1>
           <Modaldiv1>
             <Modalmail>
               <FaRegPaperPlane />
             </Modalmail>
-            <Modalword>쪽지함 가기</Modalword>
+            <ModalLink>
+              <Modalword>쪽지함 가기</Modalword>
+            </ModalLink>
           </Modaldiv1>
-          <Modaldiv2>
+          <Modaldiv2
+            onClick={() => {
+              logoutHandler();
+              Logout();
+            }}
+          >
             <Modallogout>
               <Modallogout />
             </Modallogout>
-            <Modalword to="/">로그아웃</Modalword>
+            <ModalLink>
+              <Modalword
+                onClick={() => {
+                  setModal(!modal);
+                }}
+              >
+                로그아웃
+              </Modalword>
+            </ModalLink>
           </Modaldiv2>
         </Modaldiv>
       </Modalbody>
@@ -37,13 +68,18 @@ const Modalbody = styled.div`
   box-sizing: border-box;
   left: 77%;
   top: 8%;
-  height: 22vh;
-  width: 13vw;
+  height: 23%;
+  width: 14%;
   padding: 8px;
-  background-color: #fcfcfc;
+  border: solid 2px lightgray;
   border-radius: 10px;
+  background-color: #fcfcfc;
   transform: translateX(-0%) translateY(-0%);
   z-index: 1;
+  @media (max-width: 1000px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
 const Modaldiv = styled.div`
   display: flex;
@@ -53,7 +89,7 @@ const Modaldiv = styled.div`
 `;
 const Modaldiv1 = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 5vh;
   width: 100%;
   margin-top: 1rem;
@@ -61,7 +97,7 @@ const Modaldiv1 = styled.div`
 `;
 const Modaldiv2 = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 5vh;
   width: 100%;
   margin-top: 1rem;
@@ -84,85 +120,46 @@ const Modallogout = styled(FaPowerOff)`
   margin-left: 0.5rem;
   color: #707070;
 `;
-const Modalword = styled(Link)`
-  width: 13rem;
+const ModalLink = styled(Link)``;
+const Modalword = styled.button`
+  width: auto;
   text-decoration: none;
-  font-size: 2rem;
-  margin-top: 0.5rem;
+  font-size: 1.7rem;
   color: #3a3a3a;
+  background-color: rgba(0, 0, 0, 0);
+  border: solid 1px rgba(0, 0, 0, 0);
   @media (max-width: 1740px) {
-    width: 13rem;
+    width: 100%;
     font-size: 1.7rem;
-    margin-top: 0.5rem;
   }
   @media (max-width: 1580px) {
     width: 100%;
     font-size: 1.7rem;
-    margin-top: 0.5rem;
   }
   @media (max-width: 1340px) {
     font-size: 1.3rem;
-    margin-top: 0.5rem;
   }
   @media (max-width: 1250px) {
     font-size: 1.3rem;
-    margin-top: 0.5rem;
   }
   @media (max-width: 1170px) {
     font-size: 1.3rem;
-    margin-top: 0.5rem;
   }
   @media (max-width: 1044px) {
-    font-size: 1.3rem;
-    margin-top: 0.5rem;
+    font-size: 1rem;
   }
   @media (max-width: 954px) {
-    font-size: 1.3rem;
-    margin-top: 0.5rem;
+    font-size: 1rem;
   }
   @media (max-height: 800px) {
-    font-size: 1.2rem;
-    margin-top: 0.1rem;
+    font-size: 1rem;
   }
   @media (max-height: 700px) {
-    font-size: 1.1rem;
-    margin-top: 0rem;
+    font-size: 1rem;
   }
   @media (max-height: 600px) {
     font-size: 1rem;
-    margin-top: 0rem;
   }
 `;
-// const Modaltriangle = styled.div`
-//   outline: none;
-//   position: fixed;
-//   box-sizing: border-box;
-//   top: 1vh;
-//   left: 96%;
-//   width: 0px;
-//   height: 0px;
-//   margin-top: 9rem;
-//   text-align: center;
-//   border-radius: 10px;
-//   z-index: 1;
-//   transform: translateX(-50%) translateY(-50%);
-//   border-bottom: calc(36px * 1.732) solid #f7f7f8;
-//   border-left: 36px solid transparent;
-//   border-right: 36px solid transparent;
-//   /* @media (max-width: 1500px) {
-//     display: block;
-//     position: fixed;
-//     left: 96%;
-//     width: 0px;
-//     height: 0px;
-//     margin-top: 9rem;
-//     text-align: center;
-//     border-radius: 10px;
-//     transform: translateX(-50%) translateY(-50%);
-//     border-bottom: calc(36px * 1.732) solid #f0f0ee;
-//     border-left: 36px solid transparent;
-//     border-right: 36px solid transparent;
-//   } */
-// `;
 
 export default Modal;

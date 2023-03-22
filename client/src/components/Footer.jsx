@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-
+// 프로젝트 깃허브 페이지 추가.
+// 넓이 수정.
 function Footer() {
   return (
     <Footerbody>

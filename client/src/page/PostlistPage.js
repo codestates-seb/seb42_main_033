@@ -1,7 +1,7 @@
-import BoardList from '../components/BoardList';
+import BoardList from '../components/BoardList.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { boardActions } from '../slice/boardSlice';
+import { boardActions } from '../slice/boardSlice.js';
 
 const PostlistPage = () => {
   const dispatch = useDispatch();

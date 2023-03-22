@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
-import BoardCard from './BoardCard';
+import BoardCard from './BoardCard.jsx';
 import { Link } from 'react-router-dom';
 
 const BoardList = (props) => {

@@ -1,5 +1,5 @@
 import './App.css';
-import { HeaderLogin, HeaderLogout } from './components/Header.jsx';
+import { HeaderIcon, HeaderLogin } from './components/Header.jsx';
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
@@ -22,22 +22,19 @@ const Dev = styled.div`
   width: 100%;
   height: 100%;
   background: none;
-  /* max-width: 1264px; */
   padding-top: 50px;
-  /* position: relative; */
   justify-content: center;
 `;
 function App() {
-  const [login, setLogin] = useState(true);
   const [modal, setModal] = useState(false);
-  const token = localStorage.getItem('access_token');
+  const token = localStorage.getItem('jwtToken');
   return (
     <Dev className="App">
       {console.log(token)}
       {token ? (
-        <HeaderLogout setLogin={setLogin} login={login} />
+        <HeaderIcon setModal={setModal} modal={modal} />
       ) : (
-        <HeaderLogin setLogin={setLogin} setModal={setModal} modal={modal} />
+        <HeaderLogin />
       )}
       <Routes>
         <Route path="/" element={<MainPage />} />
@@ -65,7 +62,7 @@ function App() {
         <Route path="/EditProfile" element={<EditProfilePage />} />
         {/* 내정보 수정하기 */}
       </Routes>
-      {modal ? <Modalmain /> : null}
+      {modal ? <Modalmain setModal={setModal} modal={modal} /> : null}
       <Footer />
     </Dev>
   );

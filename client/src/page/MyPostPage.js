@@ -81,103 +81,103 @@ const CommentText = styled.label`
   }
 `;
 
-// const comments = [
-//   {
-//     id: 1,
-//     text: '안녕',
-//     comments: [
-//       {
-//         id: 1,
-//         text: '반가워요!',
-//       },
-//       {
-//         id: 2,
-//         text: '안녕하세요!',
-//       },
-//     ],
-//   },
+const comments = [
+  {
+    id: 1,
+    text: '안녕',
+    comments: [
+      {
+        id: 1,
+        text: '반가워요!',
+      },
+      {
+        id: 2,
+        text: '안녕하세요!',
+      },
+    ],
+  },
 
-//   {
-//     id: 2,
-//     text: '하세요',
-//   },
-//   {
-//     id: 3,
-//     text: '오오오오오',
-//   },
-//   {
-//     id: 4,
-//     text: '오오오오오',
-//   },
-//   {
-//     id: 5,
-//     text: '오오오오오',
-//   },
-//   {
-//     id: 6,
-//     text: '오오오오오',
-//   },
-//   {
-//     id: 7,
-//     text: '오오오오오',
-//   },
-//   {
-//     id: 8,
-//     text: '오오오오오',
-//   },
-// ];
+  {
+    id: 2,
+    text: '하세요',
+  },
+  {
+    id: 3,
+    text: '오오오오오',
+  },
+  {
+    id: 4,
+    text: '오오오오오',
+  },
+  {
+    id: 5,
+    text: '오오오오오',
+  },
+  {
+    id: 6,
+    text: '오오오오오',
+  },
+  {
+    id: 7,
+    text: '오오오오오',
+  },
+  {
+    id: 8,
+    text: '오오오오오',
+  },
+];
 
 function MyPost() {
   const [post, setPost] = useState([]);
   const [selectedComments, setSelectedComments] = useState([]);
 
-  // const userId = useParams();
-  // const token = localStorage.getItem('access_token');
+  const userId = useParams();
+  const token = localStorage.getItem('access_token');
 
-  // const getPost = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://ec2-3-34-51-204.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${userId.id}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(response);
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const getPost = async () => {
+    try {
+      const response = await axios.get(
+        `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated/${userId.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  // const deletePosts = async () => {
-  //   try {
-  //     const deletePromises = selectedComments.map((postId) => {
-  //       return axios.delete(
-  //         `http://ec2-3-34-51-204.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}`,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-  //     });
-  //     await Promise.all(deletePromises);
-  //     setPost(
-  //       post.filter((postItem) => !selectedComments.includes(postItem.id))
-  //     );
-  //     setSelectedComments([]);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const deletePosts = async () => {
+    try {
+      const deletePromises = selectedComments.map((postId) => {
+        return axios.delete(
+          `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated/${postId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      });
+      await Promise.all(deletePromises);
+      setPost(
+        post.filter((postItem) => !selectedComments.includes(postItem.id))
+      );
+      setSelectedComments([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  // useEffect(() => {
-  //   getPost().then((data) => {
-  //     setPost(data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    getPost().then((data) => {
+      setPost(data);
+    });
+  }, []);
 
   const handleCheckboxClick = (id) => {
     if (selectedComments.includes(id)) {

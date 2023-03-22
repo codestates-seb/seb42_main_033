@@ -3,7 +3,7 @@ import Logo from './../images/Logo.png';
 import { Link } from 'react-router-dom';
 import { FaRegUserCircle, FaRegBell } from 'react-icons/fa';
 
-function HeaderLogin({ setModal, modal }) {
+function HeaderIcon({ setModal, modal }) {
   return (
     <Headerbody>
       <Headerimgdiv to="/">
@@ -16,11 +16,7 @@ function HeaderLogin({ setModal, modal }) {
         <Headertext>MBTI TEST</Headertext>
       </Headertext2>
       <Headericon>
-        <Headericonbell
-          onClick={() => {
-            setModal(!modal);
-          }}
-        >
+        <Headericonbell>
           <FaRegBell />
         </Headericonbell>
         <Headericonuser
@@ -34,7 +30,7 @@ function HeaderLogin({ setModal, modal }) {
     </Headerbody>
   );
 }
-function HeaderLogout({ setLogin }) {
+function HeaderLogin() {
   return (
     <Headerbody>
       <Headerimgdiv to="/">
@@ -44,14 +40,7 @@ function HeaderLogout({ setLogin }) {
         <Headertext to="/PostlistPage">통합게시판</Headertext>
         <Headertext>MBTI TEST</Headertext>
       </Headertext2>
-      <Headertextlogin
-        to="/Login"
-        onClick={() => {
-          setLogin(false);
-        }}
-      >
-        로그인
-      </Headertextlogin>
+      <Headertextlogin to="/Login"> 로그인</Headertextlogin>
     </Headerbody>
   );
 }
@@ -109,8 +98,8 @@ const Headericon = styled.div`
 `;
 const Headericonuser = styled(FaRegUserCircle)`
   display: flex;
-  width: 25%;
-  height: 100%;
+  width: 2rem;
+  height: 10rem;
   color: black;
   :hover {
     color: black;
@@ -118,8 +107,8 @@ const Headericonuser = styled(FaRegUserCircle)`
 `;
 const Headericonbell = styled(FaRegBell)`
   display: flex;
-  width: 25%;
-  height: 100%;
+  width: 2rem;
+  height: 10rem;
   margin-right: 2vw;
   color: black;
   :hover {
@@ -140,4 +129,4 @@ const Headertextlogin = styled(Link)`
     color: black;
   }
 `;
-export { HeaderLogin, HeaderLogout };
+export { HeaderIcon, HeaderLogin };
