@@ -1,6 +1,6 @@
 package Main.server.board_infj.like.repository;
 
-import Main.server.board_infj.entity.BoardInfj;
+import Main.server.board_infj.BoardInfj;
 import Main.server.board_infj.like.entity.BoardInfjLike;
 import Main.server.user.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
