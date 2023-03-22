@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Button from './Button';
-import MyPageSidebar from './MypageSidebar';
+import Button from './Button.jsx';
+import MyPageSidebar from './MypageSidebar.jsx';
 
 const Title = styled.div`
   position: relative;

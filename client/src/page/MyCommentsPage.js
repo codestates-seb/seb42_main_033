@@ -108,52 +108,52 @@ function MyComments() {
   const [comments, setComments] = useState([]);
   const [selectedComments, setSelectedComments] = useState([]);
 
-  // const userId = useParams();
-  // const token = localStorage.getItem('access_token');
+  const userId = useParams();
+  const token = localStorage.getItem('access_token');
 
-  // const getComments = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://ec2-3-34-51-204.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/1/comment/${userId.id}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(response);
-  //     setComments(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getComments();
-  // }, []);
+  const getComments = async () => {
+    try {
+      const response = await axios.get(
+        `http://ec2-3-34-51-204.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/1/comment/${userId.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      setComments(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getComments();
+  }, []);
 
-  // const deleteComment = async () => {
-  //   try {
-  //     const deletePromises = selectedComments.map((commentId) => {
-  //       return axios.delete(
-  //         `http://ec2-3-34-51-204.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/1/comment/${commentId}`,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-  //     });
-  //     await Promise.all(deletePromises);
-  //     setComments(
-  //       comments.filter(
-  //         (comment) => !selectedComments.includes(comment.content)
-  //       )
-  //     );
-  //     setSelectedComments([]);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const deleteComment = async () => {
+    try {
+      const deletePromises = selectedComments.map((commentId) => {
+        return axios.delete(
+          `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated/1/comment/${commentId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      });
+      await Promise.all(deletePromises);
+      setComments(
+        comments.filter(
+          (comment) => !selectedComments.includes(comment.content)
+        )
+      );
+      setSelectedComments([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleCheckboxClick = (id) => {
     if (selectedComments.includes(id)) {

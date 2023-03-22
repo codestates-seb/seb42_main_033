@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import BoardCreateOrEdit from '../components/BoardCreateOrEdit.js';
+import BoardCreateOrEdit from '../components/BoardCreateOrEdit.jsx';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { postActions } from '../slice/postSlice';
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 function LoginPage() {
   const [userId, setUserId] = useState('');
   const [confirmID, setConfirmId] = useState('');
@@ -9,6 +9,7 @@ function LoginPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [guest, setGuest] = useState('');
   const navigate = useNavigate();
+  // 로그인 같은 비동기 외부파일로.(관심사 불리 위해)
   const LoginSubit = async (event) => {
     event.preventDefault();
     if (userId === '') {
@@ -23,7 +24,7 @@ function LoginPage() {
     }
     try {
       const response = await axios.post(
-        `http://ec2-13-125-117-103.ap-northeast-2.compute.amazonaws.com:8080/user/login`,
+        `https://9b33-211-217-72-99.jp.ngrok.io/user/login`,
         {
           email: userId,
           password1: password,
@@ -31,7 +32,7 @@ function LoginPage() {
       );
       console.log(response);
       const accessToken = response.headers.authorization;
-      localStorage.setItem('acces_token', accessToken);
+      localStorage.setItem('jwtToken', accessToken);
       navigate('/');
     } catch (error) {
       console.log(error);
@@ -40,8 +41,10 @@ function LoginPage() {
   const Guestlogin = async (event) => {
     event.preventDefault();
     try {
+      // 게스트 여러개면 재밌을둣
+      setGuest('guest');
       const response = await axios.post(
-        `http://ec2-13-125-117-103.ap-northeast-2.compute.amazonaws.com:8080/user/login/guest`,
+        `https://9b33-211-217-72-99.jp.ngrok.io/user/login/guest`,
         {
           email: guest,
           // 게스트 상태에 guest
@@ -50,7 +53,6 @@ function LoginPage() {
         }
       );
       console.log(response);
-      setGuest('guest');
       if (response.status === 200) {
         navigate('/');
       }
@@ -87,7 +89,9 @@ function LoginPage() {
       </form>
       <Loginguestbody>
         <form onSubmit={Guestlogin}>
-          <Loginguest> 게스트 로그인 </Loginguest>
+          <Loginguest onClick={() => setGuest('guest')}>
+            게스트 로그인
+          </Loginguest>
         </form>
         <ToSigup to="/Signup"> 회원가입 </ToSigup>
       </Loginguestbody>
@@ -114,41 +118,25 @@ const Logintextbox = styled.div`
   justify-content: center;
   height: 3%;
   width: 100%;
-  border-radius: 10px;
   margin-top: 5%;
-  margin-bottom: 10%;
+  margin-bottom: 6%;
 `;
 const Logintextboxinput = styled.input`
   display: flex;
   height: 55px;
   width: 430px;
   color: black;
-  border-radius: 30px;
+  border-radius: 5px;
   border: solid 1px gray;
   font-size: 20px;
 `;
-// const Loginbuttonlink = styled(Link)`
-//   text-decoration: none;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   height: 50px;
-//   width: 410px;
-//   border-radius: 5px;
-//   color: white;
-//   background-color: #64b5ff;
-//   margin: auto;
-//   font-size: 30px;
-//   font-weight: 600;
-//   border: solid 10px #64b5ff;
-// `;
 const Loginbutton = styled.button`
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 50px;
-  width: 410px;
+  width: 430px;
   border-radius: 5px;
   color: white;
   background-color: #64b5ff;
@@ -159,14 +147,13 @@ const Loginbutton = styled.button`
 `;
 const Loginguestbody = styled.div`
   display: flex;
-  justify-content: space-evenly;
 `;
 const Loginguest = styled.button`
   display: flex;
   color: black;
+  justify-content: center;
   margin-top: 30px;
-  margin-left: 18%;
-  width: 15vw;
+  width: 12em;
   font-size: 20px;
   background-color: rgba(0, 0, 0, 0);
   border: solid 0px rgba(0, 0, 0, 0);
@@ -174,9 +161,9 @@ const Loginguest = styled.button`
 const ToSigup = styled(Link)`
   display: flex;
   color: black;
+  justify-content: center;
+  width: 12em;
   margin-top: 30px;
-  margin-left: 20%;
-  margin-right: 10%;
   font-size: 20px;
   text-decoration: none;
 `;
