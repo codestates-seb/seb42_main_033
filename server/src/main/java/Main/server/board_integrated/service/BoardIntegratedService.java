@@ -17,7 +17,9 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BoardIntegratedService {
@@ -117,10 +119,19 @@ public class BoardIntegratedService {
     public void deletePost(long id) {
         BoardIntegrated post = findPost(id);
 
+//        List<Like> likes = likeRepository.findByIdAndCategory(id, "integrated")
+//                .stream().collect(Collectors.toList());
+
+        List<Like> likes = likeRepository.findAll();
+
         while (post.getLikeCount() != 0) {
-            likeRepository.findByIdAndCategory(id);
-            if()
-            deleteLike(id);
+            for(int i = 0; i < likes.size(); i++) {
+                Like like = likes.get(i);
+                if(like.getCategory().equals("integrated") && like.getPost().getId() == id) {
+                    likeRepository.delete(like);
+                    deleteLike(id);
+                }
+            }
         }
         boardIntegratedRepository.deleteById(id);
     }
