@@ -30,7 +30,7 @@ function LoginPage() {
     }
     try {
       const response = await axios.post(
-        `https://b7d7-211-217-72-99.jp.ngrok.io/user/login`,
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/user/login`,
         {
           email: userId,
           password1: password,
@@ -50,7 +50,7 @@ function LoginPage() {
       // 게스트 여러개면 재밌을둣
       setGuest('guest');
       const response = await axios.post(
-        `https://b7d7-211-217-72-99.jp.ngrok.io/user/login/guest`,
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/user/login/guest`,
         {
           email: guest,
           // 게스트 상태에 guest

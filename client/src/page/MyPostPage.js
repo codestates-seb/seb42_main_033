@@ -137,7 +137,7 @@ function MyPost() {
   const getPost = async () => {
     try {
       const response = await axios.get(
-        `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated/${userId.id}`,
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${userId.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -155,7 +155,7 @@ function MyPost() {
     try {
       const deletePromises = selectedComments.map((postId) => {
         return axios.delete(
-          `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated/${postId}`,
+          `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
