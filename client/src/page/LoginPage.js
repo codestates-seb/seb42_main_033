@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { GoogleLogin } from '@react-oauth/google';
+
 function LoginPage() {
   const [userId, setUserId] = useState('');
   const [confirmID, setConfirmId] = useState('');
@@ -9,7 +11,11 @@ function LoginPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [guest, setGuest] = useState('');
   const navigate = useNavigate();
+  // const clientId =
+  //   '830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com';
   // 로그인 같은 비동기 외부파일로.(관심사 불리 위해)
+  // const clientId =
+  //   '830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com';
   const LoginSubit = async (event) => {
     event.preventDefault();
     if (userId === '') {
@@ -24,7 +30,7 @@ function LoginPage() {
     }
     try {
       const response = await axios.post(
-        `https://9b33-211-217-72-99.jp.ngrok.io/user/login`,
+        `https://b7d7-211-217-72-99.jp.ngrok.io/user/login`,
         {
           email: userId,
           password1: password,
@@ -44,7 +50,7 @@ function LoginPage() {
       // 게스트 여러개면 재밌을둣
       setGuest('guest');
       const response = await axios.post(
-        `https://9b33-211-217-72-99.jp.ngrok.io/user/login/guest`,
+        `https://b7d7-211-217-72-99.jp.ngrok.io/user/login/guest`,
         {
           email: guest,
           // 게스트 상태에 guest
@@ -87,6 +93,29 @@ function LoginPage() {
         </Logintextbox>
         <Loginbutton type="submit"> 로그인 </Loginbutton>
       </form>
+      <Googlebody>
+        <GoogleLogin
+          clientId="830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com"
+          onSuccess={(res) => console.log(res, '성공')}
+          width="500"
+          logo_alignment="left"
+          size="large"
+          theme="filled_black"
+          locale="300"
+          shape="rectangular"
+          onFailure={(res) => console.log(res, '실패')}
+          render={(renderProps) => (
+            <Googlelogin
+              className="social_login_box google"
+              onClick={renderProps.onClick}
+            >
+              <Googlelogin className="social_login_text_box">
+                구글로 시작하기
+              </Googlelogin>
+            </Googlelogin>
+          )}
+        />
+      </Googlebody>
       <Loginguestbody>
         <form onSubmit={Guestlogin}>
           <Loginguest onClick={() => setGuest('guest')}>
@@ -141,6 +170,7 @@ const Loginbutton = styled.button`
   color: white;
   background-color: #64b5ff;
   margin: auto;
+  margin-bottom: 20px;
   font-size: 30px;
   font-weight: 600;
   border: solid 10px #64b5ff;
@@ -166,5 +196,18 @@ const ToSigup = styled(Link)`
   margin-top: 30px;
   font-size: 20px;
   text-decoration: none;
+`;
+const Googlelogin = styled.button`
+  margin-left: 10px;
+`;
+const Googlebody = styled.button`
+  width: 430px;
+  height: 50px;
+  background-color: #202124;
+  border: solid 0px;
+  :hover {
+    background-color: #555658;
+    transition-delay: 0.095s;
+  }
 `;
 export default LoginPage;

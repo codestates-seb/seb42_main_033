@@ -32,7 +32,7 @@ function SignupPage() {
     }
     try {
       const response = await axios.post(
-        `https://9b33-211-217-72-99.jp.ngrok.io/users`,
+        `https://b7d7-211-217-72-99.jp.ngrok.io/users`,
         {
           // input 안의 값을 onChage로 받아와서 포스트 바디에 넣기
           // 같은 아이디나 닉네임이 있다면 false 메시지 보내기

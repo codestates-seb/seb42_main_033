@@ -39,8 +39,8 @@ function HeaderLogin() {
       <Headertext2>
         <Headertext to="/PostlistPage">통합게시판</Headertext>
         <Headertext>MBTI TEST</Headertext>
+        <Headertextlogin to="/Login"> 로그인</Headertextlogin>
       </Headertext2>
-      <Headertextlogin to="/Login"> 로그인</Headertextlogin>
     </Headerbody>
   );
 }
@@ -122,7 +122,7 @@ const Headertextlogin = styled(Link)`
   color: black;
   font-size: 1.3rem;
   letter-spacing: 0.1rem;
-  margin-top: 0.7vh;
+  margin-top: 2vh;
   margin-right: 10%;
   :hover {
     font-weight: 700;
