@@ -15,7 +15,7 @@ const BoardList = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        `https://b7d7-211-217-72-99.jp.ngrok.io/board/integrated`
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated`
       );
       setBoardData(response.data);
     };
@@ -28,27 +28,6 @@ const BoardList = () => {
     boardList.push(boardData.slice(i, i + 5));
   }
 
-  // useEffect(() => {
-  //   // 페이지에 해당하는 게시물 가져오기
-  //   const getBoardList = async () => {
-  //     const { data } = await axios.get(
-  //       `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated?page=${currentPage}&size=${pageSize}`
-  //     );
-  //     return data;
-  //   };
-  //   // 현재 페이지에 해당하는 게시물로 상태 변경하기
-  //   getBoardList().then((result) => setBoardList(result));
-  //   // 게시물 전체 갯수 구하기
-  //   const getTotalBoard = async () => {
-  //     // const id = searchParams.get('id');
-  //     const { data } = await axios.get(
-  //       `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated`
-  //     );
-  //     return data.total;
-  //   };
-  //   // 페이지 카운트 구하기: (전체 board 갯수) / (한 페이지 갯수) 결과 올림
-  //   // getTotalBoard().then((result) => setPageCount(Math.ceil(result / 4)));
-  // }, [currentPage, pageSize]);
   return (
     <BoardLayout>
       <BoardHead>게시판</BoardHead>

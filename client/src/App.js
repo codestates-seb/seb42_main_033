@@ -16,6 +16,7 @@ import MyCommentsPage from './page/MyCommentsPage';
 import MyPostPage from './page/MyPostPage.js';
 import EditProfilePage from './page/EditProfilePage';
 import SignoutPage from './page/SignoutPage';
+import Infp from './page/Infplist';
 
 const Dev = styled.div`
   display: flex;
@@ -59,6 +60,7 @@ function App() {
         {/* 내 게시글 */}
         <Route path="/EditProfile" element={<EditProfilePage />} />
         {/* 내정보 수정하기 */}
+        <Route path="/infp" element={<Infp />} />
       </Routes>
       {modal ? <Modalmain setModal={setModal} modal={modal} /> : null}
       <Footer />

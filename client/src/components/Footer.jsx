@@ -6,10 +6,12 @@ function Footer() {
     <Footerbody>
       <Footermain>
         ©Copyright ⓒ 2023·MBTI=Science·프론트:
+        <Footerbox />
         <Footera href="https://github.com/yeojuyeong">여주영</Footera>,
         <Footera href="https://github.com/hyeonhyeon-K">김재현</Footera>,
         <Footera href="https://velog.io/@mikjk0530">김준경</Footera>,
         <Footera href="https://github.com/ByeongminBRO">안병민</Footera>
+        <Footerbox />
         ·백엔드:
         <Footera href="https://github.com/5selny">박세련</Footera>,
         <Footera href="https://github.com/klouxia">박철우</Footera>,
@@ -31,6 +33,8 @@ const Footerbody = styled.div`
   text-align: left;
 `;
 const Footermain = styled.div`
+  display: flex;
+  justify-content: space-between;
   color: white;
   font-size: 1.3rem;
   margin-left: 30px;
@@ -40,5 +44,9 @@ const Footermain = styled.div`
 `;
 const Footera = styled.a`
   color: white;
+  letter-spacing: 1px;
+`;
+const Footerbox = styled.div`
+  width: 10px;
 `;
 export default Footer;
