@@ -2,98 +2,159 @@ import styled from 'styled-components';
 import { AiOutlineEllipsis } from 'react-icons/ai';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
 import PostModal from './PostModal.jsx';
-import { useState } from 'react';
+import { jwtUtils } from '../utils/jwtUtils';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import BoardAnswer from './BoardAnswer.jsx';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const BoardCarddetail = (props) => {
+const BoardCarddetail = () => {
+  // URL 파라미터 받기 - board의 id
+  // const { postId } = useParams();
+  const [board, setBoard] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
+  const token = localStorage.getItem('jwtToken');
+  const navigate = useNavigate();
   let [like, setLike] = useState(0);
   let [count, setCount] = useState(0);
+  // modal이 보이는 여부 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleClick = () => {
     setIsModalOpen(!isModalOpen);
+  };
+  useEffect(() => {
+    const getBoard = async () => {
+      const { data } = await axios.get(`/api/board/integrated/`);
+      return data;
+    };
+    // board 가져오기
+    getBoard()
+      .then((result) => setBoard(result))
+      .then(() => setIsLoaded(true));
+  }, []);
+
+  // 게시글 수정
+  const handleEdit = async () => {
+    navigate(`/postedit`);
+  };
+
+  // 게시글 삭제
+  const handleDelete = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      await axios.delete(`/api/board/`, config);
+      navigate('/postlistpage');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
-      <Container>
-        <div className="boardwrap">
-          <HeaderLink to="/PostlistPage">0000 게시판!!</HeaderLink>
-          <div className="boardview">
-            <div className="boardheader">
-              <div className="title">
-                {props.title}
-                <ModalContainer onClick={handleClick}>
-                  <EditDelete />
-                </ModalContainer>
-                {isModalOpen && (
-                  <PostModal
-                    onClose={() => setIsModalOpen(false)}
-                    isOpen={isModalOpen}
-                    id={props.id}
-                    title={props.title}
-                    content={props.content}
-                  />
-                )}
-              </div>
-              <div className="nickname">{props.username}</div>
-              <div className="createdate">{props.createdAt}</div>
-            </div>
-            <div className="boardcontent">
-              <div className="content">{props.content}</div>
-              <>
-                <div className="like">
-                  <span>
-                    <Like
-                      onClick={() => {
-                        setLike(like + 1);
-                      }}
-                      style={{ fontSize: '20px' }}
+      {isLoaded && (
+        <Container>
+          <div className="boardwrap">
+            <HeaderLink to="/PostlistPage">0000 게시판!!</HeaderLink>
+            <div className="boardview">
+              <div className="boardheader">
+                <div className="title">
+                  제목
+                  {/* {board.title} */}
+                  <ModalContainer onClick={handleClick}>
+                    {jwtUtils.isAuth(token) &&
+                      jwtUtils.getId(token) === board.userId && (
+                        <EditDeletIcon />
+                      )}
+                  </ModalContainer>
+                  {isModalOpen && (
+                    <PostModal
+                      onClose={() => setIsModalOpen(false)}
+                      isOpen={isModalOpen}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                      // id={id}
+                      // title={title}
+                      // content={content}
                     />
-                  </span>
-                  <span style={{ paddingBottom: '40' }}>{like}</span>
-                  <span className="commenticon">
-                    <CommentIcon
-                      onChange={() => {
-                        setCount(count);
-                      }}
-                    />
-                  </span>
-                  <span style={{ paddingBottom: '40', marginLeft: '10px' }}>
-                    {count}
-                  </span>
+                  )}
                 </div>
-              </>
+                <div className="nickname">
+                  닉네임
+                  {/* {board.username} */}
+                </div>
+                <div className="createdate">
+                  시간
+                  {/* {board.createdAt} */}
+                  {/* {moment(board.created).add(9, 'hour').format('YYYY-MM-DD')} */}
+                </div>
+              </div>
+              <div className="boardcontent">
+                <div className="content">
+                  내용
+                  {/* {board.content} */}
+                </div>
+                <>
+                  <div className="like">
+                    <span>
+                      <Like
+                        onClick={() => {
+                          setLike(like + 1);
+                        }}
+                        style={{ fontSize: '20px' }}
+                      />
+                    </span>
+                    <span style={{ paddingBottom: '40' }}>
+                      좋아요
+                      {/* {like} */}
+                    </span>
+                    <span className="commenticon">
+                      <CommentIcon
+                        onChange={() => {
+                          setCount(count);
+                        }}
+                      />
+                    </span>
+                    <span style={{ paddingBottom: '40', marginLeft: '10px' }}>
+                      댓글수{count}
+                    </span>
+                  </div>
+                </>
+              </div>
             </div>
-          </div>
-          <div className="answerview">
-            <BoardAnswer />
-            <BoardAnswer />
-            <div className="writranswer">
-              <input
-                placeholder="댓글 쓰기"
-                style={{
-                  width: '700px',
-                  height: '35px',
-                  marginTop: '20px',
-                  paddingLeft: '10px',
-                }}
-              />
-              <ButtonLink to="/PostlistPage">
-                <button
+            <div className="answerview">
+              <BoardAnswer />
+              <BoardAnswer />
+              <div className="writranswer">
+                <input
+                  placeholder="댓글 쓰기"
                   style={{
-                    height: '40px',
-                    width: '70px',
-                    marginLeft: '10px',
+                    width: '700px',
+                    height: '35px',
+                    marginTop: '20px',
+                    paddingLeft: '10px',
                   }}
-                >
-                  작성
-                </button>
-              </ButtonLink>
+                />
+                <ButtonLink to="/PostlistPage">
+                  <button
+                    style={{
+                      height: '40px',
+                      width: '70px',
+                      marginLeft: '10px',
+                    }}
+                  >
+                    작성
+                  </button>
+                </ButtonLink>
+              </div>
             </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      )}
     </>
   );
 };
@@ -123,12 +184,10 @@ const Container = styled.div`
     height: 1100px;
     margin-bottom: 700px;
   }
-
   div.boardheader {
     height: 70px;
     padding: 10px;
     border-bottom: 1px solid black;
-
     .title {
       height: 40px;
       display: flex;
@@ -192,7 +251,7 @@ const HeaderLink = styled(Link)`
   border-bottom: 2px solid #4363c4;
   text-decoration: none;
 `;
-const EditDelete = styled(AiOutlineEllipsis)`
+const EditDeletIcon = styled(AiOutlineEllipsis)`
   position: absolute;
   top: 10;
   right: 0;

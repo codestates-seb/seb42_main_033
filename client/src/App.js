@@ -40,9 +40,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         {/* 홈화면 */}
-        <Route path="/PostviewPage">
-          <Route path=":id" element={<PostviewPage />} />
-        </Route>
+        <Route path="/PostviewPage" element={<PostviewPage />} />
         {/* 게시글 화면 */}
         <Route path="/Login" element={<LoginPage />} />
         {/* 로그인 */}

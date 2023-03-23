@@ -2,25 +2,36 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import QuillEditor from './QuillEditor.jsx';
 
-const BoardCreateOrEdit = (props) => {
+const BoardCreateOrEdit = ({
+  setTitle,
+  setContent,
+  title,
+  content,
+  handleSubmit,
+}) => {
   return (
-    <BoardForm onSubmit={props.handleSubmit}>
+    <BoardForm onSubmit={handleSubmit}>
       <Title className="titlediv">
         <p>글쓰기</p>
         <input
           placeholder=" 글 제목"
           type="text"
           name="title"
-          value={props.title}
-          onChange={props.handleRegisterChange}
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
           // defaultValue={props.TitleValue}
         />
         <hr />
       </Title>
       <QuillEditor
-        name="contents"
-        value={props.content}
-        onChange={props.handleRegisterChange}
+        name="content"
+        value={content}
+        // onChange={(e) => {
+        //   setContent(e.target.value);
+        // }}
+        onChange={setContent}
         // defaultValue={props.ContentValue}
       />
       <ButtonContainer>
@@ -28,11 +39,7 @@ const BoardCreateOrEdit = (props) => {
           <BoardButton className="delete"> 취소 </BoardButton>
         </BoardButtonLink>
         <BoardButtonLink to="/PostviewPage">
-          <BoardButton
-            type="submit"
-            className="submit"
-            onClick={props.handleSubmit}
-          >
+          <BoardButton type="submit" className="submit" onClick={handleSubmit}>
             등록
           </BoardButton>
         </BoardButtonLink>

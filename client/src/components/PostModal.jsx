@@ -1,8 +1,18 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import api from '../utils/api';
 
-const PostModal = ({ onClose, isOpen }) => {
+const PostModal = ({
+  onEdit,
+  onDelete,
+  onClose,
+  isOpen,
+  postId,
+  title,
+  content,
+}) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     onClose();
@@ -10,17 +20,31 @@ const PostModal = ({ onClose, isOpen }) => {
   PostModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
+    postId: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
   };
-
   return (
     <>
       {isOpen && (
         <Container>
           <form onSubmit={handleSubmit}>
-            <ButtonLink to="/PostPage">
-              <Button type="submit">수정하기</Button>
+            <ButtonLink to="/PostPage/${postId}" state={{ title, content }}>
+              <Button type="submit" onClick={onEdit}>
+                수정하기
+              </Button>
             </ButtonLink>
-            <Button onClick={onClose}>삭제하기</Button>
+            <Button
+              // onClick={async () => {
+              //   isOpen(false);
+              //   await api.delete(`/api/board/integrated/${postId}`);
+              //   alert('게시물이 삭제되었습니다😎');
+              //   window.location.href = '/PostListPage';
+              // }}
+              onClick={onDelete}
+            >
+              삭제하기
+            </Button>
           </form>
         </Container>
       )}

@@ -9,7 +9,9 @@ const Infp = () => {
   //   const [answers, setAnswers] = useState([]);
   useEffect(() => {
     axios
-      .get(`https://b7d7-211-217-72-99.jp.ngrok.io/board/integrated`)
+      .get(
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated`
+      )
       .then((response) => {
         console.log(response.data);
       })
