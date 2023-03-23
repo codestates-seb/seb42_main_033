@@ -1,6 +1,7 @@
-import BoardCarddetail from '../components/BoardCarddetail';
+import BoardCarddetail from '../components/BoardCarddetail.jsx';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState, useNavigate } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import axios from 'axios';
 
 const PostviewPage = () => {

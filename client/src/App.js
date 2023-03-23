@@ -1,12 +1,12 @@
 import './App.css';
-import { HeaderLogin, HeaderLogout } from './components/Header.js';
+import { HeaderIcon, HeaderLogin } from './components/Header.jsx';
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import Footer from './components/Footer';
+import Footer from './components/Footer.jsx';
 import LoginPage from './page/LoginPage.js';
 import SignupPage from './page/SignupPage.js';
-import Modalmain from './components/Modalmain.js';
+import Modalmain from './components/Modalmain.jsx';
 import SendDm from './page/SendDm.js';
 import PostlistPage from './page/PostlistPage';
 import PostPage from './page/PostPage.js';
@@ -22,27 +22,24 @@ const Dev = styled.div`
   width: 100%;
   height: 100%;
   background: none;
-  /* max-width: 1264px; */
   padding-top: 50px;
-  /* position: relative; */
   justify-content: center;
 `;
 function App() {
-  const [login, setLogin] = useState(true);
   const [modal, setModal] = useState(false);
+  const token = localStorage.getItem('jwtToken');
   return (
     <Dev className="App">
-      {login ? (
-        <HeaderLogout setLogin={setLogin} login={login} />
+      {console.log(token)}
+      {token ? (
+        <HeaderIcon setModal={setModal} modal={modal} />
       ) : (
-        <HeaderLogin setLogin={setLogin} setModal={setModal} modal={modal} />
+        <HeaderLogin />
       )}
       <Routes>
         <Route path="/" element={<MainPage />} />
         {/* 홈화면 */}
-        <Route path="/PostviewPage" element={<PostviewPage />}>
-          <Route path=":id" element={<PostviewPage />} />
-        </Route>
+        <Route path="/PostviewPage" element={<PostviewPage />} />
         {/* 게시글 화면 */}
         <Route path="/Login" element={<LoginPage />} />
         {/* 로그인 */}
@@ -63,7 +60,7 @@ function App() {
         <Route path="/EditProfile" element={<EditProfilePage />} />
         {/* 내정보 수정하기 */}
       </Routes>
-      {modal ? <Modalmain /> : null}
+      {modal ? <Modalmain setModal={setModal} modal={modal} /> : null}
       <Footer />
     </Dev>
   );

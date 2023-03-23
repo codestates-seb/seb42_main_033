@@ -1,9 +1,11 @@
-import BoardList from '../components/BoardList';
+import BoardList from '../components/BoardList.jsx';
+import { useParams } from 'react-router-dom';
 
 const PostlistPage = () => {
+  const { id } = useParams();
   return (
     <div>
-      <BoardList />
+      <BoardList id={id} />
     </div>
   );
 };

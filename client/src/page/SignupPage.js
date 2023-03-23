@@ -1,5 +1,113 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useState } from 'react';
+
+function SignupPage() {
+  const [nickName, setNickName] = useState('');
+  const [confirmNickName, setConfirmNickName] = useState('');
+  const [userId, setUserId] = useState('');
+  const [confirmuserId, setConfirmuserId] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmpassword] = useState('');
+  const [confirmpassword2, setConfirmpassword2] = useState('');
+  const [mbti, setMbti] = useState('');
+  const navigate = useNavigate();
+  const SignUpPost = async (event) => {
+    event.preventDefault();
+    if (nickName === '') {
+      setConfirmNickName('Display name cannot be empty.');
+    } else {
+      setConfirmNickName('a');
+    }
+    if (userId === '') {
+      setConfirmuserId('userId cannot be empty.');
+    } else {
+      setConfirmuserId('a');
+    }
+    if (password === '') {
+      setConfirmpassword2('Password cannot be empty.');
+    } else {
+      setConfirmpassword2('a');
+    }
+    try {
+      const response = await axios.post(
+        `https://9b33-211-217-72-99.jp.ngrok.io/users`,
+        {
+          // input 안의 값을 onChage로 받아와서 포스트 바디에 넣기
+          // 같은 아이디나 닉네임이 있다면 false 메시지 보내기
+          nickName: nickName,
+          email: userId,
+          password1: password,
+          password2: confirmpassword,
+          mbti: mbti,
+        }
+      );
+      console.log(response);
+      navigate('/login');
+    } catch {
+      console.log('에러');
+    }
+  };
+  return (
+    <Signupbody>
+      <form onSubmit={SignUpPost}>
+        <Signuptext> 회원가입 </Signuptext>
+        <Signuptextbox>
+          {console.log(nickName)}
+          {console.log(userId)}
+          {console.log(password)}
+          {console.log(confirmpassword)}
+          {console.log(mbti)}
+          {console.log(confirmNickName)}
+          {console.log(confirmuserId)}
+          {console.log(confirmpassword2)}
+          <Signuptextboxinput
+            type="text"
+            name="usernickname"
+            placeholder=" 닉네임"
+            onChange={(e) => setNickName(e.target.value)}
+          />
+        </Signuptextbox>
+        <Signuptextbox>
+          <Signuptextboxinput
+            type="text"
+            name="userid"
+            placeholder=" 아이디"
+            id="userid"
+            onChange={(e) => setUserId(e.target.value)}
+          />
+        </Signuptextbox>
+        <Signuptextbox>
+          <Signuptextboxinput
+            type="password"
+            name="userpassword"
+            placeholder=" 비밀번호"
+            id="signupPassword"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Signuptextbox>
+        <Signuptextbox>
+          <Signuptextboxinput
+            type="password"
+            name="userpasswordco"
+            placeholder=" 비밀번호확인"
+            onChange={(e) => setConfirmpassword(e.target.value)}
+          />
+        </Signuptextbox>
+        <Signuptextbox>
+          <Signuptextboxinput
+            type="text"
+            name="userid"
+            placeholder=" MBTI를 입력해주세요."
+            onChange={(e) => setMbti(e.target.value)}
+          />
+        </Signuptextbox>
+        <Signupbutton type="submit">회원가입</Signupbutton>
+      </form>
+    </Signupbody>
+  );
+}
 
 const Signupbody = styled.div`
   position: absolute;
@@ -22,7 +130,7 @@ const Signuptextbox = styled.div`
   height: 2%;
   width: 100%;
   border-radius: 5px;
-  margin-top: 14%;
+  margin-top: 10%;
 `;
 const Signuptextboxinput = styled.input`
   display: flex;
@@ -32,9 +140,6 @@ const Signuptextboxinput = styled.input`
   border-radius: 3px;
   border: solid 1px gray;
   font-size: 1rem;
-`;
-const SignupbuttonLink = styled(Link)`
-  text-decoration: none;
 `;
 const Signupbutton = styled.button`
   display: block;
@@ -48,7 +153,7 @@ const Signupbutton = styled.button`
   font-size: 1.5rem;
   font-weight: 600;
   margin: auto;
-  margin-top: 15%;
+  margin-top: 10%;
   border: solid 10px #64b5ff;
   text-decoration: none;
   :hover {
@@ -56,46 +161,5 @@ const Signupbutton = styled.button`
     border: solid 10px #79bfff;
   }
 `;
-function SignupPage() {
-  return (
-    <Signupbody>
-      <Signuptext> 회원가입 </Signuptext>
-      <Signuptextbox>
-        <Signuptextboxinput
-          type="text"
-          name="usernickname"
-          placeholder=" 닉네임"
-        />
-      </Signuptextbox>
-      <Signuptextbox>
-        <Signuptextboxinput type="text" name="userid" placeholder=" 아이디" />
-      </Signuptextbox>
-      <Signuptextbox>
-        <Signuptextboxinput
-          type="text"
-          name="userpassword"
-          placeholder=" 비밀번호"
-        />
-      </Signuptextbox>
-      <Signuptextbox>
-        <Signuptextboxinput
-          type="text"
-          name="userpasswordco"
-          placeholder=" 비밀번호확인"
-        />
-      </Signuptextbox>
-      <Signuptextbox>
-        <Signuptextboxinput
-          type="text"
-          name="userid"
-          placeholder=" MBTI를 입력해주세요."
-        />
-      </Signuptextbox>
-      <SignupbuttonLink to="/">
-        <Signupbutton> 회원가입 </Signupbutton>
-      </SignupbuttonLink>
-    </Signupbody>
-  );
-}
 
 export default SignupPage;

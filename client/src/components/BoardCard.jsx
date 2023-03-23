@@ -4,7 +4,7 @@ import axios from 'axios';
 import { AiFillEye, AiFillHeart } from 'react-icons/ai';
 import { FaCommentAlt } from 'react-icons/fa';
 const BoardCard = ({
-  postId,
+  id,
   title,
   content,
   username,
@@ -19,7 +19,7 @@ const BoardCard = ({
     <div>
       <CardLayout
         onClick={() => {
-          navigate(`/PostviewPage/${postId}`);
+          navigate(`/PostviewPage/${id}`);
         }}
       >
         <div className="posttitle"> 제목{title} </div>

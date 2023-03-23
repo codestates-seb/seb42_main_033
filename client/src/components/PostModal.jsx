@@ -4,7 +4,15 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import api from '../utils/api';
 
-const PostModal = ({ onClose, isOpen, postId, title, content }) => {
+const PostModal = ({
+  onEdit,
+  onDelete,
+  onClose,
+  isOpen,
+  postId,
+  title,
+  content,
+}) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     onClose();
@@ -22,15 +30,18 @@ const PostModal = ({ onClose, isOpen, postId, title, content }) => {
         <Container>
           <form onSubmit={handleSubmit}>
             <ButtonLink to="/PostPage/${postId}" state={{ title, content }}>
-              <Button type="submit">수정하기</Button>
+              <Button type="submit" onClick={onEdit}>
+                수정하기
+              </Button>
             </ButtonLink>
             <Button
-              onClick={async () => {
-                isOpen(false);
-                await api.delete(`/api/board/integrated/${postId}`);
-                alert('게시물이 삭제되었습니다😎');
-                window.location.href = '/PostListPage';
-              }}
+              // onClick={async () => {
+              //   isOpen(false);
+              //   await api.delete(`/api/board/integrated/${postId}`);
+              //   alert('게시물이 삭제되었습니다😎');
+              //   window.location.href = '/PostListPage';
+              // }}
+              onClick={onDelete}
             >
               삭제하기
             </Button>

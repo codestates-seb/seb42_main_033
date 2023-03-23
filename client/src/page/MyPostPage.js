@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import MyPageSidebar from '../components/MypageSidebar.js';
+import MyPageSidebar from '../components/MypageSidebar.jsx';
 /*121212*/
+
 const PageContainer = styled.div`
   display: flex;
 `;
@@ -124,8 +127,57 @@ const comments = [
   },
 ];
 
-function MyPostPage() {
+function MyPost() {
+  const [post, setPost] = useState([]);
   const [selectedComments, setSelectedComments] = useState([]);
+
+  const userId = useParams();
+  const token = localStorage.getItem('access_token');
+
+  const getPost = async () => {
+    try {
+      const response = await axios.get(
+        `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated/${userId.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deletePosts = async () => {
+    try {
+      const deletePromises = selectedComments.map((postId) => {
+        return axios.delete(
+          `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated/${postId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      });
+      await Promise.all(deletePromises);
+      setPost(
+        post.filter((postItem) => !selectedComments.includes(postItem.id))
+      );
+      setSelectedComments([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getPost().then((data) => {
+      setPost(data);
+    });
+  }, []);
 
   const handleCheckboxClick = (id) => {
     if (selectedComments.includes(id)) {
@@ -145,29 +197,29 @@ function MyPostPage() {
           <CommentsContainer>
             <HeaderContainer>선택</HeaderContainer>
             <hr />
-            {comments
+            {post
               .slice()
               .reverse()
-              .map((comment) => (
-                <CommentContainer key={comment.id}>
+              .map((postItem) => (
+                <CommentContainer key={postItem.id}>
                   <input
                     type="checkbox"
-                    id={`checkbox-${comment.id}`}
-                    checked={selectedComments.includes(comment.id)}
-                    onChange={() => handleCheckboxClick(comment.id)}
+                    id={`checkbox-${postItem.id}`}
+                    checked={selectedComments.includes(postItem.id)}
+                    onChange={() => handleCheckboxClick(postItem.id)}
                   />
-                  <CommentText htmlFor={`checkbox-${comment.id}`}>
-                    <p>{comment.text}</p>
-                    <p>({comment.comments ? comment.comments.length : 0})</p>
+                  <CommentText htmlFor={`checkbox-${postItem.id}`}>
+                    <p>{postItem.title}</p>
+                    <p>({postItem.commentCount})</p>
                   </CommentText>
                 </CommentContainer>
               ))}
           </CommentsContainer>
-          <DeleteButton> 삭제 </DeleteButton>
+          <DeleteButton onClick={deletePosts}> 삭제 </DeleteButton>
         </CommentPageContainer>
       </PageContainer>
     </>
   );
 }
 
-export default MyPostPage;
+export default MyPost;

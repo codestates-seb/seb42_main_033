@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import { AiOutlineEllipsis } from 'react-icons/ai';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
-import PostModal from './PostModal';
+import PostModal from './PostModal.jsx';
 import { jwtUtils } from '../utils/jwtUtils';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import BoardAnswer from './BoardAnswer';
+import BoardAnswer from './BoardAnswer.jsx';
 import axios from 'axios';
 
 const BoardCarddetail = () => {
   // URL 파라미터 받기 - board의 id
-  const { postId } = useParams();
+  // const { postId } = useParams();
   const [board, setBoard] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const token = localStorage.getItem('jwtToken');
@@ -25,7 +25,7 @@ const BoardCarddetail = () => {
   };
   useEffect(() => {
     const getBoard = async () => {
-      const { data } = await axios.get(`/api/board/integrated/${postId}`);
+      const { data } = await axios.get(`/api/board/integrated/`);
       return data;
     };
     // board 가져오기
@@ -33,6 +33,27 @@ const BoardCarddetail = () => {
       .then((result) => setBoard(result))
       .then(() => setIsLoaded(true));
   }, []);
+
+  // 게시글 수정
+  const handleEdit = async () => {
+    navigate(`/postedit`);
+  };
+
+  // 게시글 삭제
+  const handleDelete = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      await axios.delete(`/api/board/`, config);
+      navigate('/postlistpage');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {isLoaded && (
@@ -54,6 +75,8 @@ const BoardCarddetail = () => {
                     <PostModal
                       onClose={() => setIsModalOpen(false)}
                       isOpen={isModalOpen}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
                       // id={id}
                       // title={title}
                       // content={content}
@@ -161,12 +184,10 @@ const Container = styled.div`
     height: 1100px;
     margin-bottom: 700px;
   }
-
   div.boardheader {
     height: 70px;
     padding: 10px;
     border-bottom: 1px solid black;
-
     .title {
       height: 40px;
       display: flex;
