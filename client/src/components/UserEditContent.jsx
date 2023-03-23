@@ -15,9 +15,12 @@ function UserEditContent() {
   const handleClickSubmit = (e) => {
     e.preventDefault();
     axios
-      .patch(`https://0bfa-211-217-72-99.jp.ngrok.io/users/${id}`, {
-        name,
-      })
+      .patch(
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users/${id}`,
+        {
+          name,
+        }
+      )
       .then((res) => {
         setName(res.data.data.name);
         window.alert('수정 완료');
@@ -28,7 +31,9 @@ function UserEditContent() {
   };
   useEffect(() => {
     axios
-      .get(`https://0bfa-211-217-72-99.jp.ngrok.io/users/${id}`)
+      .get(
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users/${id}`
+      )
       .then((res) => {
         setName(res.data.data.name);
       })
