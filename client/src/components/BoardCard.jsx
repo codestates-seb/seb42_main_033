@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-const BoardCard = (post) => {
+const BoardCard = () => {
   return (
     <div>
       <CardLayout>
-        <div className="posttitle"> {post.title} </div>
-        <div className="postcontent"> {post.contents} </div>
-        <div className="postnickname">{post.nickname}</div>
+        <div className="posttitle"> 제목 </div>
+        <div className="postcontent"> 나의 질문은 이것이다 휴먼 </div>
+        <div className="postnickname"> 알파고 </div>
       </CardLayout>
     </div>
   );
