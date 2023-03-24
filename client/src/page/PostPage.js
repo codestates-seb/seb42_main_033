@@ -31,12 +31,13 @@ const PostPage = () => {
 
       try {
         const response = await axios.post(
-          'http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated',
+          // 'http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated',
+          'https://5293-211-217-72-99.jp.ngrok.io/board/integrated',
           {
             userId: '1',
             title: post.title,
             content: post.content,
-            tag: '말머리',
+            tag: '',
           }
         );
 

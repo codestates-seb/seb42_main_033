@@ -29,7 +29,8 @@ const BoardCarddetail = ({ id }) => {
     const getPost = async () => {
       try {
         const { data } = await axios.get(
-          `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`
+          // `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`
+          `https://5293-211-217-72-99.jp.ngrok.io/board/integrated/${id}`
         );
         setPost(data);
         setIsLoaded(true);
