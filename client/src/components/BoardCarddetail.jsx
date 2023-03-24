@@ -24,7 +24,7 @@ const BoardCarddetail = ({ id }) => {
   const handleClick = () => {
     setIsModalOpen(!isModalOpen);
   };
-  //게시글 불러오기
+  //게시글 불러오기 1
   useEffect(() => {
     const getPost = async () => {
       try {
