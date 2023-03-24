@@ -39,7 +39,7 @@ function LoginPage() {
       console.log(response);
       const accessToken = response.headers.authorization;
       localStorage.setItem('jwtToken', accessToken);
-      //user Id 추가 (병민)
+      //user Id 추가 (병민)1
       try {
         const userIdGet = await axios.get(
           `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users`,

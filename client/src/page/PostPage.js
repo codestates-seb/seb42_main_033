@@ -13,7 +13,7 @@ const PostPage = () => {
   const post = {
     title: title,
     content: content.replace(/<\/?p[^>]*>/g, ''),
-    //<p>로 감싸져서 나오는 것 없애기
+    //<p>로 감싸져서 나오는 것 없애기 1
   };
 
   const onSubmitPost = useCallback(
@@ -32,6 +32,7 @@ const PostPage = () => {
       try {
         const response = await axios.post(
           'http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated',
+
           {
             userId: '1',
             title: post.title,
