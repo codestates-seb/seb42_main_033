@@ -1,56 +1,61 @@
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import moment from 'moment';
 import { Pagination } from '@mui/material';
 import BoardCard from './BoardCard.jsx';
 
 const BoardList = () => {
-  const [boardData, setBoardData] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
-
+  const handleInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+  const [boardList, setBoardList] = useState([
+    {
+      id: '',
+      title: '',
+      content: '',
+      username: '',
+      viewCount: '',
+      likeCount: '',
+      commentCount: '',
+      createdAt: '',
+    },
+  ]);
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated`
-      );
-      setBoardData(response.data);
-    };
-    fetchData();
+    axios
+      .get(
+        'http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated'
+      )
+      .then((res) => setBoardList(res.data.boardList))
+      .catch((error) => console.log(error));
   }, []);
 
-  const boardList = [];
+  const filteredBoardList = boardList.filter((board) =>
+    board.title.includes(searchInput)
+  );
 
-  for (let i = 0; i < boardData.length; i += 5) {
-    boardList.push(boardData.slice(i, i + 5));
-  }
+  const pageCount = Math.ceil(boardList.length / pageSize);
+  const currentBoardList = filteredBoardList.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   return (
     <BoardLayout>
       <BoardHead>게시판</BoardHead>
       <BoardBox>
-        {boardList.map((boardList, index) => {
-          <div key={index}>
-            {boardList.map((board) => (
-              <BoardCard
-                key={board.id}
-                username={board.user.username}
-                createdAt={moment(board.createdAt)
-                  .add(9, 'hour')
-                  .format('YYYY-MM-DD')}
-                title={board.title}
-                content={board.content}
-                id={board.id}
-                likeCount={board.likeCount}
-                viewCount={board.viewCount}
-                commentCount={board.commentCount}
-              />
-            ))}
-          </div>;
-        })}
+        {currentBoardList.map((board) => (
+          <BoardCard
+            key={board.id}
+            board={board}
+            // Link
+            // to={'/PostviewPage/' + `${board.id}`}
+          />
+        ))}
       </BoardBox>
       <div>
         <WriteButtonLink to="/postpage">
@@ -61,7 +66,7 @@ const BoardList = () => {
           variant="outlined"
           color="primary"
           page={currentPage}
-          count={Math.ceil(boardData.length / pageSize)}
+          count={pageCount}
           size="large"
           onChange={(e, value) => {
             // window.location.href = `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated/${value}`;
@@ -72,7 +77,11 @@ const BoardList = () => {
         />
       </div>
       <Search>
-        <input placeholder="검색어를 입력해주세요." />
+        <input
+          placeholder="검색어를 입력해주세요."
+          value={searchInput}
+          onChange={handleInputChange}
+        />
         <button>
           <FaSearch size="10px" />
           검색

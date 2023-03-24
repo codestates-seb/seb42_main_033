@@ -5,7 +5,8 @@ import { useEffect } from 'react';
 import axios from 'axios';
 
 const PostviewPage = () => {
-  return <BoardCarddetail />;
+  const { id } = useParams();
+  return <BoardCarddetail id={id} />;
 };
 
 export default PostviewPage;
