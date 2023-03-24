@@ -1,6 +1,7 @@
 package Main.server.comment;
 
 import Main.server.audit.Auditable;
+import Main.server.board_infj.BoardInfj;
 import Main.server.board_integrated.BoardIntegrated;
 import Main.server.user.entity.Users;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,6 +33,12 @@ public class Comment extends Auditable {
     @JoinColumn(name = "POST_ID")
     @JsonIgnore
     private BoardIntegrated post;
+
+//    @ManyToOne(cascade = CascadeType.PERSIST)
+//    @JsonManagedReference
+//    @JoinColumn(name = "POST_ID")
+//    @JsonIgnore
+//    private BoardInfj post;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "USER_ID")
