@@ -2,8 +2,8 @@ package Main.server.board_infj.like.controller;
 
 import Main.server.board_infj.like.dto.BoardInfjLikeDto;
 import Main.server.board_infj.like.service.BoardInfjLikeService;
-import Main.server.board_infj.mapper.BoardInfjMapper;
-import Main.server.board_infj.service.BoardInfjService;
+import Main.server.board_infj.BoardInfjMapper;
+import Main.server.board_infj.BoardInfjService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
