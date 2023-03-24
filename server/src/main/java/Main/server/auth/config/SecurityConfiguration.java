@@ -59,7 +59,7 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/*/users/join").permitAll()
+                        .antMatchers(HttpMethod.POST, "/*/users").permitAll()
                         .antMatchers(HttpMethod.PATCH, "/*/users/**").hasRole("USER")
                         .antMatchers(HttpMethod.GET, "/*/board/integrated").permitAll()
                         .antMatchers(HttpMethod.GET, "/*/board/integrated/**").permitAll()
@@ -92,7 +92,7 @@ public class SecurityConfiguration {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedOrigin("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
