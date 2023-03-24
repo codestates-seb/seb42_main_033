@@ -2,43 +2,49 @@ import styled from 'styled-components';
 import { AiOutlineEllipsis } from 'react-icons/ai';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
 import PostModal from './PostModal.jsx';
-import { jwtUtils } from '../utils/jwtUtils';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import BoardAnswer from './BoardAnswer.jsx';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
-const BoardCarddetail = () => {
-  // URL 파라미터 받기 - board의 id
-  // const { postId } = useParams();
-  const [board, setBoard] = useState({});
+const BoardCarddetail = ({ id }) => {
+  // const { id } = useParams();
   const [isLoaded, setIsLoaded] = useState(false);
   const token = localStorage.getItem('jwtToken');
+  const decodedToken = jwtDecode(token);
+  const userId = decodedToken.userId;
   const navigate = useNavigate();
   let [like, setLike] = useState(0);
   let [count, setCount] = useState(0);
-  // modal이 보이는 여부 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
+  const [post, setPost] = useState({});
   const handleClick = () => {
     setIsModalOpen(!isModalOpen);
   };
+  //게시글 불러오기
   useEffect(() => {
-    const getBoard = async () => {
-      const { data } = await axios.get(`/api/board/integrated/`);
-      return data;
+    const getPost = async () => {
+      try {
+        const { data } = await axios.get(
+          `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`
+        );
+        setPost(data);
+        setIsLoaded(true);
+      } catch (error) {
+        console.log(error);
+      }
     };
-    // board 가져오기
-    getBoard()
-      .then((result) => setBoard(result))
-      .then(() => setIsLoaded(true));
-  }, []);
-
+    getPost();
+  }, [id]);
   // 게시글 수정
   const handleEdit = async () => {
-    navigate(`/postedit`);
+    navigate(`/PostPage/${id}`, {
+      state: { title: post.title, content: post.content },
+    });
   };
-
   // 게시글 삭제
   const handleDelete = async () => {
     const config = {
@@ -47,13 +53,43 @@ const BoardCarddetail = () => {
       },
     };
     try {
-      await axios.delete(`/api/board/`, config);
-      navigate('/postlistpage');
+      await axios.delete(
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`,
+        config
+      );
+      navigate('/PostlistPage');
     } catch (error) {
       console.log(error);
     }
   };
-
+  //댓글 등록
+  const handleCommentSubmit = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const data = {
+        userId: userId,
+        postId: id,
+        content: comment,
+        username: localStorage.getItem('username'),
+      };
+      await axios.post(
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`,
+        data,
+        config
+      );
+      setComments([
+        ...comments,
+        { username: data.username, content: data.content },
+      ]);
+      setComment('');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       {isLoaded && (
@@ -64,12 +100,10 @@ const BoardCarddetail = () => {
               <div className="boardheader">
                 <div className="title">
                   제목
-                  {/* {board.title} */}
+                  {post.title}
                   <ModalContainer onClick={handleClick}>
-                    {jwtUtils.isAuth(token) &&
-                      jwtUtils.getId(token) === board.userId && (
-                        <EditDeletIcon />
-                      )}
+                    {localStorage.getItem('jwtToken') &&
+                      userId === post.userId && <EditDeletIcon />}
                   </ModalContainer>
                   {isModalOpen && (
                     <PostModal
@@ -77,26 +111,26 @@ const BoardCarddetail = () => {
                       isOpen={isModalOpen}
                       onEdit={handleEdit}
                       onDelete={handleDelete}
-                      // id={id}
-                      // title={title}
-                      // content={content}
+                      title={post.title}
+                      content={post.content}
+                      postId={post.id}
                     />
                   )}
                 </div>
                 <div className="nickname">
                   닉네임
-                  {/* {board.username} */}
+                  {post.username}
                 </div>
                 <div className="createdate">
                   시간
-                  {/* {board.createdAt} */}
+                  {post.createdAt}
                   {/* {moment(board.created).add(9, 'hour').format('YYYY-MM-DD')} */}
                 </div>
               </div>
               <div className="boardcontent">
                 <div className="content">
                   내용
-                  {/* {board.content} */}
+                  {post.content}
                 </div>
                 <>
                   <div className="like">
@@ -110,7 +144,7 @@ const BoardCarddetail = () => {
                     </span>
                     <span style={{ paddingBottom: '40' }}>
                       좋아요
-                      {/* {like} */}
+                      {post.likeCount}
                     </span>
                     <span className="commenticon">
                       <CommentIcon
@@ -120,15 +154,20 @@ const BoardCarddetail = () => {
                       />
                     </span>
                     <span style={{ paddingBottom: '40', marginLeft: '10px' }}>
-                      댓글수{count}
+                      댓글수{post.commentCount}
                     </span>
                   </div>
                 </>
               </div>
             </div>
             <div className="answerview">
-              <BoardAnswer />
-              <BoardAnswer />
+              {comments.map((comment, index) => (
+                <BoardAnswer
+                  key={index}
+                  username={comment.username}
+                  content={comment.content}
+                />
+              ))}
               <div className="writranswer">
                 <input
                   placeholder="댓글 쓰기"
@@ -138,18 +177,20 @@ const BoardCarddetail = () => {
                     marginTop: '20px',
                     paddingLeft: '10px',
                   }}
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
                 />
-                <ButtonLink to="/PostlistPage">
-                  <button
-                    style={{
-                      height: '40px',
-                      width: '70px',
-                      marginLeft: '10px',
-                    }}
-                  >
-                    작성
-                  </button>
-                </ButtonLink>
+                <button
+                  style={{
+                    height: '40px',
+                    width: '70px',
+                    marginLeft: '10px',
+                  }}
+                  type="button"
+                  onClick={handleCommentSubmit}
+                >
+                  작성
+                </button>
               </div>
             </div>
           </div>
