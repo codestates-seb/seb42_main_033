@@ -2,13 +2,11 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
 function LoginPage() {
   const [userId, setUserId] = useState('');
-  const [confirmID, setConfirmId] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [guest, setGuest] = useState('');
   const navigate = useNavigate();
   // const clientId =
@@ -18,15 +16,8 @@ function LoginPage() {
   //   '830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com';
   const LoginSubit = async (event) => {
     event.preventDefault();
-    if (userId === '') {
-      setConfirmId('Id cannot be empty.');
-    } else {
-      setConfirmId('');
-    }
-    if (password === '') {
-      setConfirmPassword('Password cannot be empty.');
-    } else {
-      setConfirmPassword('');
+    if (userId === '' || password === '') {
+      alert('아이디나 비밀번호 확인점');
     }
     try {
       const response = await axios.post(
@@ -37,6 +28,9 @@ function LoginPage() {
         }
       );
       console.log(response);
+      if (response.status === 401) {
+        alert('회원가입 해야할듯');
+      }
       const accessToken = response.headers.authorization;
       localStorage.setItem('jwtToken', accessToken);
       navigate('/');
@@ -69,8 +63,6 @@ function LoginPage() {
   return (
     <Loginbody>
       <Logintext>로그인</Logintext>
-      {console.log(confirmPassword)}
-      {console.log(confirmID)}
       <form onSubmit={LoginSubit}>
         <Logintextbox>
           <Logintextboxinput
@@ -93,29 +85,31 @@ function LoginPage() {
         </Logintextbox>
         <Loginbutton type="submit"> 로그인 </Loginbutton>
       </form>
-      <Googlebody>
-        <GoogleLogin
-          clientId="830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com"
-          onSuccess={(res) => console.log(res, '성공')}
-          width="500"
-          logo_alignment="left"
-          size="large"
-          theme="filled_black"
-          locale="300"
-          shape="rectangular"
-          onFailure={(res) => console.log(res, '실패')}
-          render={(renderProps) => (
-            <Googlelogin
-              className="social_login_box google"
-              onClick={renderProps.onClick}
-            >
-              <Googlelogin className="social_login_text_box">
-                구글로 시작하기
+      <GoogleOAuthProvider clientId="830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com">
+        <Googlebody>
+          <GoogleLogin
+            clientId="830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com"
+            onSuccess={(res) => console.log(res, '성공')}
+            width="500"
+            logo_alignment="left"
+            size="large"
+            theme="filled_black"
+            locale="300"
+            shape="rectangular"
+            onFailure={(res) => console.log(res, '실패')}
+            render={(renderProps) => (
+              <Googlelogin
+                className="social_login_box google"
+                onClick={renderProps.onClick}
+              >
+                <Googlelogin className="social_login_text_box">
+                  구글로 시작하기
+                </Googlelogin>
               </Googlelogin>
-            </Googlelogin>
-          )}
-        />
-      </Googlebody>
+            )}
+          />
+        </Googlebody>
+      </GoogleOAuthProvider>
       <Loginguestbody>
         <form onSubmit={Guestlogin}>
           <Loginguest onClick={() => setGuest('guest')}>
@@ -207,7 +201,7 @@ const Googlebody = styled.button`
   border: solid 0px;
   :hover {
     background-color: #555658;
-    transition-delay: 0.095s;
+    transition-delay: 0.1s;
   }
 `;
 export default LoginPage;

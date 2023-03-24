@@ -81,61 +81,65 @@ const CommentText = styled.label`
   }
 `;
 
-const comments = [
-  {
-    id: 1,
-    text: '안녕',
-    comments: [
-      {
-        id: 1,
-        text: '반가워요!',
-      },
-      {
-        id: 2,
-        text: '안녕하세요!',
-      },
-    ],
-  },
+// const comments = [
+//   {
+//     id: 1,
+//     text: '안녕',
+//     comments: [
+//       {
+//         id: 1,
+//         text: '반가워요!',
+//       },
+//       {
+//         id: 2,
+//         text: '안녕하세요!',
+//       },
+//     ],
+//   },
 
-  {
-    id: 2,
-    text: '하세요',
-  },
-  {
-    id: 3,
-    text: '오오오오오',
-  },
-  {
-    id: 4,
-    text: '오오오오오',
-  },
-  {
-    id: 5,
-    text: '오오오오오',
-  },
-  {
-    id: 6,
-    text: '오오오오오',
-  },
-  {
-    id: 7,
-    text: '오오오오오',
-  },
-  {
-    id: 8,
-    text: '오오오오오',
-  },
-];
+//   {
+//     id: 2,
+//     text: '하세요',
+//   },
+//   {
+//     id: 3,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 4,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 5,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 6,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 7,
+//     text: '오오오오오',
+//   },
+//   {
+//     id: 8,
+//     text: '오오오오오',
+//   },
+// ];
 
 function MyPost() {
   const [post, setPost] = useState([]);
   const [selectedComments, setSelectedComments] = useState([]);
 
-  const userId = useParams();
+  // const { id } = useParams();
+  // const postId = localStorage.getItem('id');
+
   const token = localStorage.getItem('access_token');
 
   const getPost = async () => {
     try {
+      const userId = localStorage.getItem('userId');
+      console.log();
       const response = await axios.get(
         `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${userId.id}`,
         {
@@ -145,11 +149,21 @@ function MyPost() {
         }
       );
       console.log(response);
-      return response.data;
+      const userPosts = response.data.filter(
+        (post) => post.userId === parseInt(userId)
+      );
+      const sortedUserPosts = userPosts.sort((a, b) => b.id - a.id);
+      return sortedUserPosts;
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    getPost().then((data) => {
+      setPost(data);
+    });
+  }, []);
 
   const deletePosts = async () => {
     try {
@@ -173,12 +187,6 @@ function MyPost() {
     }
   };
 
-  useEffect(() => {
-    getPost().then((data) => {
-      setPost(data);
-    });
-  }, []);
-
   const handleCheckboxClick = (id) => {
     if (selectedComments.includes(id)) {
       setSelectedComments(selectedComments.filter((cid) => cid !== id));
@@ -197,10 +205,8 @@ function MyPost() {
           <CommentsContainer>
             <HeaderContainer>선택</HeaderContainer>
             <hr />
-            {post
-              .slice()
-              .reverse()
-              .map((postItem) => (
+            {post &&
+              post.map((postItem) => (
                 <CommentContainer key={postItem.id}>
                   <input
                     type="checkbox"

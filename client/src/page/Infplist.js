@@ -6,13 +6,29 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 const list = ['1', '2', '3', '4', '5', '6', '7'];
 const Infp = () => {
-  //   const [answers, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState([]);
+  const [userid, setUserId] = useState([]);
+  const [nickName, setNickName] = useState([]);
   useEffect(() => {
     axios
       .get(
         `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated`
       )
       .then((response) => {
+        setAnswers(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get(
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users/1`
+      )
+      .then((response) => {
+        setNickName(response.data.nickName);
         console.log(response.data);
       })
       .catch((err) => {
@@ -24,13 +40,13 @@ const Infp = () => {
     <BoardLayout>
       <BoardHead>INFP 게시판</BoardHead>
       <BoardBox>
-        {list.map((list) => (
-          <Link key={list} to={`/board/integrated`}>
+        {answers.map((answers) => (
+          <Link key={answers.id} to={`/board/integrated`}>
             <div>
               <CardLayout>
-                <div className="posttitle"> 제목 </div>
-                <div className="postcontent"> 나의 질문은 이것이다 휴먼 </div>
-                <div className="postnickname"> 알파고 </div>
+                <div className="posttitle"> {answers.title} </div>
+                <div className="postcontent"> {answers.content} </div>
+                <div className="postnickname"> {nickName} </div>
               </CardLayout>
             </div>
           </Link>

@@ -1,29 +1,76 @@
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
-import BoardCard from './BoardCard.jsx';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import moment from 'moment';
+import { Pagination } from '@mui/material';
+import BoardCard from './BoardCard.jsx';
 
-const BoardList = (props) => {
-  console.log(props.board);
+const BoardList = () => {
+  const [boardData, setBoardData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(
+        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated`
+      );
+      setBoardData(response.data);
+    };
+    fetchData();
+  }, []);
+
+  const boardList = [];
+
+  for (let i = 0; i < boardData.length; i += 5) {
+    boardList.push(boardData.slice(i, i + 5));
+  }
 
   return (
     <BoardLayout>
       <BoardHead>게시판</BoardHead>
       <BoardBox>
-        {props.board.map((post) => (
-          <Link key={post.id} to={`/board/integrated/${post.id}`}>
-            <BoardCard
-              key={post.id}
-              title={post.title}
-              content={post.contents}
-              nickname={post.nickname}
-            />
-          </Link>
-        ))}
+        {boardList.map((boardList, index) => {
+          <div key={index}>
+            {boardList.map((board) => (
+              <BoardCard
+                key={board.id}
+                username={board.user.username}
+                createdAt={moment(board.createdAt)
+                  .add(9, 'hour')
+                  .format('YYYY-MM-DD')}
+                title={board.title}
+                content={board.content}
+                id={board.id}
+                likeCount={board.likeCount}
+                viewCount={board.viewCount}
+                commentCount={board.commentCount}
+              />
+            ))}
+          </div>;
+        })}
       </BoardBox>
-      <WriteButtonLink to="/postpage">
-        <WriteButton>글쓰기</WriteButton>
-      </WriteButtonLink>
+      <div>
+        <WriteButtonLink to="/postpage">
+          <WriteButton>글쓰기</WriteButton>
+        </WriteButtonLink>
+        {/* 페이지네이션: count에 페이지 카운트, page에 페이지 번호 넣기 */}
+        <Pagination
+          variant="outlined"
+          color="primary"
+          page={currentPage}
+          count={Math.ceil(boardData.length / pageSize)}
+          size="large"
+          onChange={(e, value) => {
+            // window.location.href = `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated/${value}`;
+            setCurrentPage(value);
+          }}
+          showFirstButton
+          showLastButton
+        />
+      </div>
       <Search>
         <input placeholder="검색어를 입력해주세요." />
         <button>
@@ -34,6 +81,7 @@ const BoardList = (props) => {
     </BoardLayout>
   );
 };
+
 const BoardLayout = styled.div`
   display: flex;
   justify-content: center;
@@ -69,7 +117,8 @@ const WriteButton = styled.button`
   margin-top: 10px;
   margin-left: -830px;
   background-color: #ffffff;
-  border-color: #a1a1a1;
+  border-color: rgba(161, 161, 161, 1);
+  border-radius: 4px;
   border-width: thin;
   color: #ff8686;
   font-size: 18px;
