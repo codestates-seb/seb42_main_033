@@ -4,7 +4,6 @@ import Main.server.comment.Comment;
 import Main.server.comment.CommentDto;
 import Main.server.comment.CommentMapper;
 import Main.server.like.LikeDto;
-import Main.server.like.LikeMapper;
 import Main.server.like.BoardIntegratedLikeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,18 +19,15 @@ import java.util.List;
 public class BoardIntegratedController {
     private final BoardIntegratedService service;
     private final BoardIntegratedMapper mapper;
-    private final LikeMapper likeMapper;
     private final BoardIntegratedLikeRepository boardIntegratedLikeRepository;
     private final CommentMapper commentMapper;
 
     public BoardIntegratedController(BoardIntegratedService service,
                                      BoardIntegratedMapper mapper,
-                                     LikeMapper likeMapper,
                                      BoardIntegratedLikeRepository boardIntegratedLikeRepository,
                                      CommentMapper commentMapper) {
         this.service = service;
         this.mapper = mapper;
-        this.likeMapper = likeMapper;
         this.boardIntegratedLikeRepository = boardIntegratedLikeRepository;
         this.commentMapper = commentMapper;
     }

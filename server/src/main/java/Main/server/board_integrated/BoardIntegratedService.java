@@ -4,7 +4,7 @@ import Main.server.advice.errors.DuplicateResourceException;
 import Main.server.advice.errors.NotFoundException;
 import Main.server.comment.Comment;
 import Main.server.comment.CommentRepository;
-import Main.server.like.BoardIntegratedLike;
+import Main.server.like.Like;
 import Main.server.like.LikeDto;
 import Main.server.like.BoardIntegratedLikeRepository;
 import Main.server.user.entity.Users;
@@ -74,7 +74,7 @@ public class BoardIntegratedService {
 
     // 게시글 추천
     @Transactional
-    public BoardIntegratedLike insert(LikeDto likeDto) throws Exception {
+    public Like insert(LikeDto likeDto) throws Exception {
 
         Users users = userRepository.findById(likeDto.getUserId())
                 .orElseThrow(() -> new NotFoundException("회원 정보를 찾을 수 없습니다."));
@@ -82,12 +82,12 @@ public class BoardIntegratedService {
         BoardIntegrated post = boardIntegratedRepository.findById(likeDto.getPostId())
                 .orElseThrow(() -> new NotFoundException("게시글을 찾을 수 없습니다."));
 
-        if(likeRepository.findByUsersAndPost(users, post).isPresent()) {
+        if(likeRepository.findByUsersAndBoardIntegrated(users, post).isPresent()) {
             throw new DuplicateResourceException("이미 추천했습니다.");
         }
 
-        BoardIntegratedLike boardIntegratedLike = BoardIntegratedLike.builder()
-                .post(post)
+        Like boardIntegratedLike = Like.builder()
+                .boardIntegrated(post)
                 .users(users)
                 .category("integrated")
                 .build();
@@ -105,7 +105,7 @@ public class BoardIntegratedService {
         BoardIntegrated post = boardIntegratedRepository.findById(likeDto.getPostId())
                 .orElseThrow(() -> new NotFoundException("게시글을 찾을 수 없습니다."));
 
-        BoardIntegratedLike boardIntegratedLike = likeRepository.findByUsersAndPost(users, post)
+        Like boardIntegratedLike = likeRepository.findByUsersAndBoardIntegrated(users, post)
                 .orElseThrow(() -> new NotFoundException("추천하지 않았습니다."));
 
         likeRepository.delete(boardIntegratedLike);
@@ -129,12 +129,12 @@ public class BoardIntegratedService {
     public void deletePost(long id) {
         BoardIntegrated post = findPost(id);
 
-        List<BoardIntegratedLike> boardIntegratedLikes = likeRepository.findAll();
+        List<Like> boardIntegratedLikes = likeRepository.findAll();
 
         while (post.getLikeCount() != 0) {
             for(int i = 0; i < boardIntegratedLikes.size(); i++) {
-                BoardIntegratedLike boardIntegratedLike = boardIntegratedLikes.get(i);
-                if(boardIntegratedLike.getCategory().equals("integrated") && boardIntegratedLike.getPost().getId() == id) {
+                Like boardIntegratedLike = boardIntegratedLikes.get(i);
+                if(boardIntegratedLike.getCategory().equals("integrated") && boardIntegratedLike.getBoardIntegrated().getId() == id) {
                     likeRepository.delete(boardIntegratedLike);
                     deleteLike(id);
                 }
