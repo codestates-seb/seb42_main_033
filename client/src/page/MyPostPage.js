@@ -56,7 +56,7 @@ function MyPost() {
   const [selectedComments, setSelectedComments] = useState([]);
 
   // const { id } = useParams();
-  // const postId = localStorage.getItem('id');
+  // const postId = localStorage.getItem('id'); 11
 
   const token = localStorage.getItem('jwtToken');
 

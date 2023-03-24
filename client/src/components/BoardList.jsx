@@ -62,7 +62,7 @@ const BoardList = () => {
         <WriteButtonLink to="/postpage">
           <WriteButton>글쓰기</WriteButton>
         </WriteButtonLink>
-        {/* 페이지네이션: count에 페이지 카운트, page에 페이지 번호 넣기 */}
+        {/* 페이지네이션: count에 페이지 카운트, page에 페이지 번호 넣기 1*/}
         <Pagination
           variant="outlined"
           color="primary"
