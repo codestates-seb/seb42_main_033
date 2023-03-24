@@ -1,17 +1,15 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
-import api from '../utils/api';
+import { Link } from 'react-router-dom';
 
 const PostModal = ({
   onEdit,
   onDelete,
   onClose,
   isOpen,
-  postId,
   title,
   content,
+  postId,
 }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,13 +33,12 @@ const PostModal = ({
               </Button>
             </ButtonLink>
             <Button
-              // onClick={async () => {
-              //   isOpen(false);
-              //   await api.delete(`/api/board/integrated/${postId}`);
-              //   alert('게시물이 삭제되었습니다😎');
-              //   window.location.href = '/PostListPage';
-              // }}
-              onClick={onDelete}
+              onClick={() => {
+                if (window.confirm('정말로 삭제하시겠습니까?')) {
+                  onDelete();
+                  alert('게시물이 삭제되었습니다😎');
+                }
+              }}
             >
               삭제하기
             </Button>
