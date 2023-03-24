@@ -22,6 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.reactive.CorsUtils;
 
 import java.util.Arrays;
 
@@ -42,8 +43,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.headers().frameOptions().sameOrigin()
-                .and()
+        http
                 .csrf().disable()
                 .cors(withDefaults())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -86,9 +86,10 @@ public class SecurityConfiguration {
         }
 
         @Bean
-        CorsConfigurationSource corsConfigurationSource(){
+        public CorsConfigurationSource corsConfigurationSource(){
 
             CorsConfiguration configuration = new CorsConfiguration();
+
             configuration.addAllowedOriginPattern("*");
             configuration.addAllowedHeader("*");
             configuration.addAllowedMethod("*");
