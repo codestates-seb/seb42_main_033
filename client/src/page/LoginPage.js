@@ -39,7 +39,26 @@ function LoginPage() {
       console.log(response);
       const accessToken = response.headers.authorization;
       localStorage.setItem('jwtToken', accessToken);
-      navigate('/');
+      //user Id 추가 (병민)
+      try {
+        const userIdGet = await axios.get(
+          `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        const user = userIdGet.data.find((user) => user.email === userId);
+        if (user) {
+          const userIdSet = user.userId;
+          localStorage.setItem('userId', userIdSet);
+        }
+        //user Id 추가 (병민)
+        navigate('/');
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       console.log(error);
     }
