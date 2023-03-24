@@ -11,12 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-<<<<<<< HEAD
-=======
-import java.io.IOException;
-
 @CrossOrigin
->>>>>>> 762984e3b591daeb6fe2f3085062a948b63fa4ef
 @Slf4j
 @RestController
 public class SseController {

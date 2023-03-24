@@ -2,8 +2,8 @@ package Main.server.notification.service;
 
 import Main.server.advice.BusinessLogicalException;
 import Main.server.advice.ExceptionCode;
-import Main.server.board_integrated.entity.BoardIntegrated;
-import Main.server.board_integrated.repository.BoardIntegratedRepository;
+import Main.server.board_integrated.BoardIntegrated;
+import Main.server.board_integrated.BoardIntegratedRepository;
 import Main.server.user.entity.Users;
 import Main.server.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
