@@ -1,31 +1,43 @@
-package Main.server.comment;
+package Main.server.comment.controller;
 
+import Main.server.comment.dto.CommentPatchDto;
+import Main.server.comment.dto.CommentPostDto;
+import Main.server.comment.dto.CommentResponseDto;
+import Main.server.comment.entity.Comment;
+import Main.server.comment.mapper.CommentMapper;
+import Main.server.comment.service.CommentService;
+import Main.server.notification.service.SseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/board/integrated")
 public class CommentController {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
+    private final SseService sseService;
 
-    public CommentController(CommentService commentService, CommentMapper commentMapper) {
+    public CommentController(CommentService commentService, CommentMapper commentMapper, SseService sseService) {
         this.commentService = commentService;
         this.commentMapper = commentMapper;
+        this.sseService = sseService;
     }
 
     @PostMapping("/{post-id}")
     public ResponseEntity postComment(@PathVariable("post-id") Long boardId,
-                                      @RequestBody CommentDto.Post postDto) {
+                                      @RequestBody CommentPostDto postDto) {
 
         Comment createComment = commentService.createComment(commentMapper.commentPostDtoToComment(postDto), postDto.getUserId(), boardId);
-        CommentDto.Response result = commentMapper.commentToCommentResponseDto(createComment);
+        CommentResponseDto result = commentMapper.commentToCommentResponseDto(createComment);
         result.setUserId(createComment.getUser().getUserId());
         result.setUsername(createComment.getUser().getNickName());
         result.setBoardId(createComment.getBoard().getId());
+
+        sseService.AddCommentEvent(boardId);
 
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
@@ -35,7 +47,7 @@ public class CommentController {
                                      @PathVariable("comment-id") long commentId) {
 
         Comment comment = commentService.findVerifiedComment(commentId);
-        CommentDto.Response result = commentMapper.commentToCommentResponseDto(comment);
+        CommentResponseDto result = commentMapper.commentToCommentResponseDto(comment);
         result.setUserId(comment.getUser().getUserId());
         result.setUsername(comment.getUser().getNickName());
         result.setBoardId(comment.getBoard().getId());
@@ -52,12 +64,12 @@ public class CommentController {
     @PatchMapping("/{post-id}/comment/{comment-id}")
     public ResponseEntity patchComment(@PathVariable("post-id") Long boardId,
                                        @PathVariable("comment-id") Long commentId,
-                                       @RequestBody CommentDto.Patch patchDto) {
+                                       @RequestBody CommentPatchDto patchDto) {
         Comment comment = commentMapper.commentPatchDtoToComment(patchDto);
-        comment.setId(commentId);
+        comment.setCommentId(commentId);
 
         Comment patchComment = commentService.updateComment(comment);
-        CommentDto.Response result = commentMapper.commentToCommentResponseDto(patchComment);
+        CommentResponseDto result = commentMapper.commentToCommentResponseDto(patchComment);
         result.setUserId(patchComment.getUser().getUserId());
         result.setUsername(patchComment.getUser().getNickName());
         result.setBoardId(boardId);

@@ -44,6 +44,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
+                .headers().frameOptions().sameOrigin()
+                .and()
                 .csrf().disable()
                 .cors(withDefaults())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -57,7 +59,7 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/*/users/join").permitAll()
+                        .antMatchers(HttpMethod.POST, "/*/users").permitAll()
                         .antMatchers(HttpMethod.PATCH, "/*/users/**").hasRole("USER")
                         .antMatchers(HttpMethod.GET, "/*/board/integrated").permitAll()
                         .antMatchers(HttpMethod.GET, "/*/board/integrated/**").permitAll()
@@ -72,7 +74,7 @@ public class SecurityConfiguration {
                 .oauth2Login(oauth2 -> oauth2.successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService)));
 
         http.logout()
-                .logoutUrl("/users/logout")
+                .logoutUrl("/user/logout")
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .deleteCookies("JSESSIONID", "remember-me");
@@ -88,17 +90,17 @@ public class SecurityConfiguration {
         @Bean
         public CorsConfigurationSource corsConfigurationSource(){
 
-            CorsConfiguration configuration = new CorsConfiguration();
+        CorsConfiguration configuration = new CorsConfiguration();
 
-            configuration.addAllowedOriginPattern("*");
-            configuration.addAllowedHeader("*");
-            configuration.addAllowedMethod("*");
-            configuration.setAllowCredentials(true);
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
 
-            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-            source.registerCorsConfiguration("/**", configuration);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
 
-            return source;
+        return source;
     }
 
     public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity>{

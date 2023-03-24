@@ -9,7 +9,5 @@ public class BusinessLogicalException extends RuntimeException {
     public BusinessLogicalException(ExceptionCode exceptionCode) {
         super(exceptionCode.getMessage());
         this.exceptionCode = exceptionCode;
-
-
     }
 }
