@@ -1,7 +1,7 @@
 import './App.css';
 import { HeaderIcon, HeaderLogin } from './components/Header.jsx';
 import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from './components/Footer.jsx';
 import LoginPage from './page/LoginPage.js';
@@ -29,6 +29,7 @@ const Dev = styled.div`
 function App() {
   const [modal, setModal] = useState(false);
   const token = localStorage.getItem('jwtToken');
+
   return (
     <Dev className="App">
       {console.log(token)}
@@ -40,7 +41,9 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         {/* 홈화면 */}
-        <Route path="/PostviewPage/:id" element={<PostviewPage />} />
+        <Route path="/PostviewPage">
+          <Route path=":id" element={<PostviewPage />} />
+        </Route>
         {/* 게시글 화면 */}
         <Route path="/Login" element={<LoginPage />} />
         {/* 로그인 */}

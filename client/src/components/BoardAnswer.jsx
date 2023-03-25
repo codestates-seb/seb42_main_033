@@ -3,11 +3,11 @@ import { FaHeart } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const BoardAnswer = ({ username, content }) => {
+const BoardAnswer = ({ username, content, id, userId }) => {
   const [comments, setComments] = useState([]);
   const [comlike, setComlike] = useState(0);
-
-  const handleEdit = async (commentId, editedContent) => {
+  //댓글수정
+  const handleEdit = async (userId, editedContent) => {
     const token = localStorage.getItem('jwtToken');
     const config = {
       headers: {
@@ -19,7 +19,7 @@ const BoardAnswer = ({ username, content }) => {
     };
     try {
       const response = await axios.put(
-        `/api/comments/${commentId}`,
+        `https://f941-211-217-72-99.jp.ngrok.io/board/integrated/${id}/comment/${userId}`,
         body,
         config
       );
