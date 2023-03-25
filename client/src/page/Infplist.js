@@ -9,9 +9,7 @@ const Infp = () => {
   //   const [answers, setAnswers] = useState([]);
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated`
-      )
+      .get(`${process.env.REACT_APP_API_URL}/board/integrated`)
       .then((response) => {
         console.log(response.data);
       })

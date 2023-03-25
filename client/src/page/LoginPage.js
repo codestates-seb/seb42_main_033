@@ -41,6 +41,7 @@ function LoginPage() {
         alert('회원가입 해야할듯');
       }
       const accessToken = response.headers.authorization;
+      console.log(response.headers.authorization);
       localStorage.setItem('jwtToken', accessToken);
       navigate('/');
     } catch (error) {
