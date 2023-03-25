@@ -8,9 +8,8 @@ import BoardAnswer from './BoardAnswer.jsx';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
-const BoardCarddetail = ({ id }) => {
-  // const { id } = useParams();
-  const [isLoaded, setIsLoaded] = useState(false);
+const BoardCarddetail = ({ id, post, setPost, isLoaded, setIsLoaded }) => {
+  // const [isLoaded, setIsLoaded] = useState(false);
   const token = localStorage.getItem('jwtToken');
   const decodedToken = jwtDecode(token);
   const userId = decodedToken.userId;
@@ -20,7 +19,7 @@ const BoardCarddetail = ({ id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
-  const [post, setPost] = useState({});
+  // const [post, setPost] = useState({});
   const handleClick = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -29,8 +28,7 @@ const BoardCarddetail = ({ id }) => {
     const getPost = async () => {
       try {
         const { data } = await axios.get(
-          // `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`
-          `https://5293-211-217-72-99.jp.ngrok.io/board/integrated/${id}`
+          `${process.env.REACT_APP_API_URL}/board/integrated/${id}`
         );
         setPost(data);
         setIsLoaded(true);
@@ -55,7 +53,7 @@ const BoardCarddetail = ({ id }) => {
     };
     try {
       await axios.delete(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`,
+        `${process.env.REACT_APP_API_URL}/board/integrated/${id}`,
         config
       );
       navigate('/PostlistPage');
@@ -78,7 +76,7 @@ const BoardCarddetail = ({ id }) => {
         username: localStorage.getItem('username'),
       };
       await axios.post(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`,
+        `${process.env.REACT_APP_API_URL}/board/integrated/${id}`,
         data,
         config
       );
@@ -96,7 +94,7 @@ const BoardCarddetail = ({ id }) => {
       {isLoaded && (
         <Container>
           <div className="boardwrap">
-            <HeaderLink to="/PostlistPage">0000 게시판!!</HeaderLink>
+            <HeaderLink to="/PostlistPage">통합 게시판</HeaderLink>
             <div className="boardview">
               <div className="boardheader">
                 <div className="title">

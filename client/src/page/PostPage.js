@@ -3,23 +3,31 @@ import BoardCreateOrEdit from '../components/BoardCreateOrEdit.jsx';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import moment from 'moment';
+// import jwtDecode from 'jwt-decode';
 
 const PostPage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const navigate = useNavigate();
-  const token = localStorage.getItem('jwtToken');
-
+  // const token = localStorage.getItem('jwtToken');
+  // const decodedToken = jwtDecode(token);
+  // console.log(decodedToken);
+  // const userId = decodedToken.userId;
+  // const userId = localStorage.getItem('userId');
+  const createdAt = moment().format('YYYY.MM:DD HH:mm:ss');
+  const userId = localStorage.getItem('userId');
   const post = {
+    userId: userId,
     title: title,
     content: content.replace(/<\/?p[^>]*>/g, ''),
     //<p>로 감싸져서 나오는 것 없애기 1
+    createdAt: createdAt,
   };
 
   const onSubmitPost = useCallback(
     async (event) => {
       event.preventDefault();
-
       if (title === '' || title === null || title === undefined) {
         alert('제목을 작성하십시오.');
         return false;
@@ -31,7 +39,7 @@ const PostPage = () => {
 
       try {
         const response = await axios.post(
-          'http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated',
+          `${process.env.REACT_APP_API_URL}/board/integrated`,
           {
             userId: '1',
             title: post.title,

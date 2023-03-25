@@ -1,42 +1,61 @@
 import styled from 'styled-components';
-// import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { AiFillEye, AiFillHeart } from 'react-icons/ai';
 import { FaCommentAlt } from 'react-icons/fa';
-const BoardCard = ({ board }) => {
-  // const navigate = useNavigate();
+import { Link } from 'react-router-dom';
+const BoardCard = ({
+  key,
+  id,
+  title,
+  content,
+  username,
+  viewCount,
+  likeCount,
+  commentCount,
+  createdAt,
+}) => {
   return (
     <div>
-      <CardLayout Link to={`/PostviewPage/${board.id}`}>
-        <div className="posttitle"> 제목{board.title} </div>
-        <div className="postcontent">
-          <span className="content">내용{board.content}</span>
-          <span className="username" style={{ marginLeft: 'auto' }}>
-            닉네임{board.username}
-          </span>
-        </div>
-        <div className="cardbottom">
-          <span className="viewCount">
-            <AiFillEye size="15px" />
-            <span className="view">20 {board.viewCount}</span>
-          </span>
-          <span className="likeCount">
-            <AiFillHeart size="14px" />
-            <span className="like"> 20 {board.likeCount}</span>
-          </span>
-          <span className="commentCount">
-            <FaCommentAlt size="11px" />
-            <span className="cmt"> 20 {board.commentCount}</span>
-          </span>
-          <span className="createdAt" style={{ marginLeft: 'auto' }}>
-            작성시간 {board.createdAt}
-          </span>
-        </div>
+      <CardLayout>
+        <CardLink to={`/PostViewPage/${id}`}>
+          <div className="posttitle"> 제목{title} </div>
+          <div className="postcontent">
+            <span className="content">내용{content}</span>
+            <span className="username" style={{ marginLeft: 'auto' }}>
+              닉네임{username}
+            </span>
+          </div>
+          <div className="cardbottom">
+            <span className="viewCount">
+              <AiFillEye size="15px" />
+              <span className="view">20 {viewCount}</span>
+            </span>
+            <span className="likeCount">
+              <AiFillHeart size="14px" />
+              <span className="like"> 20 {likeCount}</span>
+            </span>
+            <span className="commentCount">
+              <FaCommentAlt size="11px" />
+              <span className="cmt"> 20 {commentCount}</span>
+            </span>
+            <span className="createdAt" style={{ marginLeft: 'auto' }}>
+              작성시간 {createdAt}
+            </span>
+          </div>
+        </CardLink>
       </CardLayout>
     </div>
   );
 };
-
+const CardLink = styled(Link)`
+  text-decoration: none;
+  color: #000;
+  :visited {
+    color: #000;
+  }
+  :active {
+    color: #000;
+  }
+`;
 const CardLayout = styled.div`
   display: flex;
   flex-direction: column;

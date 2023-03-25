@@ -30,49 +30,31 @@ function LoginPage() {
     }
     try {
       const response = await axios.post(
-        // `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/user/login`,
-        'https://5293-211-217-72-99.jp.ngrok.io/user/login',
+        `${process.env.REACT_APP_API_URL}/user/login`,
         {
           email: userId,
           password1: password,
         }
       );
       console.log(response);
+      if (response.status === 401) {
+        alert('회원가입 해야할듯');
+      }
       const accessToken = response.headers.authorization;
       localStorage.setItem('jwtToken', accessToken);
-      //user Id 추가 (병민)1
-      try {
-        const userIdGet = await axios.get(
-          // `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users`,
-          'https://5293-211-217-72-99.jp.ngrok.io/users',
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        const user = userIdGet.data.find((user) => user.email === userId);
-        if (user) {
-          const userIdSet = user.userId;
-          localStorage.setItem('userId', userIdSet);
-        }
-        //user Id 추가 (병민)
-        navigate('/');
-      } catch (error) {
-        console.log(error);
-      }
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
   };
+
   const Guestlogin = async (event) => {
     event.preventDefault();
     try {
       // 게스트 여러개면 재밌을둣
       setGuest('guest');
       const response = await axios.post(
-        // `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/login/guest`,
-        'https://5293-211-217-72-99.jp.ngrok.io/login/guest',
+        `${process.env.REACT_APP_API_URL}/login/guest`,
         {
           email: guest,
           // 게스트 상태에 guest
