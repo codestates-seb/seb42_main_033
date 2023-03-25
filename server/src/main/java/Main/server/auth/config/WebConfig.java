@@ -16,11 +16,11 @@ public class WebConfig implements WebMvcConfigurer {
                         "ec2-52-78-241-208.ap-northeast-2.compute.amazonaws.com:8080",
                         "http://seb42-main-033-bucket.s3-website.ap-northeast-2.amazonaws.com",
                         "ec2-52-78-241-208.ap-northeast-2.compute.amazonaws.com",
-                        "https://68ba-211-217-72-99.jp.ngrok.io:3000",
-                        "https://68ba-211-217-72-99.jp.ngrok.io",
+                        "https://9ab3-211-217-72-99.jp.ngrok.io:3000",
+                        "https://9ab3-211-217-72-99.jp.ngrok.io",
                         "http://localhost:3000")
                 .allowedHeaders("*")
-                .allowedMethods("*")
+                .allowedMethods("GET","HEAD","POST","PUT","DELETE","OPTIONS","PATCH")
                 .allowCredentials(true)
                 .maxAge(3000);
     }

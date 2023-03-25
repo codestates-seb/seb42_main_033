@@ -3,6 +3,7 @@ package Main.server.board_integrated.controller;
 import Main.server.board_integrated.dto.BoardIntegratedDto;
 import Main.server.board_integrated.entity.BoardIntegrated;
 import Main.server.board_integrated.mapper.BoardIntegratedMapper;
+import Main.server.board_integrated.mapper.CustomBoardIntegratedMapper;
 import Main.server.board_integrated.service.BoardIntegratedService;
 import Main.server.like.dto.LikeDto;
 import Main.server.like.entity.Like;
@@ -22,11 +23,11 @@ import java.util.List;
 @RequestMapping("/board/integrated")
 public class BoardIntegratedController {
     private final BoardIntegratedService service;
-    private final BoardIntegratedMapper mapper;
+    private final CustomBoardIntegratedMapper mapper;
     private final LikeMapper likeMapper;
     private final LikeRepository likeRepository;
 
-    public BoardIntegratedController(BoardIntegratedService service, BoardIntegratedMapper mapper, LikeMapper likeMapper, LikeRepository likeRepository) {
+    public BoardIntegratedController(BoardIntegratedService service, CustomBoardIntegratedMapper mapper, LikeMapper likeMapper, LikeRepository likeRepository) {
         this.service = service;
         this.mapper = mapper;
         this.likeMapper = likeMapper;
