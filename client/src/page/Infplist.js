@@ -1,19 +1,207 @@
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
-import BoardCard from './../components/BoardCard.jsx';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-const list = ['1', '2', '3', '4', '5', '6', '7'];
 const Infp = () => {
+  const URL = `https://5293-211-217-72-99.jp.ngrok.io`;
   const [answers, setAnswers] = useState([]);
-  const [userid, setUserId] = useState([]);
   const [nickName, setNickName] = useState([]);
+  const [mbtiArr, setMbtiArr] = useState([]);
+  const [enfpId, setenfpId] = useState([]);
+  const [infpId, setinfpId] = useState([]);
+  const [entpId, setentpId] = useState([]);
+  const [intpId, setintpId] = useState([]);
+  const [enfjId, setenfjId] = useState([]);
+  const [infjId, setinfjId] = useState([]);
+  const [entjId, setentjId] = useState([]);
+  const [intjId, setintjId] = useState([]);
+  const [esfpId, setesfpId] = useState([]);
+  const [isfpId, setisfpId] = useState([]);
+  const [estpId, setestpId] = useState([]);
+  const [istpId, setistpId] = useState([]);
+  const [esfjId, setesfjId] = useState([]);
+  const [isfjId, setisfjId] = useState([]);
+  const [estjId, setestjId] = useState([]);
+  const [istjId, setistjId] = useState([]);
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated`
-      )
+      .get(`${URL}/users`)
+      .then((response) => {
+        setMbtiArr(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  for (const i in mbtiArr) {
+    console.log(mbtiArr[i].mbti);
+    if (mbtiArr[i].mbti === 'ENFP') {
+      setenfpId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'INFP') {
+      setinfpId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'ENTP') {
+      setentpId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'INTP') {
+      setintpId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'ENFJ') {
+      setenfjId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'INFJ') {
+      setinfjId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'ENTJ') {
+      setentjId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'INTJ') {
+      setintjId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'ESFP') {
+      setesfpId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'ISFP') {
+      setisfpId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'ESTP') {
+      setestpId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'ISTP') {
+      setistpId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'ESFJ') {
+      setesfjId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'ISFJ') {
+      setisfjId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'ESTJ') {
+      setestjId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    } else if (mbtiArr[i].mbti === 'ISTJ') {
+      setistjId(
+        'userid' +
+          ':' +
+          mbtiArr[i].userId +
+          ',' +
+          'mbti' +
+          ':' +
+          mbtiArr[i].mbti
+      );
+    }
+  }
+  useEffect(() => {
+    axios
+      .get(`${URL}/board/integrated`)
       .then((response) => {
         setAnswers(response.data);
         console.log(response.data);
@@ -24,9 +212,7 @@ const Infp = () => {
   }, []);
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users/1`
-      )
+      .get(`${URL}users/1`)
       .then((response) => {
         setNickName(response.data.nickName);
         console.log(response.data);
@@ -35,11 +221,22 @@ const Infp = () => {
         console.log(err);
       });
   }, []);
-
+  useEffect(() => {
+    axios
+      .get(`${URL}users/${infpId.userId}`)
+      .then((response) => {
+        setNickName(response.data.nickName);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <BoardLayout>
       <BoardHead>INFP 게시판</BoardHead>
       <BoardBox>
+        {console.log(infpId)}
         {answers.map((answers) => (
           <Link key={answers.id} to={`/board/integrated`}>
             <div>

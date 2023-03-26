@@ -111,10 +111,11 @@ function MyComments() {
   const userId = useParams();
   const token = localStorage.getItem('access_token');
 
+  const URL = `https://5293-211-217-72-99.jp.ngrok.io`;
   const getComments = async () => {
     try {
       const response = await axios.get(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/1/comment/${userId.id}`,
+        `${URL}/board/integrated/1/comment/${userId.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -134,14 +135,11 @@ function MyComments() {
   const deleteComment = async () => {
     try {
       const deletePromises = selectedComments.map((commentId) => {
-        return axios.delete(
-          `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/1/comment/${commentId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        return axios.delete(`${URL}/board/integrated/1/comment/${commentId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
       });
       await Promise.all(deletePromises);
       setComments(

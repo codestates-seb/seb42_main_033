@@ -9,6 +9,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [guest, setGuest] = useState('');
   const navigate = useNavigate();
+  const URL = `https://5293-211-217-72-99.jp.ngrok.io`;
   // const clientId =
   //   '830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com';
   // 로그인 같은 비동기 외부파일로.(관심사 불리 위해)
@@ -16,17 +17,20 @@ function LoginPage() {
   //   '830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com';
   const LoginSubit = async (event) => {
     event.preventDefault();
-    if (userId === '' || password === '') {
-      alert('아이디나 비밀번호 확인점');
+    if (userId === '' && password === '') {
+      alert('회원가입 해야할듯');
+    }
+    if (userId === '') {
+      alert('아이디 확인점');
+    }
+    if (password === '') {
+      alert('비밀번호 확인좀');
     }
     try {
-      const response = await axios.post(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/user/login`,
-        {
-          email: userId,
-          password1: password,
-        }
-      );
+      const response = await axios.post(`${URL}/user/login`, {
+        email: userId,
+        password1: password,
+      });
       console.log(response);
       if (response.status === 401) {
         alert('회원가입 해야할듯');
@@ -35,14 +39,11 @@ function LoginPage() {
       localStorage.setItem('jwtToken', accessToken);
       //user Id 추가 (병민)
       try {
-        const userIdGet = await axios.get(
-          `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const userIdGet = await axios.get(`${URL}/users`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         const user = userIdGet.data.find((user) => user.email === userId);
         if (user) {
           const userIdSet = user.userId;
@@ -62,15 +63,12 @@ function LoginPage() {
     try {
       // 게스트 여러개면 재밌을둣
       setGuest('guest');
-      const response = await axios.post(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/user/login/guest`,
-        {
-          email: guest,
-          // 게스트 상태에 guest
-          password1: guest,
-          // guest
-        }
-      );
+      const response = await axios.post(`${URL}/user/login/guest`, {
+        email: guest,
+        // 게스트 상태에 guest
+        password1: guest,
+        // guest
+      });
       console.log(response);
       if (response.status === 200) {
         navigate('/');

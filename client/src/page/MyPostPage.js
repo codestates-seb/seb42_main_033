@@ -60,18 +60,16 @@ function MyPost() {
 
   const token = localStorage.getItem('jwtToken');
 
+  const URL = `https://5293-211-217-72-99.jp.ngrok.io`;
   const getPost = async () => {
     try {
       const userId = localStorage.getItem('userId');
       console.log();
-      const response = await axios.get(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${userId.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${URL}/board/integrated/${userId.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(response);
       const userPosts = response.data.filter(
         (post) => post.userId === parseInt(userId)
@@ -92,14 +90,11 @@ function MyPost() {
   const deletePosts = async () => {
     try {
       const deletePromises = selectedComments.map((postId) => {
-        return axios.delete(
-          `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        return axios.delete(`${URL}/board/integrated/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
       });
       await Promise.all(deletePromises);
       setPost(
