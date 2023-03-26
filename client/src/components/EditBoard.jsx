@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import api from '../utils/api';
-import BoardCreateOrEdit from './BoardCreateOrEdit';
+import BoardCreateOrEdit from './BoardCreateOrEdit.jsx';
 import { Button } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
