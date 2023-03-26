@@ -39,7 +39,9 @@ function LoginPage() {
         alert('회원가입 해야할듯');
       }
       const accessToken = response.headers.authorization;
+      const refreshToken = response.headers.refresh;
       localStorage.setItem('jwtToken', accessToken);
+      localStorage.setItem('rfToken', refreshToken);
       //user Id 추가 (병민)
       try {
         const userIdGet = await axios.get(`${URL}/users`, {
