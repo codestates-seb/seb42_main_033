@@ -2,38 +2,16 @@ import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Pagination } from '@mui/material';
 import BoardCard from './BoardCard.jsx';
 
-const BoardList = () => {
+const BoardList = ({ boardList }) => {
   const [searchInput, setSearchInput] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
   const handleInputChange = (e) => {
     setSearchInput(e.target.value);
   };
-  const [boardList, setBoardList] = useState([
-    {
-      id: '',
-      title: '',
-      content: '',
-      username: '',
-      viewCount: '',
-      likeCount: '',
-      commentCount: '',
-      createdAt: '',
-    },
-  ]);
-  useEffect(() => {
-    axios
-      .get(
-        'http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/board/integrated'
-      )
-      .then((res) => setBoardList(res.data.boardList))
-      .catch((error) => console.log(error));
-  }, []);
-
   const filteredBoardList = boardList.filter((board) =>
     board.title.includes(searchInput)
   );
@@ -43,17 +21,21 @@ const BoardList = () => {
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
-
   return (
     <BoardLayout>
       <BoardHead>게시판</BoardHead>
       <BoardBox>
-        {currentBoardList.map((board) => (
+        {currentBoardList.map((board, idx) => (
           <BoardCard
-            key={board.id}
-            board={board}
-            // Link
-            // to={'/PostviewPage/' + `${board.id}`}
+            key={board.idx}
+            id={board.id}
+            title={board.title}
+            content={board.content}
+            username={board.username}
+            viewCount={board.viewCount}
+            likeCount={board.likeCount}
+            commentCount={board.commentCount}
+            createdAt={board.createdAt}
           />
         ))}
       </BoardBox>
@@ -61,7 +43,6 @@ const BoardList = () => {
         <WriteButtonLink to="/postpage">
           <WriteButton>글쓰기</WriteButton>
         </WriteButtonLink>
-        {/* 페이지네이션: count에 페이지 카운트, page에 페이지 번호 넣기 */}
         <Pagination
           variant="outlined"
           color="primary"
@@ -69,7 +50,6 @@ const BoardList = () => {
           count={pageCount}
           size="large"
           onChange={(e, value) => {
-            // window.location.href = `https://9b33-211-217-72-99.jp.ngrok.io/board/integrated/${value}`;
             setCurrentPage(value);
           }}
           showFirstButton

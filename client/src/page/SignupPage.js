@@ -13,7 +13,6 @@ function SignupPage() {
   const [confirmpassword2, setConfirmpassword2] = useState('');
   const [mbti, setMbti] = useState('');
   const navigate = useNavigate();
-  const URL = `https://5293-211-217-72-99.jp.ngrok.io`;
   const SignUpPost = async (event) => {
     event.preventDefault();
     if (nickName === '') {
@@ -32,13 +31,19 @@ function SignupPage() {
       setConfirmpassword2('a');
     }
     try {
-      const response = await axios.post(`${URL}/users`, {
-        nickName: nickName,
-        email: userId,
-        password1: password,
-        password2: confirmpassword,
-        mbti: mbti,
-      });
+      const response = await axios.post(
+        // `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users`,
+        `${process.env.REACT_APP_API_URL}/users`,
+        {
+          // input 안의 값을 onChage로 받아와서 포스트 바디에 넣기
+          // 같은 아이디나 닉네임이 있다면 false 메시지 보내기
+          nickName: nickName,
+          email: userId,
+          password1: password,
+          password2: confirmpassword,
+          mbti: mbti,
+        }
+      );
       console.log(response);
       navigate('/login');
     } catch {

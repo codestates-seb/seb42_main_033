@@ -27,10 +27,13 @@ function LoginPage() {
       alert('비밀번호 확인좀');
     }
     try {
-      const response = await axios.post(`${URL}/user/login`, {
-        email: userId,
-        password1: password,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/user/login`,
+        {
+          email: userId,
+          password1: password,
+        }
+      );
       console.log(response);
       if (response.status === 401) {
         alert('회원가입 해야할듯');
@@ -58,17 +61,21 @@ function LoginPage() {
       console.log(error);
     }
   };
+
   const Guestlogin = async (event) => {
     event.preventDefault();
     try {
       // 게스트 여러개면 재밌을둣
       setGuest('guest');
-      const response = await axios.post(`${URL}/user/login/guest`, {
-        email: guest,
-        // 게스트 상태에 guest
-        password1: guest,
-        // guest
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/login/guest`,
+        {
+          email: guest,
+          // 게스트 상태에 guest
+          password1: guest,
+          // guest
+        }
+      );
       console.log(response);
       if (response.status === 200) {
         navigate('/');

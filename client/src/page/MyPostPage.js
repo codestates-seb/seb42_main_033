@@ -56,20 +56,22 @@ function MyPost() {
   const [selectedComments, setSelectedComments] = useState([]);
 
   // const { id } = useParams();
-  // const postId = localStorage.getItem('id');
+  // const postId = localStorage.getItem('id'); 11
 
   const token = localStorage.getItem('jwtToken');
 
-  const URL = `https://5293-211-217-72-99.jp.ngrok.io`;
   const getPost = async () => {
     try {
       const userId = localStorage.getItem('userId');
       console.log();
-      const response = await axios.get(`${URL}/board/integrated/${userId.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/board/integrated`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(response);
       const userPosts = response.data.filter(
         (post) => post.userId === parseInt(userId)
@@ -90,11 +92,14 @@ function MyPost() {
   const deletePosts = async () => {
     try {
       const deletePromises = selectedComments.map((postId) => {
-        return axios.delete(`${URL}/board/integrated/${postId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        return axios.delete(
+          `${process.env.REACT_APP_API_URL}/board/integrated/${postId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       });
       await Promise.all(deletePromises);
       setPost(
