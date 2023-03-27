@@ -5,28 +5,78 @@ import PostModal from './PostModal.jsx';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import BoardAnswer from './BoardAnswer.jsx';
-import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 
 const BoardCarddetail = ({
   id,
   post,
+  setPost,
   isLoaded,
   handleEdit,
   handleDelete,
-  handleCommentSubmit,
-  comment,
-  setComment,
-  comments,
 }) => {
   const [like, setLike] = useState(0);
   const [count, setCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const token = localStorage.getItem('jwtToken');
-  const decodedToken = jwtDecode(token);
-  const userId = decodedToken.userId;
+  const userId = localStorage.getItem('userId');
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
+  const commentCount = comments.length;
 
   const handleClick = () => {
     setIsModalOpen(!isModalOpen);
+  };
+  const handleLikeClick = async () => {
+    const postId = post.id;
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/like`,
+        {
+          userId: userId,
+          postId: postId,
+        },
+        {
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //댓글 등록
+  const handleCommentSubmit = async () => {
+    const postId = post.id;
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const data = {
+        userId: userId,
+        postId: postId,
+        content: comment,
+      };
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/board/integrated/${id}`,
+        data,
+        config
+      );
+      setComments([
+        ...comments,
+        { username: data.username, content: data.content },
+      ]);
+      setComment('');
+      setCount(count + 1);
+      setPost({ ...post, commentCount: commentCount + 1 });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -41,8 +91,7 @@ const BoardCarddetail = ({
                   제목
                   {post.title}
                   <ModalContainer onClick={handleClick}>
-                    {localStorage.getItem('jwtToken') &&
-                      userId === post.userId && <EditDeletIcon />}
+                    {token && userId === post.userId && <EditDeletIcon />}
                   </ModalContainer>
                   {isModalOpen && (
                     <PostModal
@@ -58,12 +107,11 @@ const BoardCarddetail = ({
                 </div>
                 <div className="nickname">
                   닉네임
-                  {post.username}
+                  {post.nickname}
                 </div>
                 <div className="createdate">
                   시간
                   {post.createdAt}
-                  {/* {moment(board.created).add(9, 'hour').format('YYYY-MM-DD')} */}
                 </div>
               </div>
               <div className="boardcontent">
@@ -77,6 +125,7 @@ const BoardCarddetail = ({
                       <Like
                         onClick={() => {
                           setLike(like + 1);
+                          handleLikeClick();
                         }}
                         style={{ fontSize: '20px' }}
                       />
@@ -103,6 +152,8 @@ const BoardCarddetail = ({
               {comments.map((comment, index) => (
                 <BoardAnswer
                   key={index}
+                  // id={id}
+                  // userId={userId}
                   username={comment.username}
                   content={comment.content}
                 />
