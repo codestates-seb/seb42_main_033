@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 /*123*/
 
+/*123*/ /*123233*/
+
 // const comments = [
 //   {
 //     id: 1,
@@ -43,49 +45,72 @@ import { useParams } from 'react-router-dom';
 function MyComments() {
   const [comments, setComments] = useState([]);
   const [selectedComments, setSelectedComments] = useState([]);
-
-  const userId = useParams();
-  const token = localStorage.getItem('access_token');
-
-  const URL = `http://ec2-3-38-180-247.ap-northeast-2.compute.amazonaws.com:8080`;
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('jwtToken');
 
   const getComments = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${userId}/comment/`,
+      const postsResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/board/integrated`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      const userComments = response.data.filter(
+
+      const userPosts = postsResponse.data.filter(
+        (post) => post.userId === parseInt(userId)
+      );
+
+      const commentsPromises = userPosts.map((post) =>
+        axios.get(
+          `${process.env.REACT_APP_API_URL}/board/integrated/${post.id}/comment`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+      );
+
+      const commentsResponses = await Promise.all(commentsPromises);
+
+      const allUserComments = commentsResponses.flatMap(
+        (response) => response.data
+      );
+
+      const myComments = allUserComments.filter(
         (comment) => comment.userId === parseInt(userId)
       );
-      const sortedUserComments = userComments.sort((a, b) => b.id - a.id);
+
+      const sortedUserComments = myComments.sort((a, b) => b.id - a.id);
+
       return sortedUserComments;
     } catch (error) {
       console.error(error);
     }
   };
+
   useEffect(() => {
     getComments();
   }, []);
 
   const deleteComment = async () => {
     try {
-      const deletePromises = selectedComments.map((commentId) => {
-        return axios.delete(`${URL}/board/integrated/1/comment/${commentId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+      const deletePromises = selectedComments.map(({ postId, commentId }) => {
+        return axios.delete(
+          `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${commentId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       });
       await Promise.all(deletePromises);
       setComments(
-        comments.filter(
-          (comment) => !selectedComments.includes(comment.content)
-        )
+        comments.filter((comment) => !selectedComments.includes(comment.id))
       );
       setSelectedComments([]);
     } catch (error) {
@@ -93,11 +118,18 @@ function MyComments() {
     }
   };
 
-  const handleCheckboxClick = (id) => {
-    if (selectedComments.includes(id)) {
-      setSelectedComments(selectedComments.filter((cid) => cid !== id));
+  const handleCheckboxClick = (postId, commentId) => {
+    const commentData = { postId, commentId };
+    const isSelected = selectedComments.some(
+      (comment) => comment.commentId === commentId
+    );
+
+    if (isSelected) {
+      setSelectedComments(
+        selectedComments.filter((comment) => comment.commentId !== commentId)
+      );
     } else {
-      setSelectedComments([...selectedComments, id]);
+      setSelectedComments([...selectedComments, commentData]);
     }
   };
 
@@ -134,7 +166,6 @@ const CommentPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   justify-content: center;
   position: absolute;
   top: 15%;
