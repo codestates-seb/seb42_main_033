@@ -2,7 +2,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Button from './Button.jsx';
 import MyPageSidebar from './MypageSidebar.jsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 function SignoutContent() {

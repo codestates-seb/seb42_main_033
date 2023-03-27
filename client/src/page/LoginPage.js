@@ -9,7 +9,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [guest, setGuest] = useState('');
   const navigate = useNavigate();
-  const URL = `http://ec2-3-39-235-30.ap-northeast-2.compute.amazonaws.com:8080`;
+  const URL = `http://ec2-3-38-180-247.ap-northeast-2.compute.amazonaws.com:8080`;
   // const clientId =
   //   '830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com';
   // 로그인 같은 비동기 외부파일로.(관심사 불리 위해)

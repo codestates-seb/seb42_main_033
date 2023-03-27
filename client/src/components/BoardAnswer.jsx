@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 const BoardAnswer = ({ username, content, post }) => {
   const [commentsId, setcommentsId] = useState();
   const token = localStorage.getItem('jwtToken');
+
   useEffect(() => {
     const postId = post.id;
     axios
