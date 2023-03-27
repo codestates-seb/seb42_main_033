@@ -22,11 +22,16 @@ const QuillEditor = ({ name, value, onChange }) => {
     }),
     []
   );
+  // const handleEditorChange = (content, delta, source, editor) => {
+  //   const html = editor.getHTML();
+  //   onChange(html !== undefined ? html : '');
+  // };
   const handleEditorChange = (content, delta, source, editor) => {
     const html = editor.getHTML();
-    onChange(html !== undefined ? html : '');
+    if (html !== undefined && html !== '') {
+      onChange(html);
+    }
   };
-
   return (
     <div>
       <ReactQuill

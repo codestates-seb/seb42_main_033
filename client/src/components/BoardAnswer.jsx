@@ -3,25 +3,27 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const BoardAnswer = ({ username, content, post }) => {
+const BoardAnswer = ({ nickName, content, post, id }) => {
   const [commentsId, setcommentsId] = useState();
   const token = localStorage.getItem('jwtToken');
-
+  const postId = post.id;
   useEffect(() => {
-    const postId = post.id;
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment`
-      )
-      .then((response) => {
-        setcommentsId(response.data.commentsId);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+    const getAnswer = async () => {
+      try {
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment`
+        );
+
+        setcommentsId(data.commentsId);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAnswer();
+  }, [id]);
+
   const answerDelete = async () => {
-    const postId = post.id;
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${commentsId}`,
@@ -39,7 +41,7 @@ const BoardAnswer = ({ username, content, post }) => {
   };
   return (
     <AnswerForm>
-      <div className="answernickname">{username}</div>
+      <div className="answernickname">{nickName}</div>
       <div
         className="answerbutton"
         style={{ marginLeft: '730px', fontSize: '13px' }}

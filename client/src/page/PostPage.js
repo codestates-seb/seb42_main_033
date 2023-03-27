@@ -10,7 +10,9 @@ const PostPage = () => {
   const [content, setContent] = useState('');
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
-  const createdAt = moment().local().format('MM.DD HH:mm:ss');
+  const now = new Date();
+  now.setHours(now.getHours() + 9);
+  const createdAt = now.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
 
   const post = {
     userId: userId,

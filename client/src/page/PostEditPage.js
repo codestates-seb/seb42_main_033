@@ -10,6 +10,7 @@ const PostEditPage = () => {
   const { id } = useParams();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const navigate = useNavigate();
   // 사용자가 직전에 등록한 게시물의 상태를 그대로 보여주기 위해
   // 컴포넌트가 마운트되고 URI 파라미터에 해당하는 board를 가져와서
   // title, content의 상태를 바꿔줌
@@ -22,7 +23,7 @@ const PostEditPage = () => {
     };
     getBoard().then((result) => {
       setTitle(result.title);
-      setContent(result.content);
+      setContent(result.content.replace(/<\/?p[^>]*>/g, ''));
     });
   }, []);
 
@@ -32,7 +33,8 @@ const PostEditPage = () => {
 
   const handleeditSubmit = useCallback(async () => {
     try {
-      const data = { title, content, tag: '' };
+      const modifiedContent = content.replace(/<\/?p[^>]*>/g, '');
+      const data = { title, content: modifiedContent, tag: '' };
       await axios.patch(
         `${process.env.REACT_APP_API_URL}/board/integrated/${id}`,
         data,
@@ -43,7 +45,7 @@ const PostEditPage = () => {
         }
       );
       window.alert('😎수정이 완료되었습니다😎');
-      window.location.href = `${process.env.REACT_APP_API_URL}/board/integrated/${id}`;
+      navigate(`/PostviewPage/${id}`);
     } catch (e) {
       toast.error('오류가 발생했습니다!😭', {
         position: 'top-center',
@@ -60,7 +62,7 @@ const PostEditPage = () => {
         setTitle={setTitle}
         setContent={setContent}
         title={title}
-        content={content}
+        content={content.replace(/<\/?p[^>]*>/g, '')}
         handleSubmit={handleeditSubmit}
       />
       <ButtonContainer>

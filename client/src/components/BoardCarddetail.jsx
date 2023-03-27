@@ -3,7 +3,7 @@ import { AiOutlineEllipsis } from 'react-icons/ai';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
 import PostModal from './PostModal.jsx';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BoardAnswer from './BoardAnswer.jsx';
 import axios from 'axios';
 import moment from 'moment';
@@ -24,16 +24,13 @@ const BoardCarddetail = ({
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const commentCount = comments.length;
+  const postId = post.id;
   //게시글 수정삭제 모달
   const handleClick = () => {
-    // if (userId === post.userId) {
-    //   setIsModalOpen(!isModalOpen);
-    // }
     setIsModalOpen(!isModalOpen);
   };
   //좋아요
   const handleLikeClick = async () => {
-    const postId = post.id;
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/board/integrated/${id}/like`,
@@ -55,7 +52,6 @@ const BoardCarddetail = ({
   };
   //댓글 등록
   const handleCommentSubmit = async () => {
-    const postId = post.id;
     try {
       const config = {
         headers: {
@@ -72,10 +68,12 @@ const BoardCarddetail = ({
         data,
         config
       );
-      setComments([
-        ...comments,
-        { username: data.username, content: data.content },
-      ]);
+      const newComment = { username: post.username, content: comment };
+      setComments([...comments, newComment]);
+      // setComments([
+      //   ...comments,
+      //   { username: data.username, content: data.content },
+      // ]);
       setComment('');
       setCount(count + 1);
       setPost({ ...post, commentCount: commentCount + 1 });
@@ -83,6 +81,22 @@ const BoardCarddetail = ({
       console.log(error);
     }
   };
+  //댓글조회
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment`
+        );
+        setComments(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchComments();
+  }, [postId]);
+
   return (
     <>
       {isLoaded && (
@@ -95,7 +109,6 @@ const BoardCarddetail = ({
                   {post.title}
                   <ModalContainer onClick={handleClick}>
                     {token && userId === post.userId && <EditDeletIcon />}
-                    {/* <EditDeletIcon /> */}
                   </ModalContainer>
                   {isModalOpen && (
                     <PostModal
@@ -103,19 +116,11 @@ const BoardCarddetail = ({
                       isOpen={isModalOpen}
                       onEdit={handleEdit}
                       onDelete={handleDelete}
-                      // title={post.title}
-                      // content={post.content}
-                      // postId={post.id}
                     />
                   )}
                 </div>
                 <div className="nickname">{post.nickName}</div>
-                <div className="createdate">
-                  {post.createdAt}
-                  {/* {moment(post.createdAt)
-                    .add(9, 'hour')
-                    .format('MM.DD HH:mm:ss')} */}
-                </div>
+                <div className="createdate">{post.createdAt}</div>
               </div>
               <div className="boardcontent">
                 <div className="content">{post.content}</div>
@@ -148,17 +153,26 @@ const BoardCarddetail = ({
               </div>
             </div>
             <div className="answerview">
-              {comments.map((comment, index) => (
+              {/* {comments.map((comment, index) => (
                 <BoardAnswer
                   key={index}
-                  // id={id}
-                  // userId={userId}
-                  username={comment.username}
+                  id={id}
+                  userId={userId}
+                  nickName={comment.nickName}
                   content={comment.content}
                   post={post}
                   setPost={setPost}
-                  id={id}
                 />
+              ))} */}
+              {comments.map((comment) => (
+                <BoardAnswer key={comment.id}>
+                  id={id}
+                  userId={userId}
+                  nickName={comment.nickName}
+                  content={comment.content}
+                  post={post}
+                  setPost={setPost}
+                </BoardAnswer>
               ))}
               <div className="writranswer">
                 <input
