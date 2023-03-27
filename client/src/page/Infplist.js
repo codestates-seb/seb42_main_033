@@ -187,6 +187,17 @@ const Infp = () => {
         console.log(err);
       });
   }, []);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/users/1`)
+      .then((response) => {
+        setNickName(response.data.nickName);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <BoardLayout>
       {console.log(infpId)}
