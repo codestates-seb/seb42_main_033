@@ -40,57 +40,57 @@ const Infp = () => {
   let isfjs = '';
   let estjs = '';
   let istjs = '';
+  let mbtiList = [];
   useEffect(() => {
     for (const i in mbtiArr) {
       // 엠비티아이별 회원 id
-      console.log(mbtiArr[i].userId);
       if (mbtiArr[i].mbti === 'ENFP' || mbtiArr[i].mbti === 'enfp') {
-        enfps = mbtiArr[i].userId + ',';
+        enfps += mbtiArr[i].userId;
         setenfpId(enfps);
       } else if (mbtiArr[i].mbti === 'INFP' || mbtiArr[i].mbti === 'infp') {
-        infps = mbtiArr[i].userId + ',';
+        infps += mbtiArr[i].userId;
         setinfpId(infps);
       } else if (mbtiArr[i].mbti === 'ENTP' || mbtiArr[i].mbti === 'entp') {
-        entps = mbtiArr[i].userId + ',';
+        entps += mbtiArr[i].userId;
         setentpId(entps);
       } else if (mbtiArr[i].mbti === 'INTP' || mbtiArr[i].mbti === 'intp') {
-        intps = mbtiArr[i].userId + ',';
+        intps += mbtiArr[i].userId;
         setintpId(intps);
       } else if (mbtiArr[i].mbti === 'ENFJ' || mbtiArr[i].mbti === 'enfj') {
-        enfjs = mbtiArr[i].userId + ',';
+        enfjs += mbtiArr[i].userId;
         setenfjId(enfjs);
       } else if (mbtiArr[i].mbti === 'INFJ' || mbtiArr[i].mbti === 'infj') {
-        infjs = mbtiArr[i].userId + ',';
+        infjs += mbtiArr[i].userId;
         setinfjId(infjs);
       } else if (mbtiArr[i].mbti === 'ENTJ' || mbtiArr[i].mbti === 'entj') {
-        entjs = mbtiArr[i].userId + ',';
+        entjs += mbtiArr[i].userId;
         setentjId(entjs);
       } else if (mbtiArr[i].mbti === 'INTJ' || mbtiArr[i].mbti === 'intj') {
-        intjs = mbtiArr[i].userId + ',';
+        intjs += mbtiArr[i].userId;
         setintjId(intjs);
       } else if (mbtiArr[i].mbti === 'ESFP' || mbtiArr[i].mbti === 'esfp') {
-        esfps = mbtiArr[i].userId + ',';
+        esfps += mbtiArr[i].userId;
         setesfpId(esfps);
       } else if (mbtiArr[i].mbti === 'ISFP' || mbtiArr[i].mbti === 'isfp') {
-        isfps = mbtiArr[i].userId + ',';
+        isfps += mbtiArr[i].userId;
         setisfpId(isfps);
       } else if (mbtiArr[i].mbti === 'ESTP' || mbtiArr[i].mbti === 'estp') {
-        estps = mbtiArr[i].userId + ',';
+        estps += mbtiArr[i].userId;
         setestpId(estps);
       } else if (mbtiArr[i].mbti === 'ISTP' || mbtiArr[i].mbti === 'istp') {
-        istps = mbtiArr[i].userId + ',';
+        istps += mbtiArr[i].userId;
         setistpId(istps);
       } else if (mbtiArr[i].mbti === 'ESFJ' || mbtiArr[i].mbti === 'esfj') {
-        esfjs = mbtiArr[i].userId + ',';
+        esfjs += mbtiArr[i].userId;
         setesfjId(esfjs);
       } else if (mbtiArr[i].mbti === 'ISFJ' || mbtiArr[i].mbti === 'isfj') {
-        isfjs = mbtiArr[i].userId + ',';
+        isfjs += mbtiArr[i].userId;
         setisfjId(isfjs);
       } else if (mbtiArr[i].mbti === 'ESTJ' || mbtiArr[i].mbti === 'estj') {
-        estjs = mbtiArr[i].userId + ',';
+        estjs += mbtiArr[i].userId;
         setestjId(estjs);
       } else if (mbtiArr[i].mbti === 'ISTJ' || mbtiArr[i].mbti === 'istj') {
-        istjs = mbtiArr[i].userId + ',';
+        istjs += mbtiArr[i].userId;
         setistjId(istjs);
       }
     }
@@ -106,20 +106,77 @@ const Infp = () => {
         console.log(err);
       });
   }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const promises = [infpId].map((id) => {
+  //       return axios.get(
+  //         `${process.env.REACT_APP_API_URL}/board/integrated/${id}`
+  //       );
+  //     });
+  //     const responses = await Promise.all(promises);
+  //     const data = responses.map((response) => response.data);
+  //     setinfpList((prevList) => [...prevList, ...data]);
+  //   };
+  //   fetchData().catch((err) => {
+  //     console.log(err);
+  //   });
+  // }, []);
 
   useEffect(() => {
     // 엠비티아이id .map 으로 get
-    [infpId].map((i) => {
+    for (const i of infpId) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/users/${i}`)
+        .get(`${process.env.REACT_APP_API_URL}/board/integrated/${i}`)
         .then((response) => {
           setinfpList(response.data);
         })
         .catch((err) => {
           console.log(err);
         });
-    });
+    }
   }, []);
+
+  // useEffect(() => {
+  //   Promise.all(
+  //     [infpId].map((i) =>
+  //       axios
+  //         .get(`${process.env.REACT_APP_API_URL}/board/integrated/${i}`)
+  //         .then((response) => {
+  //           setinfpList(response);
+  //           console.log(i);
+  //         })
+  //     )
+  //   );
+  // }, []);
+  // useEffect(() => {
+  //   async function fetchInfpList() {
+  //     const results = await Promise.all(
+  //       infpId.map((i) =>
+  //         axios.get(`${process.env.REACT_APP_API_URL}/board/integrated/${i}`)
+  //       )
+  //     );
+  //     const data = results.map((response) => response.data);
+  //     setinfpList(data);
+  //   }
+  //   fetchInfpList();
+  // }, [infpId]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const responses = await Promise.all(
+  //         infpId.map((id) =>
+  //           axios.get(`${process.env.REACT_APP_API_URL}/board/integrated/${id}`)
+  //         )
+  //       );
+  //       const infpList = responses.map((response) => response.data);
+  //       setinfpList(infpList);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/board/integrated`)
@@ -140,15 +197,14 @@ const Infp = () => {
         console.log(err);
       });
   }, []);
+
   return (
     <BoardLayout>
+      {console.log(infpId)}
       <BoardHead>INFP 게시판</BoardHead>
       <BoardBox>
-        {console.log(infps)}
-        {console.log(infpId)}
-        {console.log(infjs)}
-        {infplist.map((infplist) => (
-          <Link key={infplist.id} to={`/board/integrated`}>
+        {[infplist].map((infplist, index) => (
+          <Link key={index} to={`/board/integrated/${infplist.id}`}>
             <div>
               <CardLayout>
                 <div className="posttitle"> {infplist.title} </div>
