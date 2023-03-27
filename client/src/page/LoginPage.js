@@ -17,13 +17,9 @@ function LoginPage() {
   //   '830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com';
   const LoginSubit = async (event) => {
     event.preventDefault();
-    if (userId === '' && password === '') {
-      alert('회원가입 해야할듯');
-    }
     if (userId === '') {
       alert('아이디 확인점');
-    }
-    if (password === '') {
+    } else if (password === '') {
       alert('비밀번호 확인좀');
     }
     try {

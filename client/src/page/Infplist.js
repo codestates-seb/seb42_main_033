@@ -132,7 +132,7 @@ const Infp = () => {
         {console.log(infps)}
         {console.log(infpId)}
         {console.log(infjs)}
-        {answers.map((answers) => (
+        {infpId.map((answers) => (
           <Link key={answers.id} to={`/board/integrated`}>
             <div>
               <CardLayout>
