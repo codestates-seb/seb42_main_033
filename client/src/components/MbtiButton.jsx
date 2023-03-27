@@ -21,13 +21,6 @@ const buttons = [
   { id: 16, text: 'ESTJ' },
 ];
 
-const images = {
-  INTP: require('./../images/intp.png'),
-  INTJ: require('./../images/intj.png'),
-  INFJ: require('./../images/infj.png'),
-  ENTP: require('./../images/entp.png'),
-};
-
 const StyledText = styled.div`
   font-size: 2vh;
   margin-bottom: 2vh;
@@ -68,7 +61,6 @@ const StyledButton = styled.button`
 
   &:hover {
     cursor: pointer;
-    background-image: url(${(props) => images[props.button.text]});
     color: black;
     border: solid;
     border-color: black;
@@ -76,7 +68,7 @@ const StyledButton = styled.button`
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    transform: scale(2, 3);
+    /* transform: scale(2, 3); */
 
     /* transition: transform 0.1s; */
   }

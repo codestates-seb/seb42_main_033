@@ -1,9 +1,45 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+function SendDm() {
+  return (
+    <Dmbody>
+      <Dmmodal>
+        <Dmdiv>
+          <Dmtext>쪽지 보내기</Dmtext>
+          <Dmtextbox>
+            <Dmtextboxinput
+              type="text"
+              name="userid"
+              placeholder=" 받는 사람"
+            />
+          </Dmtextbox>
+          <Dmsubtitle>쪽지내용</Dmsubtitle>
+          <Dmtextbox>
+            <Dmtextboxinput2
+              type="text"
+              name="userid"
+              placeholder=" 쪽지내용"
+            />
+          </Dmtextbox>
+          <Dmbuttons>
+            {/* 보낸페이지에 계속 남게 */}
+            {/* 보내기 창 말고 다른곳 누르면 닫히게 */}
+            <Dmlink to="/PostviewPage">
+              <Dmcancelbutton> 취소 </Dmcancelbutton>
+            </Dmlink>
+            <Dmlink to="/PostviewPage">
+              <Dmsendbutton> 보내기 </Dmsendbutton>
+            </Dmlink>
+          </Dmbuttons>
+        </Dmdiv>
+      </Dmmodal>
+    </Dmbody>
+  );
+}
+
 const Dmbody = styled.div`
   position: absolute;
-  display: none;
   top: 0;
   left: 0;
   width: 100%;
@@ -101,38 +137,4 @@ const Dmcancelbutton = styled.button`
 const Dmlink = styled(Link)`
   text-decoration: none;
 `;
-function Dm() {
-  return (
-    <Dmbody>
-      <Dmmodal>
-        <Dmdiv>
-          <Dmtext>쪽지 보내기</Dmtext>
-          <Dmtextbox>
-            <Dmtextboxinput
-              type="text"
-              name="userid"
-              placeholder=" 받는 사람"
-            />
-          </Dmtextbox>
-          <Dmsubtitle>쪽지내용</Dmsubtitle>
-          <Dmtextbox>
-            <Dmtextboxinput2
-              type="text"
-              name="userid"
-              placeholder=" 쪽지내용"
-            />
-          </Dmtextbox>
-          <Dmbuttons>
-            <Dmlink to="/PostviewPage">
-              <Dmcancelbutton> 취소 </Dmcancelbutton>
-            </Dmlink>
-            <Dmlink to="/PostviewPage">
-              <Dmsendbutton> 보내기 </Dmsendbutton>
-            </Dmlink>
-          </Dmbuttons>
-        </Dmdiv>
-      </Dmmodal>
-    </Dmbody>
-  );
-}
-export default Dm;
+export default SendDm;

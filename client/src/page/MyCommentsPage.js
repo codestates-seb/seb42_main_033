@@ -4,7 +4,11 @@ import MyPageSidebar from '../components/MypageSidebar.jsx';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 /*123*/
+
 /*123*/ /*123233*/
+
+
+
 // const comments = [
 //   {
 //     id: 1,
@@ -46,16 +50,30 @@ function MyComments() {
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('jwtToken');
 
+
   const getComments = async () => {
     try {
       const postsResponse = await axios.get(
         `${process.env.REACT_APP_API_URL}/board/integrated`,
+
+
+  const userId = useParams();
+  const token = localStorage.getItem('access_token');
+
+  const URL = `http://ec2-3-39-235-30.ap-northeast-2.compute.amazonaws.com:8080`;
+
+  const getComments = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/board/integrated/${userId}/comment/`,
+
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+
 
       const userPosts = postsResponse.data.filter(
         (post) => post.userId === parseInt(userId)
@@ -84,6 +102,11 @@ function MyComments() {
 
       const sortedUserComments = myComments.sort((a, b) => b.id - a.id);
 
+
+      const userComments = response.data.filter(
+        (comment) => comment.userId === parseInt(userId)
+      );
+      const sortedUserComments = userComments.sort((a, b) => b.id - a.id);
       return sortedUserComments;
     } catch (error) {
       console.error(error);
@@ -96,6 +119,7 @@ function MyComments() {
 
   const deleteComment = async () => {
     try {
+
       const deletePromises = selectedComments.map(({ postId, commentId }) => {
         return axios.delete(
           `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${commentId}`,
@@ -109,12 +133,27 @@ function MyComments() {
       await Promise.all(deletePromises);
       setComments(
         comments.filter((comment) => !selectedComments.includes(comment.id))
+
+      const deletePromises = selectedComments.map((commentId) => {
+        return axios.delete(`${URL}/board/integrated/1/comment/${commentId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      });
+      await Promise.all(deletePromises);
+      setComments(
+        comments.filter(
+          (comment) => !selectedComments.includes(comment.content)
+        )
+
       );
       setSelectedComments([]);
     } catch (error) {
       console.error(error);
     }
   };
+
 
   const handleCheckboxClick = (postId, commentId) => {
     const commentData = { postId, commentId };
@@ -128,6 +167,12 @@ function MyComments() {
       );
     } else {
       setSelectedComments([...selectedComments, commentData]);
+
+  const handleCheckboxClick = (id) => {
+    if (selectedComments.includes(id)) {
+      setSelectedComments(selectedComments.filter((cid) => cid !== id));
+    } else {
+      setSelectedComments([...selectedComments, id]);
     }
   };
 

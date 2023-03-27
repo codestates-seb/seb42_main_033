@@ -1,67 +1,76 @@
 import './App.css';
-import { HeaderLogin, HeaderLogout } from './components/Header.js';
+import { HeaderIcon, HeaderLogin } from './components/Header.jsx';
 import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Footer from './components/Footer';
-import Login from './page/LoginPage.js';
-import Signup from './page/SignupPage.js';
-import Modalmain from './components/Modalmain.js';
-import Dm from './components/Dm.js';
+import Footer from './components/Footer.jsx';
+import LoginPage from './page/LoginPage.js';
+import SignupPage from './page/SignupPage.js';
+import Modalmain from './components/Modalmain.jsx';
+import SendDm from './page/SendDm.js';
 import PostlistPage from './page/PostlistPage';
 import PostPage from './page/PostPage.js';
 import PostviewPage from './page/PostviewPage.js';
+import PostEditPage from './page/PostEditPage';
 import MainPage from './page/MainPage';
-import MyComments from './components/MyComents';
-import MyPost from './components/MyPost.js';
+import MyCommentsPage from './page/MyCommentsPage';
+import MyPostPage from './page/MyPostPage.js';
 import EditProfilePage from './page/EditProfilePage';
 import SignoutPage from './page/SignoutPage';
+import Infp from './page/Infplist';
 
 const Dev = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
   background: none;
-  /* max-width: 1264px; */
   padding-top: 50px;
-  /* position: relative; */
   justify-content: center;
 `;
 function App() {
-  const [login, setLogin] = useState(true);
   const [modal, setModal] = useState(false);
+  const token = localStorage.getItem('jwtToken');
+
   return (
     <Dev className="App">
-      {login ? (
-        <HeaderLogout setLogin={setLogin} login={login} />
+      {console.log(token)}
+      {token ? (
+        <HeaderIcon setModal={setModal} modal={modal} />
       ) : (
-        <HeaderLogin setLogin={setLogin} setModal={setModal} modal={modal} />
+        <HeaderLogin />
       )}
       <Routes>
         <Route path="/" element={<MainPage />} />
         {/* 홈화면 */}
-        <Route path="/PostviewPage" element={<PostviewPage />} />
+        <Route path="/PostviewPage">
+          <Route path=":id" element={<PostviewPage />} />
+        </Route>
         {/* 게시글 화면 */}
-        <Route path="/Login" element={<Login />} />
+        <Route path="/PostEditPage">
+          <Route path=":id" element={<PostEditPage />} />
+        </Route>
+        {/* 게시글 수정 */}
+        <Route path="/Login" element={<LoginPage />} />
         {/* 로그인 */}
-        <Route path="/Signup" element={<Signup />} />
+        <Route path="/Signup" element={<SignupPage />} />
         {/* 회원가입 */}
         <Route path="/Signout" element={<SignoutPage />} />
         {/* 회원탈퇴 */}
         <Route path="/PostlistPage" element={<PostlistPage />} />
-        {/* 게시판 */}
+        {/* 통합게시판 */}
         <Route path="/PostPage" element={<PostPage />} />
         {/* 글쓰기 */}
-        <Route path="/Dm" element={<Dm />} />
+        <Route path="/Dm" element={<SendDm />} />
         {/* 쪽지보내기 */}
-        <Route path="/MyComments" element={<MyComments />} />
+        <Route path="/MyComments" element={<MyCommentsPage />} />
         {/* 내댓글 */}
-        <Route path="/MyPost" element={<MyPost />} />
+        <Route path="/MyPost" element={<MyPostPage />} />
         {/* 내 게시글 */}
         <Route path="/EditProfile" element={<EditProfilePage />} />
         {/* 내정보 수정하기 */}
+        <Route path="/infp" element={<Infp />} />
       </Routes>
-      {modal ? <Modalmain /> : null}
+      {modal ? <Modalmain setModal={setModal} modal={modal} /> : null}
       <Footer />
     </Dev>
   );

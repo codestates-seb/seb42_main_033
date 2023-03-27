@@ -1,10 +1,8 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 
-const QuillEditor = () => {
-  const [contents, setContents] = useState('');
-
+const QuillEditor = ({ name, value, onChange }) => {
   const modules = useMemo(
     () => ({
       toolbar: {
@@ -24,11 +22,14 @@ const QuillEditor = () => {
     }),
     []
   );
+  const handleEditorChange = (content, delta, source, editor) => {
+    const html = editor.getHTML();
+    onChange(html !== undefined ? html : '');
+  };
+
   return (
     <div>
       <ReactQuill
-        value={contents}
-        onChange={setContents}
         modules={modules}
         theme="snow"
         placeholder="내용을 입력해주세요."
@@ -37,6 +38,9 @@ const QuillEditor = () => {
           marginBottom: '60px',
           width: '840px',
         }}
+        name={name}
+        value={value}
+        onChange={handleEditorChange}
       />
     </div>
   );

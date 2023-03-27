@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import MyPageSidebar from './MypageSidebar.js';
+import MyPageSidebar from '../components/MypageSidebar.js';
+import { Link } from 'react-router-dom';
 
+/*121212*/
 const CommentPageContainer = styled.div`
   font-size: 1vw;
   display: flex;
@@ -10,7 +12,7 @@ const CommentPageContainer = styled.div`
 
   justify-content: center;
   position: absolute;
-  top: 30%;
+  top: 10%;
   left: 55%;
   transform: translate(-50%, 20%);
 `;
@@ -32,7 +34,7 @@ const CommentContainer = styled.div`
 `;
 
 const StyledText = styled.div`
-  font-size: 4vh;
+  font-size: 3.5vh;
   font-weight: bold;
   margin-bottom: 2vh;
   position: absolute;
@@ -57,39 +59,37 @@ const DeleteButton = styled.button`
   border-radius: 5px;
   position: absolute;
   right: 10%;
-  bottom: -30%;
+  bottom: -15%;
   cursor: pointer;
 `;
 
+const SendBtnContainer = styled.div`
+  width: 100%;
+  text-align: right;
+`;
+const SendButton = styled.button`
+  background-color: #64b5ff;
+  width: 11vh;
+  height: 4.5vh;
+  color: white;
+  padding: 5px 10px;
+  margin: auto;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-weight: bold;
+`;
 const CommentText = styled.label`
   margin-left: 5vw;
   margin-top: 0px;
-  position: relative;
-
-  & p:last-child {
-    color: orange;
-    position: absolute;
-    left: 100%;
-    bottom: 0;
-  }
 `;
 
 const comments = [
   {
     id: 1,
     text: '안녕',
-    comments: [
-      {
-        id: 1,
-        text: '반가워요!',
-      },
-      {
-        id: 2,
-        text: '안녕하세요!',
-      },
-    ],
   },
-
   {
     id: 2,
     text: '하세요',
@@ -98,29 +98,29 @@ const comments = [
     id: 3,
     text: '오오오오오',
   },
-  // {
-  //   id: 4,
-  //   text: '오오오오오',
-  // },
-  // {
-  //   id: 5,
-  //   text: '오오오오오',
-  // },
-  // {
-  //   id: 6,
-  //   text: '오오오오오',
-  // },
-  // {
-  //   id: 7,
-  //   text: '오오오오오',
-  // },
-  // {
-  //   id: 8,
-  //   text: '오오오오오',
-  // },
+  {
+    id: 4,
+    text: '오오오오오',
+  },
+  {
+    id: 5,
+    text: '오오오오오',
+  },
+  {
+    id: 6,
+    text: '오오오오오',
+  },
+  {
+    id: 7,
+    text: '오오오오오',
+  },
+  {
+    id: 8,
+    text: '오오오오오',
+  },
 ];
 
-function MyPost() {
+function MyDmPage() {
   const [selectedComments, setSelectedComments] = useState([]);
 
   const handleCheckboxClick = (id) => {
@@ -133,10 +133,14 @@ function MyPost() {
 
   return (
     <>
+      <MyPageSidebar />
       <CommentPageContainer>
-        <MyPageSidebar />
-        <StyledText>내 게시글</StyledText>
-
+        <StyledText>쪽지함</StyledText>
+        <SendBtnContainer>
+          <Link to="/SendDm">
+            <SendButton>쪽지 쓰기</SendButton>
+          </Link>
+        </SendBtnContainer>
         <CommentsContainer>
           <HeaderContainer>선택</HeaderContainer>
           <hr />
@@ -153,15 +157,14 @@ function MyPost() {
                 />
                 <CommentText htmlFor={`checkbox-${comment.id}`}>
                   <p>{comment.text}</p>
-                  <p>({comment.comments ? comment.comments.length : 0})</p>
                 </CommentText>
               </CommentContainer>
             ))}
         </CommentsContainer>
-        <DeleteButton> 삭제 </DeleteButton>
+        <DeleteButton>삭제</DeleteButton>
       </CommentPageContainer>
     </>
   );
 }
 
-export default MyPost;
+export default MyDmPage;
