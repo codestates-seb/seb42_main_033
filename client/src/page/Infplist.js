@@ -122,7 +122,7 @@ const Infp = () => {
   useEffect(() => {
     for (const i of infpId) {
       // userid랑 게시글 id랑 안맞아서 특정 mbti만 불러오기 안되는거였음
-      // 해결법 생각해 봤는데 없음 ㄹㅇ;; 게시글 id로 받아올라 해도 거기에는 mbti 안적혀있음;;
+      // 해결법 생각해 봤는데 없음 게시글 id로 받아올라 해도 거기에는 mbti 안적혀있음
       axios
         .get(`${process.env.REACT_APP_API_URL}/board/integrated/${i}`)
         .then((response) => {
