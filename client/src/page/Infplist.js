@@ -116,7 +116,7 @@ const Infp = () => {
   useEffect(() => {
     axios
       // 전체회원 조회
-      .get(`${process.env.REACT_APP_API_URL}users`)
+      .get(`${process.env.REACT_APP_API_URL}/users`)
       .then((response) => {
         setMbtiArr(response.data.data);
       })
@@ -129,7 +129,7 @@ const Infp = () => {
     // 엠비티아이id .map 으로 get
     [infpId].map((i) => {
       axios
-        .get(`${process.env.REACT_APP_API_URL}users/${i}`)
+        .get(`${process.env.REACT_APP_API_URL}/users/${i}`)
         .then((response) => {
           setinfpList(response.data);
         })
@@ -140,7 +140,7 @@ const Infp = () => {
   }, []);
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}board/integrated`)
+      .get(`${process.env.REACT_APP_API_URL}/board/integrated`)
       .then((response) => {
         setAnswers(response.data);
       })
@@ -150,7 +150,7 @@ const Infp = () => {
   }, []);
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}users/1`)
+      .get(`${process.env.REACT_APP_API_URL}/users/1`)
       .then((response) => {
         setNickName(response.data.nickName);
       })
