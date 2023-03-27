@@ -12,10 +12,10 @@ const BoardList = ({ boardList }) => {
   const handleInputChange = (e) => {
     setSearchInput(e.target.value);
   };
+
   const filteredBoardList = boardList.filter((board) =>
     board.title.includes(searchInput)
   );
-
   const pageCount = Math.ceil(boardList.length / pageSize);
   const currentBoardList = filteredBoardList.slice(
     (currentPage - 1) * pageSize,

@@ -15,6 +15,7 @@ const PostPage = () => {
   // console.log(decodedToken);
   // const userId = decodedToken.userId;
   const userId = localStorage.getItem('userId');
+
   const createdAt = moment().format('YYYY.MM:DD HH:mm:ss');
   const post = {
     userId: userId,

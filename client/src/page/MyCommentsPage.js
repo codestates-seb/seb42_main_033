@@ -111,10 +111,11 @@ function MyComments() {
   const userId = useParams();
   const token = localStorage.getItem('access_token');
 
+  const URL = `http://ec2-3-39-235-30.ap-northeast-2.compute.amazonaws.com:8080`;
   const getComments = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/board/integrated/1/comment/${userId.id}`,
+        `${URL}/board/integrated/1/comment/${userId.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -134,14 +135,11 @@ function MyComments() {
   const deleteComment = async () => {
     try {
       const deletePromises = selectedComments.map((commentId) => {
-        return axios.delete(
-          `${process.env.REACT_APP_API_URL}/board/integrated/1/comment/${commentId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        return axios.delete(`${URL}/board/integrated/1/comment/${commentId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
       });
       await Promise.all(deletePromises);
       setComments(

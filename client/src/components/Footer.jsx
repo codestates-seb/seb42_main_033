@@ -34,7 +34,6 @@ const Footerbody = styled.div`
 `;
 const Footermain = styled.div`
   display: flex;
-  justify-content: space-between;
   color: white;
   font-size: 1.3rem;
   margin-left: 30px;
@@ -44,7 +43,6 @@ const Footermain = styled.div`
 `;
 const Footera = styled.a`
   color: white;
-  letter-spacing: 1px;
 `;
 const Footerbox = styled.div`
   width: 10px;
