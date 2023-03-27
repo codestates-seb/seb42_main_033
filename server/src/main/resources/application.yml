@@ -14,7 +14,7 @@ spring:
     hibernate:
       ddl-auto: create
 
-# swagger 적용 시 필요한 것.
+# swagger 적용 시  필요한 것.
 #  mvc:
 #    pathmatch:
 #      matching-strategy: ant_path_matcher

@@ -36,7 +36,6 @@ public class BoardIntegratedController {
     @PostMapping
     public ResponseEntity postPost(@RequestBody BoardIntegratedDto.Post postDto) {
 
-
         BoardIntegrated createdPost = service.createPost(mapper.postDtoToBoardIntegrated(postDto), postDto.getUserId());
         BoardIntegratedDto.Response result = mapper.boardIntegratedToResponseDto(createdPost);
 
