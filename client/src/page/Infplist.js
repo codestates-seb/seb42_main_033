@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 const Infp = () => {
-  const URL = `http://ec2-3-38-180-247.ap-northeast-2.compute.amazonaws.com:8080`;
   const [answers, setAnswers] = useState([]);
   const [nickName, setNickName] = useState([]);
+  const [infplist, setinfpList] = useState([]);
   const [mbtiArr, setMbtiArr] = useState('');
   const [enfpId, setenfpId] = useState('');
   const [infpId, setinfpId] = useState('');
@@ -42,6 +42,7 @@ const Infp = () => {
   let istjs = '';
   useEffect(() => {
     for (const i in mbtiArr) {
+      // 엠비티아이별 회원 id
       console.log(mbtiArr[i].userId);
       if (mbtiArr[i].mbti === 'ENFP' || mbtiArr[i].mbti === 'enfp') {
         enfps = mbtiArr[i].userId + ',';
@@ -94,10 +95,34 @@ const Infp = () => {
       }
     }
   });
-
   useEffect(() => {
     axios
-      .get(`${URL}/board/integrated`)
+      // 전체회원 조회
+      .get(`${process.env.REACT_APP_API_URL}users`)
+      .then((response) => {
+        setMbtiArr(response.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    // 엠비티아이id .map 으로 get
+    [infpId].map((i) => {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}users/${i}`)
+        .then((response) => {
+          setinfpList(response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }, []);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}board/integrated`)
       .then((response) => {
         setAnswers(response.data);
       })
@@ -107,17 +132,7 @@ const Infp = () => {
   }, []);
   useEffect(() => {
     axios
-      .get(`${URL}users/1`)
-      .then((response) => {
-        setNickName(response.data.nickName);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  useEffect(() => {
-    axios
-      .get(`${URL}users/${infpId.userId}`)
+      .get(`${process.env.REACT_APP_API_URL}users/1`)
       .then((response) => {
         setNickName(response.data.nickName);
       })
@@ -132,13 +147,13 @@ const Infp = () => {
         {console.log(infps)}
         {console.log(infpId)}
         {console.log(infjs)}
-        {answers.map((answers) => (
-          <Link key={answers.id} to={`/board/integrated`}>
+        {infplist.map((infplist) => (
+          <Link key={infplist.id} to={`/board/integrated`}>
             <div>
               <CardLayout>
-                <div className="posttitle"> {answers.title} </div>
-                <div className="postcontent"> {answers.content} </div>
-                <div className="postnickname"> {nickName} </div>
+                <div className="posttitle"> {infplist.title} </div>
+                <div className="postcontent"> {infplist.content} </div>
+                <div className="postnickname"> {infplist.nickName} </div>
               </CardLayout>
             </div>
           </Link>

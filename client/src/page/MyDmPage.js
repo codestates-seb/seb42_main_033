@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import MyPageSidebar from '../components/MypageSidebar.js';
+import MyPageSidebar from '../components/MypageSidebar.jsx';
 import { Link } from 'react-router-dom';
 
 /*121212*/
