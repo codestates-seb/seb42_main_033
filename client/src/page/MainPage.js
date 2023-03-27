@@ -8,6 +8,7 @@ const MainContainer = styled.main`
   width: 100%;
   height: 100vh;
   margin-top: 10vh;
+  margin-bottom: 15vh;
   display: flex;
   flex-direction: column;
 `;

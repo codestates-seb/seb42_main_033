@@ -1,8 +1,41 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-const BoardAnswer = ({ username, content }) => {
+const BoardAnswer = ({ username, content, post }) => {
+  const [commentsId, setcommentsId] = useState();
+  const token = localStorage.getItem('jwtToken');
+  useEffect(() => {
+    const postId = post.id;
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment`
+      )
+      .then((response) => {
+        setcommentsId(response.data.commentsId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+  const answerDelete = async () => {
+    const postId = post.id;
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${commentsId}`,
+        {
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <AnswerForm>
       <div className="answernickname">인프피 맞습니다{username}</div>
@@ -10,14 +43,17 @@ const BoardAnswer = ({ username, content }) => {
         className="answerbutton"
         style={{ marginLeft: '730px', fontSize: '13px' }}
       >
-        <span>수정</span>
-        <span>삭제</span>
+        <AnswerButton>수정</AnswerButton>
+        <AnswerButton
+          onClick={() => {
+            answerDelete();
+          }}
+        >
+          삭제
+        </AnswerButton>
       </div>
 
-      <div className="answercontent">
-        이정도면 괜찮을거 같기도 하고 아닐거 같기도 하고 잘
-        모르겠네여어어어어어어어{content}
-      </div>
+      <div className="answercontent"> {content} </div>
     </AnswerForm>
   );
 };
@@ -26,6 +62,10 @@ const AnswerForm = styled.div`
   color: #767676;
   height: 130px;
   border-bottom: 1px solid black;
+`;
+const AnswerButton = styled.button`
+  background-color: rgba(0, 0, 0, 0);
+  border: solid 0px rgba(0, 0, 0, 0);
 `;
 
 export default BoardAnswer;
