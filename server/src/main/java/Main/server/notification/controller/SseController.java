@@ -1,39 +1,29 @@
 package Main.server.notification.controller;
 
-import Main.server.notification.SseEmitters;
+import Main.server.notification.service.SseService;
+import Main.server.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
-import java.io.IOException;
 
 @CrossOrigin
 @Slf4j
 @RestController
 public class SseController {
-    private final SseEmitters sseEmitters;
+    private final SseService sseService;
 
-    public SseController(SseEmitters sseEmitters) {
-        this.sseEmitters = sseEmitters;
+    public SseController(SseService sseService) {
+        this.sseService = sseService;
     }
 
-    @GetMapping(value = "/connect", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public ResponseEntity<SseEmitter> connect(){
-        SseEmitter emitter = new SseEmitter(60 * 1000L);
-        sseEmitters.add(emitter);
-
-        try{
-            emitter.send(SseEmitter.event()
-                    .name("connect") // 해당 이벤트 이름 지정
-                    .data("연결완료!")); // 503 에러 방지
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
-
+    @GetMapping(value = "/connect/{user-id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public ResponseEntity<SseEmitter> connect(@PathVariable("user-id") Long userId){
+        SseEmitter emitter = sseService.connectSse(userId);
         return ResponseEntity.ok(emitter);
     }
 }
