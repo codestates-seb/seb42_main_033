@@ -9,7 +9,6 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [guest, setGuest] = useState('');
   const navigate = useNavigate();
-  const URL = `http://ec2-3-39-235-30.ap-northeast-2.compute.amazonaws.com:8080`;
   // const clientId =
   //   '830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com';
   // 로그인 같은 비동기 외부파일로.(관심사 불리 위해)
@@ -23,10 +22,13 @@ function LoginPage() {
       alert('비밀번호 확인좀');
     }
     try {
-      const response = await axios.post(`${URL}/user/login`, {
-        email: userId,
-        password1: password,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/user/login`,
+        {
+          email: userId,
+          password1: password,
+        }
+      );
       console.log(response);
       if (response.status === 401) {
         alert('회원가입 해야할듯');
@@ -37,11 +39,14 @@ function LoginPage() {
       localStorage.setItem('rfToken', refreshToken);
       //user Id 추가 (병민)
       try {
-        const userIdGet = await axios.get(`${URL}/users`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const userIdGet = await axios.get(
+          `${process.env.REACT_APP_API_URL}/users`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
         console.log('userIdGet:', userIdGet.data);
         const user = userIdGet.data.data.find((user) => user.email === userId);
         if (user) {

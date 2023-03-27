@@ -25,9 +25,10 @@ const BoardCreateOrEdit = ({
       <QuillEditor
         name="content"
         value={content}
-        onChange={(e) => {
-          setContent(e.target.value);
-        }}
+        // onChange={(e) => {
+        //   setContent(e.target.value);
+        // }}
+        onChange={setContent}
       />
     </BoardForm>
   );
