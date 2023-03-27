@@ -20,6 +20,7 @@ const PostviewPage = () => {
     likeCount: '',
     commentCount: '',
   });
+
   //게시글 조회
   useEffect(() => {
     const getPost = async () => {
