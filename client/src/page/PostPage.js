@@ -4,19 +4,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import moment from 'moment';
-// import jwtDecode from 'jwt-decode';
 
 const PostPage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const navigate = useNavigate();
-  // const token = localStorage.getItem('jwtToken');
-  // const decodedToken = jwtDecode(token);
-  // console.log(decodedToken);
-  // const userId = decodedToken.userId;
-  // const userId = localStorage.getItem('userId');
-  const createdAt = moment().format('YYYY.MM:DD HH:mm:ss');
   const userId = localStorage.getItem('userId');
+  const createdAt = moment.utc().local().format('YYYY.MM.DD HH:mm:ss');
+
   const post = {
     userId: userId,
     title: title,
@@ -41,7 +36,7 @@ const PostPage = () => {
         const response = await axios.post(
           `${process.env.REACT_APP_API_URL}/board/integrated`,
           {
-            userId: '1',
+            userId: post.userId,
             title: post.title,
             content: post.content,
             tag: '',

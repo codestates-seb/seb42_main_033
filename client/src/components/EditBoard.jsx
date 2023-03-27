@@ -20,7 +20,9 @@ const EditBoard = () => {
   // title, content의 상태를 바꿔줌
   useEffect(() => {
     const getBoard = async () => {
-      const { data } = await axios.patch(`/api/board/integrated/${postId}`);
+      const { data } = await axios.patch(
+        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}`
+      );
       return data;
     };
     getBoard().then((result) => {
@@ -43,7 +45,7 @@ const EditBoard = () => {
       await api.put('/api/board/integrated', formData);
       window.alert('😎수정이 완료되었습니다😎');
       // 이전 페이지로 돌아가기
-      window.location.href = `/api/board/integrated/${postId}`;
+      window.location.href = `${process.env.REACT_APP_API_URL}/board/integrated/${postId}`;
     } catch (e) {
       // 서버에서 받은 에러 메시지 출력
       toast.error('오류가 발생했습니다!😭', {

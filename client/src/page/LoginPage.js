@@ -9,7 +9,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [guest, setGuest] = useState('');
   const navigate = useNavigate();
-  const URL = `https://5293-211-217-72-99.jp.ngrok.io`;
+  const URL = `http://ec2-3-39-235-30.ap-northeast-2.compute.amazonaws.com:8080`;
   // const clientId =
   //   '830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com';
   // 로그인 같은 비동기 외부파일로.(관심사 불리 위해)
@@ -27,13 +27,10 @@ function LoginPage() {
       alert('비밀번호 확인좀');
     }
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/user/login`,
-        {
-          email: userId,
-          password1: password,
-        }
-      );
+      const response = await axios.post(`${URL}/user/login`, {
+        email: userId,
+        password1: password,
+      });
       console.log(response);
       if (response.status === 401) {
         alert('회원가입 해야할듯');
@@ -79,6 +76,7 @@ function LoginPage() {
           // guest
         }
       );
+      console.log(guest);
       console.log(response);
       if (response.status === 200) {
         navigate('/');
@@ -195,6 +193,10 @@ const Loginbutton = styled.button`
   font-size: 30px;
   font-weight: 600;
   border: solid 10px #64b5ff;
+  :hover {
+    background-color: #7ec2ff;
+    border: solid 10px #7ec2ff;
+  }
 `;
 const Loginguestbody = styled.div`
   display: flex;

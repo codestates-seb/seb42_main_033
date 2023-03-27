@@ -2,67 +2,55 @@ import styled from 'styled-components';
 import { AiOutlineEllipsis } from 'react-icons/ai';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
 import PostModal from './PostModal.jsx';
-import { useNavigate, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import BoardAnswer from './BoardAnswer.jsx';
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 
-const BoardCarddetail = ({ id, post, setPost, isLoaded, setIsLoaded }) => {
-  // const [isLoaded, setIsLoaded] = useState(false);
-  const token = localStorage.getItem('jwtToken');
-  const decodedToken = jwtDecode(token);
-  const userId = decodedToken.userId;
-  const navigate = useNavigate();
-  let [like, setLike] = useState(0);
-  let [count, setCount] = useState(0);
+const BoardCarddetail = ({
+  id,
+  post,
+  setPost,
+  isLoaded,
+  handleEdit,
+  handleDelete,
+}) => {
+  const [like, setLike] = useState(0);
+  const [count, setCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const token = localStorage.getItem('jwtToken');
+  const userId = localStorage.getItem('userId');
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
-  // const [post, setPost] = useState({});
+  const commentCount = comments.length;
+
   const handleClick = () => {
     setIsModalOpen(!isModalOpen);
   };
-  //게시글 불러오기 1
-  useEffect(() => {
-    const getPost = async () => {
-      try {
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/board/integrated/${id}`
-        );
-        setPost(data);
-        setIsLoaded(true);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getPost();
-  }, [id]);
-  // 게시글 수정
-  const handleEdit = async () => {
-    navigate(`/PostPage/${id}`, {
-      state: { title: post.title, content: post.content },
-    });
-  };
-  // 게시글 삭제
-  const handleDelete = async () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+  const handleLikeClick = async () => {
+    const postId = post.id;
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${id}`,
-        config
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/like`,
+        {
+          userId: userId,
+          postId: postId,
+        },
+        {
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+          },
+        }
       );
-      navigate('/PostlistPage');
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
   //댓글 등록
   const handleCommentSubmit = async () => {
+    const postId = post.id;
     try {
       const config = {
         headers: {
@@ -71,9 +59,8 @@ const BoardCarddetail = ({ id, post, setPost, isLoaded, setIsLoaded }) => {
       };
       const data = {
         userId: userId,
-        postId: id,
+        postId: postId,
         content: comment,
-        username: localStorage.getItem('username'),
       };
       await axios.post(
         `${process.env.REACT_APP_API_URL}/board/integrated/${id}`,
@@ -85,10 +72,13 @@ const BoardCarddetail = ({ id, post, setPost, isLoaded, setIsLoaded }) => {
         { username: data.username, content: data.content },
       ]);
       setComment('');
+      setCount(count + 1);
+      setPost({ ...post, commentCount: commentCount + 1 });
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <>
       {isLoaded && (
@@ -101,8 +91,7 @@ const BoardCarddetail = ({ id, post, setPost, isLoaded, setIsLoaded }) => {
                   제목
                   {post.title}
                   <ModalContainer onClick={handleClick}>
-                    {localStorage.getItem('jwtToken') &&
-                      userId === post.userId && <EditDeletIcon />}
+                    {token && userId === post.userId && <EditDeletIcon />}
                   </ModalContainer>
                   {isModalOpen && (
                     <PostModal
@@ -118,12 +107,11 @@ const BoardCarddetail = ({ id, post, setPost, isLoaded, setIsLoaded }) => {
                 </div>
                 <div className="nickname">
                   닉네임
-                  {post.username}
+                  {post.nickname}
                 </div>
                 <div className="createdate">
                   시간
                   {post.createdAt}
-                  {/* {moment(board.created).add(9, 'hour').format('YYYY-MM-DD')} */}
                 </div>
               </div>
               <div className="boardcontent">
@@ -137,6 +125,7 @@ const BoardCarddetail = ({ id, post, setPost, isLoaded, setIsLoaded }) => {
                       <Like
                         onClick={() => {
                           setLike(like + 1);
+                          handleLikeClick();
                         }}
                         style={{ fontSize: '20px' }}
                       />
@@ -163,8 +152,13 @@ const BoardCarddetail = ({ id, post, setPost, isLoaded, setIsLoaded }) => {
               {comments.map((comment, index) => (
                 <BoardAnswer
                   key={index}
+                  // id={id}
+                  // userId={userId}
                   username={comment.username}
                   content={comment.content}
+                  post={post}
+                  setPost={setPost}
+                  id={id}
                 />
               ))}
               <div className="writranswer">

@@ -46,6 +46,12 @@ function MyComments() {
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('jwtToken');
 
+
+  const userId = useParams();
+  const token = localStorage.getItem('access_token');
+
+  const URL = `http://ec2-3-39-235-30.ap-northeast-2.compute.amazonaws.com:8080`;
+
   const getComments = async () => {
     try {
       const response = await axios.get(
