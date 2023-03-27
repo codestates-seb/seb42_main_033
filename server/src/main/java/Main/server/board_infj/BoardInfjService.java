@@ -2,12 +2,12 @@ package Main.server.board_infj;
 
 import Main.server.advice.errors.DuplicateResourceException;
 import Main.server.advice.errors.NotFoundException;
+import Main.server.board_integrated.BoardIntegrated;
 import Main.server.comment.Comment;
 import Main.server.comment.CommentRepository;
-import Main.server.like.BoardInfjLike;
-import Main.server.like.BoardInfjLikeRepository;
+import Main.server.like.Like;
 import Main.server.like.LikeDto;
-import Main.server.like.BoardIntegratedLikeRepository;
+import Main.server.like.LikeRepository;
 import Main.server.user.entity.Users;
 import Main.server.user.repository.UserRepository;
 import org.springframework.data.domain.Page;
@@ -25,12 +25,12 @@ import java.util.Optional;
 public class BoardInfjService {
     private final BoardInfjRepository boardInfjRepository;
     private final UserRepository userRepository;
-    private final BoardInfjLikeRepository likeRepository;
+    private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
 
     public BoardInfjService(BoardInfjRepository boardInfjRepository,
                             UserRepository userRepository,
-                            BoardInfjLikeRepository likeRepository,
+                            LikeRepository likeRepository,
                             CommentRepository commentRepository) {
         this.boardInfjRepository = boardInfjRepository;
         this.userRepository = userRepository;
@@ -40,7 +40,7 @@ public class BoardInfjService {
 
     @Transactional
     public BoardInfj createPost(BoardInfj post, long userId) {
-        Users findUser = getUserId(userId);
+        Users findUser = getUserFromId(userId);
         post.setUsers(findUser);
         post.setViewCount(0L);
         post.setLikeCount(0L);
@@ -71,7 +71,7 @@ public class BoardInfjService {
     }
 
     @Transactional
-    public BoardInfjLike insert(LikeDto likeDto) throws Exception {
+    public Like insert(LikeDto likeDto) throws Exception {
 
         Users users = userRepository.findById(likeDto.getUserId())
                 .orElseThrow(() -> new NotFoundException("회원 정보를 찾을 수 없습니다."));
@@ -79,12 +79,12 @@ public class BoardInfjService {
         BoardInfj post = boardInfjRepository.findById(likeDto.getPostId())
                 .orElseThrow(() -> new NotFoundException("게시글을 찾을 수 없습니다."));
 
-        if(likeRepository.findByUsersAndPost(users, post).isPresent()) {
+        if(likeRepository.findByUsersAndBoardInfj(users, post).isPresent()) {
             throw new DuplicateResourceException("이미 추천했습니다.");
         }
 
-        BoardInfjLike boardInfjLike = BoardInfjLike.builder()
-                .post(post)
+        Like boardInfjLike = Like.builder()
+                .boardInfj(post)
                 .users(users)
                 .category("infj")
                 .build();
@@ -100,7 +100,7 @@ public class BoardInfjService {
         BoardInfj post = boardInfjRepository.findById(likeDto.getPostId())
                 .orElseThrow(() -> new NotFoundException("게시글을 찾을 수 없습니다."));
 
-        BoardInfjLike boardInfjLike = likeRepository.findByUsersAndPost(users, post)
+        Like boardInfjLike = likeRepository.findByUsersAndBoardInfj(users, post)
                 .orElseThrow(() -> new NotFoundException("추천하지 않았습니다."));
 
         likeRepository.delete(boardInfjLike);
@@ -121,12 +121,12 @@ public class BoardInfjService {
     public void deletePost(long id) {
         BoardInfj post = findPost(id);
 
-        List<BoardInfjLike> boardInfjLikes = likeRepository.findAll();
+        List<Like> boardInfjLikes = likeRepository.findAll();
 
         while (post.getLikeCount() != 0) {
             for(int i = 0; i < boardInfjLikes.size(); i++) {
-                BoardInfjLike boardInfjLike = boardInfjLikes.get(i);
-                if(boardInfjLike.getCategory().equals("infj") && boardInfjLike.getPost().getId() == id) {
+                Like boardInfjLike = boardInfjLikes.get(i);
+                if(boardInfjLike.getCategory().equals("infj") && boardInfjLike.getBoardInfj().getId() == id) {
                     likeRepository.delete(boardInfjLike);
                     deleteLike(id);
                 }
@@ -138,7 +138,7 @@ public class BoardInfjService {
         while (post.getCommentCount() != 0) {
             for(int i = 0; i < comments.size(); i++) {
                 Comment comment = comments.get(i);
-                if(comment.getCategory().equals("infj") && comment.getPost().getId() == id) {
+                if(comment.getCategory().equals("infj") && comment.getBoardInfj().getId() == id) {
                     commentRepository.delete(comment);
                     post.setCommentCount(post.getCommentCount() - 1);
                 }
@@ -146,6 +146,47 @@ public class BoardInfjService {
         }
 
         boardInfjRepository.deleteById(id);
+    }
+
+    // 댓글 작성
+    @Transactional
+    public Comment createComment(Comment comment, long userId, long postId) {
+        Users findUser = getUserFromId(userId);
+        BoardInfj findPost = findPost(postId);
+        findPost.setCommentCount(findPost.getCommentCount()+1);
+        comment.setUser(findUser);
+        comment.setBoardInfj(findPost);
+        comment.setCategory("infj");
+        return commentRepository.save(comment);
+    }
+
+    // 댓글 수정
+    @Transactional
+    public Comment updateComment(Comment comment) {
+        Comment findComment = findVerifiedComment(comment.getId());
+        Optional.ofNullable(comment.getContent()).ifPresent(content -> findComment.setContent(content));
+
+        findComment.setModifiedAt(LocalDateTime.now());
+        return commentRepository.save(findComment);
+    }
+
+    // 댓글 삭제
+    @Transactional
+    public void deleteComment(long commentId) {
+        Comment findComment = findVerifiedComment(commentId);
+        BoardInfj post = findComment.getBoardInfj();
+        commentRepository.deleteById(commentId);
+        post.setCommentCount(post.getCommentCount()-1);
+    }
+
+    // 댓글 조회
+    public Comment findVerifiedComment(long commentId) {
+        return commentRepository.findById(commentId).orElse(null);
+    }
+
+    // 전체 댓글 조회
+    public List<Comment> findComments() {
+        return commentRepository.findAll();
     }
 
     public BoardInfj findPost(long id) {
@@ -156,7 +197,7 @@ public class BoardInfjService {
         return boardInfjRepository.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
     }
 
-    public Users getUserId(long userId) {
+    public Users getUserFromId(long userId) {
         return userRepository.findById(userId).get();
     }
 }

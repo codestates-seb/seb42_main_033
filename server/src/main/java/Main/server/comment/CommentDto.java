@@ -1,5 +1,6 @@
 package Main.server.comment;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,8 +19,8 @@ public class CommentDto {
         @NotBlank
         String content;
 
-        @NotBlank
-        String username;
+//        @NotBlank
+//        String username;
     }
 
     @Getter
@@ -37,6 +38,7 @@ public class CommentDto {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class Response {
         private Long id;
         private Long userId;

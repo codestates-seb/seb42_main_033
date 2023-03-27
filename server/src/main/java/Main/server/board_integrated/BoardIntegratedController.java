@@ -4,7 +4,7 @@ import Main.server.comment.Comment;
 import Main.server.comment.CommentDto;
 import Main.server.comment.CommentMapper;
 import Main.server.like.LikeDto;
-import Main.server.like.BoardIntegratedLikeRepository;
+import Main.server.like.LikeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,23 +18,25 @@ import java.util.List;
 @RequestMapping("/board/integrated")
 public class BoardIntegratedController {
     private final BoardIntegratedService service;
-    private final BoardIntegratedMapper mapper;
-    private final BoardIntegratedLikeRepository boardIntegratedLikeRepository;
+    private final CustomBoardIntegratedMapper mapper;
+    private final LikeRepository likeRepository;
     private final CommentMapper commentMapper;
 
     public BoardIntegratedController(BoardIntegratedService service,
-                                     BoardIntegratedMapper mapper,
-                                     BoardIntegratedLikeRepository boardIntegratedLikeRepository,
+                                     CustomBoardIntegratedMapper mapper,
+                                     LikeRepository likeRepository,
                                      CommentMapper commentMapper) {
         this.service = service;
         this.mapper = mapper;
-        this.boardIntegratedLikeRepository = boardIntegratedLikeRepository;
+        this.likeRepository = likeRepository;
         this.commentMapper = commentMapper;
     }
 
     //게시글 등록
     @PostMapping
     public ResponseEntity postPost(@RequestBody BoardIntegratedDto.Post postDto) {
+
+
         BoardIntegrated createdPost = service.createPost(mapper.postDtoToBoardIntegrated(postDto), postDto.getUserId());
         BoardIntegratedDto.Response result = mapper.boardIntegratedToResponseDto(createdPost);
 
@@ -126,7 +128,7 @@ public class BoardIntegratedController {
             CommentDto.Response result = commentMapper.commentToCommentResponseDto(createComment);
             result.setUserId(createComment.getUser().getUserId());
             result.setUsername(createComment.getUser().getNickName());
-            result.setBoardId(createComment.getPost().getId());
+            result.setBoardId(createComment.getBoardIntegrated().getId());
 
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
@@ -152,7 +154,7 @@ public class BoardIntegratedController {
         CommentDto.Response result = commentMapper.commentToCommentResponseDto(comment);
         result.setUserId(comment.getUser().getUserId());
         result.setUsername(comment.getUser().getNickName());
-        result.setBoardId(comment.getPost().getId());
+        result.setBoardId(comment.getBoardIntegrated().getId());
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

@@ -30,15 +30,15 @@ public class Comment extends Auditable {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JsonManagedReference
-    @JoinColumn(name = "POST_ID")
+    @JoinColumn(name = "board_integrated_id")
     @JsonIgnore
-    private BoardIntegrated post;
+    private BoardIntegrated boardIntegrated;
 
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JsonManagedReference
-//    @JoinColumn(name = "POST_ID")
-//    @JsonIgnore
-//    private BoardInfj post;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonManagedReference
+    @JoinColumn(name = "board_infj_id")
+    @JsonIgnore
+    private BoardInfj boardInfj;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "USER_ID")

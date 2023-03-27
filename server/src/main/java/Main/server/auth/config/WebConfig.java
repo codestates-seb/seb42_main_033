@@ -15,7 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "ec2-52-78-241-208.ap-northeast-2.compute.amazonaws.com:8080",
                         "http://seb42-main-033-bucket.s3-website.ap-northeast-2.amazonaws.com",
                         "ec2-52-78-241-208.ap-northeast-2.compute.amazonaws.com")
-                .allowedMethods(ALLOWED_METHOD_NAME.split(","))
+                .allowedHeaders("*")
+                .allowedMethods("GET","HEAD","POST","PUT","DELETE","OPTIONS","PATCH")
                 .allowCredentials(true)
                 .maxAge(3000);
     }

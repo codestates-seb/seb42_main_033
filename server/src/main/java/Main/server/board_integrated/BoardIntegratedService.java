@@ -6,7 +6,7 @@ import Main.server.comment.Comment;
 import Main.server.comment.CommentRepository;
 import Main.server.like.Like;
 import Main.server.like.LikeDto;
-import Main.server.like.BoardIntegratedLikeRepository;
+import Main.server.like.LikeRepository;
 import Main.server.user.entity.Users;
 import Main.server.user.repository.UserRepository;
 import org.springframework.data.domain.Page;
@@ -24,12 +24,12 @@ import java.util.Optional;
 public class BoardIntegratedService {
     private final BoardIntegratedRepository boardIntegratedRepository;
     private final UserRepository userRepository;
-    private final BoardIntegratedLikeRepository likeRepository;
+    private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
 
     public BoardIntegratedService(BoardIntegratedRepository boardIntegratedRepository,
                                   UserRepository userRepository,
-                                  BoardIntegratedLikeRepository likeRepository,
+                                  LikeRepository likeRepository,
                                   CommentRepository commentRepository) {
         this.boardIntegratedRepository = boardIntegratedRepository;
         this.userRepository = userRepository;
@@ -146,7 +146,7 @@ public class BoardIntegratedService {
         while (post.getCommentCount() != 0) {
             for(int i = 0; i < comments.size(); i++) {
                 Comment comment = comments.get(i);
-                if(comment.getCategory().equals("integrated") && comment.getPost().getId() == id) {
+                if(comment.getCategory().equals("integrated") && comment.getBoardIntegrated().getId() == id) {
                     commentRepository.delete(comment);
                     post.setCommentCount(post.getCommentCount()-1);
                 }
@@ -162,7 +162,7 @@ public class BoardIntegratedService {
         BoardIntegrated findPost = findPost(postId);
         findPost.setCommentCount(findPost.getCommentCount()+1);
         comment.setUser(findUser);
-        comment.setPost(findPost);
+        comment.setBoardIntegrated(findPost);
         comment.setCategory("integrated");
         return commentRepository.save(comment);
     }
@@ -181,7 +181,7 @@ public class BoardIntegratedService {
     @Transactional
     public void deleteComment(long commentId) {
         Comment findComment = findVerifiedComment(commentId);
-        BoardIntegrated post = findComment.getPost();
+        BoardIntegrated post = findComment.getBoardIntegrated();
         commentRepository.deleteById(commentId);
         post.setCommentCount(post.getCommentCount()-1);
     }
@@ -200,10 +200,6 @@ public class BoardIntegratedService {
     public Users getUserFromId(Long userId) {
         return userRepository.findById(userId).get();
     }
-
-//    public BoardIntegrated getBoardIntegratedFromId(Long postId) {
-//        return boardIntegratedRepository.findById(postId).get();
-//    }
 
     // 게시글 조회
     public BoardIntegrated findPost(long id) {

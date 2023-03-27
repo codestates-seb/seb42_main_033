@@ -1,5 +1,6 @@
 package Main.server.like;
 
+import Main.server.board_infj.BoardInfj;
 import Main.server.board_integrated.BoardIntegrated;
 import Main.server.user.entity.Users;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -24,20 +25,14 @@ public class Like {
     private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "board_integrated_id")
     @JsonBackReference
     private BoardIntegrated boardIntegrated;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "post_id")
-//    @JsonBackReference
-//    private BoardInfj boardInfjPost;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_infj_id")
+    @JsonBackReference
+    private BoardInfj boardInfj;
 
     private String category;
-
-//    public BoardIntegratedLike(Users users, BoardIntegrated post, String category) {
-//        this.users = users;
-//        this.post = post;
-//        this.category = category;
-//    }
 }
