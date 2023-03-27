@@ -49,7 +49,8 @@ function LoginPage() {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        const user = userIdGet.data.find((user) => user.email === userId);
+        console.log('userIdGet:', userIdGet.data);
+        const user = userIdGet.data.data.find((user) => user.email === userId);
         if (user) {
           const userIdSet = user.userId;
           localStorage.setItem('userId', userIdSet);
