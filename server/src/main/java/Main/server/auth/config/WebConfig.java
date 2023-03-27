@@ -11,11 +11,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry){
         registry.addMapping("/**")
-                .allowedOriginPatterns("*",
-                        "https://5293-211-217-72-99.jp.ngrok.io",
-                        "https://5293-211-217-72-99.jp.ngrok.io:3000",
-                        "http://localhost:3000")
-                .allowedMethods(ALLOWED_METHOD_NAME.split(","))
+                .allowedOriginPatterns("*", "http://seb42-main-033-bucket.s3-website.ap-northeast-2.amazonaws.com:8080",
+                        "ec2-52-78-241-208.ap-northeast-2.compute.amazonaws.com:8080",
+                        "http://seb42-main-033-bucket.s3-website.ap-northeast-2.amazonaws.com",
+                        "ec2-52-78-241-208.ap-northeast-2.compute.amazonaws.com")
+                .allowedHeaders("*")
+                .allowedMethods("GET","HEAD","POST","PUT","DELETE","OPTIONS","PATCH")
                 .allowCredentials(true)
                 .maxAge(3000);
     }

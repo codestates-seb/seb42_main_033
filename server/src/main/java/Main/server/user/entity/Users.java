@@ -16,8 +16,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Users extends Auditable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;

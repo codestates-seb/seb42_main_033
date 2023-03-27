@@ -1,5 +1,6 @@
 package Main.server.board_integrated;
 
+import Main.server.comment.CommentDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +31,7 @@ public class BoardIntegratedDto {
     public static class Response {
         long id;
         long userId;
+        String nickName;
         String title;
         String content;
         String tag;
@@ -43,6 +45,6 @@ public class BoardIntegratedDto {
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy년 MM월 dd일 HH:mm", timezone = "Asia/Seoul")
         LocalDateTime modifiedAt;
 
-//        private List<CommentResponseDto> comments;
+        private List<CommentDto.Response> comments;
     }
 }

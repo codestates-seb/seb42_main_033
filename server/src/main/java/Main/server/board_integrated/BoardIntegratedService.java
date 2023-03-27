@@ -4,9 +4,9 @@ import Main.server.advice.errors.DuplicateResourceException;
 import Main.server.advice.errors.NotFoundException;
 import Main.server.comment.Comment;
 import Main.server.comment.CommentRepository;
-import Main.server.like.BoardIntegratedLike;
+import Main.server.like.Like;
 import Main.server.like.LikeDto;
-import Main.server.like.BoardIntegratedLikeRepository;
+import Main.server.like.LikeRepository;
 import Main.server.user.entity.Users;
 import Main.server.user.repository.UserRepository;
 import org.springframework.data.domain.Page;
@@ -24,12 +24,12 @@ import java.util.Optional;
 public class BoardIntegratedService {
     private final BoardIntegratedRepository boardIntegratedRepository;
     private final UserRepository userRepository;
-    private final BoardIntegratedLikeRepository likeRepository;
+    private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
 
     public BoardIntegratedService(BoardIntegratedRepository boardIntegratedRepository,
                                   UserRepository userRepository,
-                                  BoardIntegratedLikeRepository likeRepository,
+                                  LikeRepository likeRepository,
                                   CommentRepository commentRepository) {
         this.boardIntegratedRepository = boardIntegratedRepository;
         this.userRepository = userRepository;
@@ -74,7 +74,7 @@ public class BoardIntegratedService {
 
     // 게시글 추천
     @Transactional
-    public BoardIntegratedLike insert(LikeDto likeDto) throws Exception {
+    public Like insert(LikeDto likeDto) throws Exception {
 
         Users users = userRepository.findById(likeDto.getUserId())
                 .orElseThrow(() -> new NotFoundException("회원 정보를 찾을 수 없습니다."));
@@ -82,12 +82,12 @@ public class BoardIntegratedService {
         BoardIntegrated post = boardIntegratedRepository.findById(likeDto.getPostId())
                 .orElseThrow(() -> new NotFoundException("게시글을 찾을 수 없습니다."));
 
-        if(likeRepository.findByUsersAndPost(users, post).isPresent()) {
+        if(likeRepository.findByUsersAndBoardIntegrated(users, post).isPresent()) {
             throw new DuplicateResourceException("이미 추천했습니다.");
         }
 
-        BoardIntegratedLike boardIntegratedLike = BoardIntegratedLike.builder()
-                .post(post)
+        Like boardIntegratedLike = Like.builder()
+                .boardIntegrated(post)
                 .users(users)
                 .category("integrated")
                 .build();
@@ -105,7 +105,7 @@ public class BoardIntegratedService {
         BoardIntegrated post = boardIntegratedRepository.findById(likeDto.getPostId())
                 .orElseThrow(() -> new NotFoundException("게시글을 찾을 수 없습니다."));
 
-        BoardIntegratedLike boardIntegratedLike = likeRepository.findByUsersAndPost(users, post)
+        Like boardIntegratedLike = likeRepository.findByUsersAndBoardIntegrated(users, post)
                 .orElseThrow(() -> new NotFoundException("추천하지 않았습니다."));
 
         likeRepository.delete(boardIntegratedLike);
@@ -129,12 +129,12 @@ public class BoardIntegratedService {
     public void deletePost(long id) {
         BoardIntegrated post = findPost(id);
 
-        List<BoardIntegratedLike> boardIntegratedLikes = likeRepository.findAll();
+        List<Like> boardIntegratedLikes = likeRepository.findAll();
 
         while (post.getLikeCount() != 0) {
             for(int i = 0; i < boardIntegratedLikes.size(); i++) {
-                BoardIntegratedLike boardIntegratedLike = boardIntegratedLikes.get(i);
-                if(boardIntegratedLike.getCategory().equals("integrated") && boardIntegratedLike.getPost().getId() == id) {
+                Like boardIntegratedLike = boardIntegratedLikes.get(i);
+                if(boardIntegratedLike.getCategory().equals("integrated") && boardIntegratedLike.getBoardIntegrated().getId() == id) {
                     likeRepository.delete(boardIntegratedLike);
                     deleteLike(id);
                 }
@@ -146,7 +146,7 @@ public class BoardIntegratedService {
         while (post.getCommentCount() != 0) {
             for(int i = 0; i < comments.size(); i++) {
                 Comment comment = comments.get(i);
-                if(comment.getCategory().equals("integrated") && comment.getPost().getId() == id) {
+                if(comment.getCategory().equals("integrated") && comment.getBoardIntegrated().getId() == id) {
                     commentRepository.delete(comment);
                     post.setCommentCount(post.getCommentCount()-1);
                 }
@@ -162,7 +162,7 @@ public class BoardIntegratedService {
         BoardIntegrated findPost = findPost(postId);
         findPost.setCommentCount(findPost.getCommentCount()+1);
         comment.setUser(findUser);
-        comment.setPost(findPost);
+        comment.setBoardIntegrated(findPost);
         comment.setCategory("integrated");
         return commentRepository.save(comment);
     }
@@ -181,7 +181,7 @@ public class BoardIntegratedService {
     @Transactional
     public void deleteComment(long commentId) {
         Comment findComment = findVerifiedComment(commentId);
-        BoardIntegrated post = findComment.getPost();
+        BoardIntegrated post = findComment.getBoardIntegrated();
         commentRepository.deleteById(commentId);
         post.setCommentCount(post.getCommentCount()-1);
     }
@@ -200,10 +200,6 @@ public class BoardIntegratedService {
     public Users getUserFromId(Long userId) {
         return userRepository.findById(userId).get();
     }
-
-//    public BoardIntegrated getBoardIntegratedFromId(Long postId) {
-//        return boardIntegratedRepository.findById(postId).get();
-//    }
 
     // 게시글 조회
     public BoardIntegrated findPost(long id) {
