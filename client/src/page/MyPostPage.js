@@ -59,11 +59,12 @@ function MyPost() {
   // const postId = localStorage.getItem('id'); 11
 
   const token = localStorage.getItem('jwtToken');
+  console.log('Token:', token);
 
   const getPost = async () => {
     try {
       const userId = localStorage.getItem('userId');
-      console.log();
+      console.log('userId:', userId);
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/board/integrated`,
         {
@@ -86,6 +87,7 @@ function MyPost() {
   useEffect(() => {
     getPost().then((data) => {
       setPost(data);
+      console.log();
     });
   }, []);
 
