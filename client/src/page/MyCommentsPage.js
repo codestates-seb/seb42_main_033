@@ -4,7 +4,8 @@ import MyPageSidebar from '../components/MypageSidebar.jsx';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 /*123*/
-
+/*123*/
+/*123*/
 // const comments = [
 //   {
 //     id: 1,
@@ -113,8 +114,8 @@ function MyComments() {
       setSelectedComments([]);
     } catch (error) {
       console.error(error);
-   
-  
+    }
+  };
 
   const handleCheckboxClick = (postId, commentId) => {
     const commentData = { postId, commentId };
