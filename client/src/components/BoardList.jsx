@@ -31,7 +31,7 @@ const BoardList = ({ boardList }) => {
             id={board.id}
             title={board.title}
             content={board.content}
-            username={board.username}
+            nickname={board.nickname}
             viewCount={board.viewCount}
             likeCount={board.likeCount}
             commentCount={board.commentCount}
