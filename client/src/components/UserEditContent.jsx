@@ -15,12 +15,9 @@ function UserEditContent() {
   const handleClickSubmit = (e) => {
     e.preventDefault();
     axios
-      .patch(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users/${id}`,
-        {
-          name,
-        }
-      )
+      .patch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
+        name,
+      })
       .then((res) => {
         setName(res.data.data.name);
         window.alert('수정 완료');
@@ -31,9 +28,7 @@ function UserEditContent() {
   };
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users/${id}`
-      )
+      .get(`${process.env.REACT_APP_API_URL}/users/${id}`)
       .then((res) => {
         setName(res.data.data.name);
       })

@@ -7,7 +7,7 @@ const BoardCard = ({
   id,
   title,
   content,
-  username,
+  nickname,
   viewCount,
   likeCount,
   commentCount,
@@ -17,11 +17,11 @@ const BoardCard = ({
     <div>
       <CardLayout>
         <CardLink to={`/PostViewPage/${id}`}>
-          <div className="posttitle"> 제목{title} </div>
+          <div className="posttitle"> {title} </div>
           <div className="postcontent">
-            <span className="content">내용{content}</span>
+            <span className="content">{content}</span>
             <span className="username" style={{ marginLeft: 'auto' }}>
-              닉네임{username}
+              {nickname}
             </span>
           </div>
           <div className="cardbottom">
@@ -38,7 +38,7 @@ const BoardCard = ({
               <span className="cmt"> 20 {commentCount}</span>
             </span>
             <span className="createdAt" style={{ marginLeft: 'auto' }}>
-              작성시간 {createdAt}
+              {createdAt}
             </span>
           </div>
         </CardLink>
