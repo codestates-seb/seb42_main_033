@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import BoardAnswer from './BoardAnswer.jsx';
 import axios from 'axios';
+import moment from 'moment';
 
 const BoardCarddetail = ({
   id,
@@ -23,15 +24,18 @@ const BoardCarddetail = ({
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const commentCount = comments.length;
-
+  //게시글 수정삭제 모달
   const handleClick = () => {
-    setIsModalOpen(!isModalOpen);
+    if (userId === post.userId) {
+      setIsModalOpen(!isModalOpen);
+    }
   };
+  //좋아요
   const handleLikeClick = async () => {
     const postId = post.id;
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/like`,
+        `${process.env.REACT_APP_API_URL}/board/integrated/${id}/like`,
         {
           userId: userId,
           postId: postId,
@@ -78,7 +82,6 @@ const BoardCarddetail = ({
       console.log(error);
     }
   };
-
   return (
     <>
       {isLoaded && (
@@ -88,7 +91,6 @@ const BoardCarddetail = ({
             <div className="boardview">
               <div className="boardheader">
                 <div className="title">
-                  제목
                   {post.title}
                   <ModalContainer onClick={handleClick}>
                     {token && userId === post.userId && <EditDeletIcon />}
@@ -99,9 +101,9 @@ const BoardCarddetail = ({
                       isOpen={isModalOpen}
                       onEdit={handleEdit}
                       onDelete={handleDelete}
-                      title={post.title}
-                      content={post.content}
-                      postId={post.id}
+                      // title={post.title}
+                      // content={post.content}
+                      // postId={post.id}
                     />
                   )}
                 </div>
@@ -110,15 +112,14 @@ const BoardCarddetail = ({
                   {post.nickname}
                 </div>
                 <div className="createdate">
-                  시간
                   {post.createdAt}
+                  {/* {moment(post.createdAt)
+                    .add(9, 'hour')
+                    .format('MM.DD HH:mm:ss')} */}
                 </div>
               </div>
               <div className="boardcontent">
-                <div className="content">
-                  내용
-                  {post.content}
-                </div>
+                <div className="content">{post.content}</div>
                 <>
                   <div className="like">
                     <span>
@@ -131,7 +132,6 @@ const BoardCarddetail = ({
                       />
                     </span>
                     <span style={{ paddingBottom: '40' }}>
-                      좋아요
                       {post.likeCount}
                     </span>
                     <span className="commenticon">
@@ -142,7 +142,7 @@ const BoardCarddetail = ({
                       />
                     </span>
                     <span style={{ paddingBottom: '40', marginLeft: '10px' }}>
-                      댓글수{post.commentCount}
+                      {post.commentCount}
                     </span>
                   </div>
                 </>
@@ -235,6 +235,7 @@ const Container = styled.div`
     .createdate {
       position: absolute;
       right: 0;
+      font-size: 10px;
     }
   }
   div.boardcontent {
