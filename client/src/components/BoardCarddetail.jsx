@@ -2,93 +2,33 @@ import styled from 'styled-components';
 import { AiOutlineEllipsis } from 'react-icons/ai';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
 import PostModal from './PostModal.jsx';
-import { useNavigate, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import BoardAnswer from './BoardAnswer.jsx';
-import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
-const BoardCarddetail = ({ id, post, setPost, isLoaded, setIsLoaded }) => {
-  // const [isLoaded, setIsLoaded] = useState(false);
+const BoardCarddetail = ({
+  id,
+  post,
+  isLoaded,
+  handleEdit,
+  handleDelete,
+  handleCommentSubmit,
+  comment,
+  setComment,
+  comments,
+}) => {
+  const [like, setLike] = useState(0);
+  const [count, setCount] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const token = localStorage.getItem('jwtToken');
   const decodedToken = jwtDecode(token);
   const userId = decodedToken.userId;
-  const navigate = useNavigate();
-  let [like, setLike] = useState(0);
-  let [count, setCount] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [comment, setComment] = useState('');
-  const [comments, setComments] = useState([]);
-  // const [post, setPost] = useState({});
+
   const handleClick = () => {
     setIsModalOpen(!isModalOpen);
   };
-  //게시글 불러오기 1
-  useEffect(() => {
-    const getPost = async () => {
-      try {
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/board/integrated/${id}`
-        );
-        setPost(data);
-        setIsLoaded(true);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getPost();
-  }, [id]);
-  // 게시글 수정
-  const handleEdit = async () => {
-    navigate(`/PostPage/${id}`, {
-      state: { title: post.title, content: post.content },
-    });
-  };
-  // 게시글 삭제
-  const handleDelete = async () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${id}`,
-        config
-      );
-      navigate('/PostlistPage');
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  //댓글 등록
-  const handleCommentSubmit = async () => {
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const data = {
-        userId: userId,
-        postId: id,
-        content: comment,
-        username: localStorage.getItem('username'),
-      };
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${id}`,
-        data,
-        config
-      );
-      setComments([
-        ...comments,
-        { username: data.username, content: data.content },
-      ]);
-      setComment('');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   return (
     <>
       {isLoaded && (

@@ -19,7 +19,7 @@ const BoardAnswer = ({ username, content, id, userId }) => {
     };
     try {
       const response = await axios.put(
-        `https://f941-211-217-72-99.jp.ngrok.io/board/integrated/${id}/comment/${userId}`,
+        `${process.env.REACT_APP_API_URL}/board/integrated/${id}/comment/${userId}`,
         body,
         config
       );
@@ -37,7 +37,10 @@ const BoardAnswer = ({ username, content, id, userId }) => {
       },
     };
     try {
-      const response = await axios.delete(`/api/comments/${commentId}`, config);
+      const response = await axios.delete(
+        `${process.env.REACT_APP_API_URL}/board/integrated/comments/${commentId}`,
+        config
+      );
       setComments(response.data.comments);
     } catch (error) {
       console.log(error);

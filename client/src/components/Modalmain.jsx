@@ -11,7 +11,7 @@ function Modal({ setModal, modal }) {
   const Logout = async () => {
     try {
       const response = await axios.post(
-        `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/user/logout`
+        `${process.env.REACT_APP_API_URL}/user/logout`
       );
       console.log(response);
     } catch (error) {

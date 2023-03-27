@@ -14,9 +14,9 @@ const PostPage = () => {
   // const decodedToken = jwtDecode(token);
   // console.log(decodedToken);
   // const userId = decodedToken.userId;
-  // const userId = localStorage.getItem('userId');
-  const createdAt = moment().format('YYYY.MM:DD HH:mm:ss');
   const userId = localStorage.getItem('userId');
+
+  const createdAt = moment().format('YYYY.MM:DD HH:mm:ss');
   const post = {
     userId: userId,
     title: title,
@@ -41,7 +41,7 @@ const PostPage = () => {
         const response = await axios.post(
           `${process.env.REACT_APP_API_URL}/board/integrated`,
           {
-            userId: '1',
+            userId: post.userId,
             title: post.title,
             content: post.content,
             tag: '',
