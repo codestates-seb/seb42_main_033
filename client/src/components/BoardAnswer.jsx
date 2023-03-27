@@ -13,7 +13,6 @@ const BoardAnswer = ({ nickName, content, post, id }) => {
         const { data } = await axios.get(
           `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment`
         );
-
         setcommentsId(data.commentsId);
         console.log(data);
       } catch (error) {
