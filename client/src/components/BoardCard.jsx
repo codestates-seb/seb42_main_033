@@ -27,11 +27,11 @@ const BoardCard = ({
           <div className="cardbottom">
             <span className="viewCount">
               <AiFillEye size="15px" />
-              <span className="view">20 {viewCount}</span>
+              <span className="view">{viewCount}</span>
             </span>
             <span className="likeCount">
               <AiFillHeart size="14px" />
-              <span className="like"> 20 {likeCount}</span>
+              <span className="like"> {likeCount}</span>
             </span>
             <span className="commentCount">
               <FaCommentAlt size="11px" />

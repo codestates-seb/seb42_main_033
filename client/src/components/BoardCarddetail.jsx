@@ -20,15 +20,16 @@ const BoardCarddetail = ({
   const [count, setCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const token = localStorage.getItem('jwtToken');
-  const userId = localStorage.getItem('userId');
+  const userId = post.userId;
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const commentCount = comments.length;
   //게시글 수정삭제 모달
   const handleClick = () => {
-    if (userId === post.userId) {
-      setIsModalOpen(!isModalOpen);
-    }
+    // if (userId === post.userId) {
+    //   setIsModalOpen(!isModalOpen);
+    // }
+    setIsModalOpen(!isModalOpen);
   };
   //좋아요
   const handleLikeClick = async () => {
@@ -94,6 +95,7 @@ const BoardCarddetail = ({
                   {post.title}
                   <ModalContainer onClick={handleClick}>
                     {token && userId === post.userId && <EditDeletIcon />}
+                    {/* <EditDeletIcon /> */}
                   </ModalContainer>
                   {isModalOpen && (
                     <PostModal
@@ -107,10 +109,7 @@ const BoardCarddetail = ({
                     />
                   )}
                 </div>
-                <div className="nickname">
-                  닉네임
-                  {post.nickname}
-                </div>
+                <div className="nickname">{post.nickName}</div>
                 <div className="createdate">
                   {post.createdAt}
                   {/* {moment(post.createdAt)

@@ -32,13 +32,15 @@ const PostEditPage = () => {
 
   const handleeditSubmit = useCallback(async () => {
     try {
-      const formData = new FormData();
-      formData.append('title', title);
-      formData.append('content', content);
-      formData.append('tag', '');
+      const data = { title, content, tag: '' };
       await axios.patch(
         `${process.env.REACT_APP_API_URL}/board/integrated/${id}`,
-        formData
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
       window.alert('😎수정이 완료되었습니다😎');
       window.location.href = `${process.env.REACT_APP_API_URL}/board/integrated/${id}`;
