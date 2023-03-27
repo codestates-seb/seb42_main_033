@@ -40,7 +40,6 @@ const Infp = () => {
   let isfjs = '';
   let estjs = '';
   let istjs = '';
-  let mbtiList = [];
   useEffect(() => {
     for (const i in mbtiArr) {
       // 엠비티아이별 회원 id
@@ -106,29 +105,28 @@ const Infp = () => {
         console.log(err);
       });
   }, []);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const promises = [infpId].map((id) => {
-  //       return axios.get(
-  //         `${process.env.REACT_APP_API_URL}/board/integrated/${id}`
-  //       );
-  //     });
-  //     const responses = await Promise.all(promises);
-  //     const data = responses.map((response) => response.data);
-  //     setinfpList((prevList) => [...prevList, ...data]);
-  //   };
-  //   fetchData().catch((err) => {
-  //     console.log(err);
-  //   });
-  // }, []);
 
+  // useEffect(() => {
+  //   // 엠비티아이id .map 으로 get
+  //   for (const i of infpId) {
+  //     axios
+  //       .get(`${process.env.REACT_APP_API_URL}/board/integrated/${i}`)
+  //       .then((response) => {
+  //         setinfpList(response.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }, []);
   useEffect(() => {
-    // 엠비티아이id .map 으로 get
     for (const i of infpId) {
+      // userid랑 게시글 id랑 안맞아서 특정 mbti만 불러오기 안되는거였음
+      // 해결법 생각해 봤는데 없음 ㄹㅇ;; 게시글 id로 받아올라 해도 거기에는 mbti 안적혀있음;;
       axios
         .get(`${process.env.REACT_APP_API_URL}/board/integrated/${i}`)
         .then((response) => {
-          setinfpList(response.data);
+          setinfpList((prevList) => [...prevList, response.data]);
         })
         .catch((err) => {
           console.log(err);
@@ -136,47 +134,6 @@ const Infp = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   Promise.all(
-  //     [infpId].map((i) =>
-  //       axios
-  //         .get(`${process.env.REACT_APP_API_URL}/board/integrated/${i}`)
-  //         .then((response) => {
-  //           setinfpList(response);
-  //           console.log(i);
-  //         })
-  //     )
-  //   );
-  // }, []);
-  // useEffect(() => {
-  //   async function fetchInfpList() {
-  //     const results = await Promise.all(
-  //       infpId.map((i) =>
-  //         axios.get(`${process.env.REACT_APP_API_URL}/board/integrated/${i}`)
-  //       )
-  //     );
-  //     const data = results.map((response) => response.data);
-  //     setinfpList(data);
-  //   }
-  //   fetchInfpList();
-  // }, [infpId]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const responses = await Promise.all(
-  //         infpId.map((id) =>
-  //           axios.get(`${process.env.REACT_APP_API_URL}/board/integrated/${id}`)
-  //         )
-  //       );
-  //       const infpList = responses.map((response) => response.data);
-  //       setinfpList(infpList);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/board/integrated`)
@@ -190,9 +147,10 @@ const Infp = () => {
   return (
     <BoardLayout>
       {console.log(infpId)}
+      {console.log(infplist)}
       <BoardHead>INFP 게시판</BoardHead>
       <BoardBox>
-        {[infplist].map((infplist, index) => (
+        {infplist.map((infplist, index) => (
           <Link key={index} to={`/board/integrated/${infplist.id}`}>
             <div>
               <CardLayout>
