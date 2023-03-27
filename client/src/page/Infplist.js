@@ -241,6 +241,7 @@ const Infp = () => {
           <Link key={answers.id} to={`/board/integrated`}>
             <div>
               <CardLayout>
+                <h1>a</h1>
                 <div className="posttitle"> {answers.title} </div>
                 <div className="postcontent"> {answers.content} </div>
                 <div className="postnickname"> {nickName} </div>
