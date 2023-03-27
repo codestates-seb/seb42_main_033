@@ -76,6 +76,7 @@ function LoginPage() {
           // guest
         }
       );
+      console.log(guest);
       console.log(response);
       if (response.status === 200) {
         navigate('/');
@@ -192,6 +193,10 @@ const Loginbutton = styled.button`
   font-size: 30px;
   font-weight: 600;
   border: solid 10px #64b5ff;
+  :hover {
+    background-color: #7ec2ff;
+    border: solid 10px #7ec2ff;
+  }
 `;
 const Loginguestbody = styled.div`
   display: flex;

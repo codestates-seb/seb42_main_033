@@ -59,7 +59,6 @@ function MyPost() {
   // const postId = localStorage.getItem('id'); 11
 
   const token = localStorage.getItem('jwtToken');
-  console.log('Token:', token);
 
   const getPost = async () => {
     try {
@@ -73,7 +72,7 @@ function MyPost() {
           },
         }
       );
-      console.log(response);
+
       const userPosts = response.data.filter(
         (post) => post.userId === parseInt(userId)
       );
@@ -87,29 +86,31 @@ function MyPost() {
   useEffect(() => {
     getPost().then((data) => {
       setPost(data);
-      console.log();
     });
   }, []);
 
   const deletePosts = async () => {
-    try {
-      const deletePromises = selectedComments.map((postId) => {
-        return axios.delete(
-          `${process.env.REACT_APP_API_URL}/board/integrated/${postId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+    const Deletepost = window.confirm('게시글을 삭제하시겠습니까??');
+    if (Deletepost) {
+      try {
+        const deletePromises = selectedComments.map((postId) => {
+          return axios.delete(
+            `${process.env.REACT_APP_API_URL}/board/integrated/${postId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        });
+        await Promise.all(deletePromises);
+        setPost(
+          post.filter((postItem) => !selectedComments.includes(postItem.id))
         );
-      });
-      await Promise.all(deletePromises);
-      setPost(
-        post.filter((postItem) => !selectedComments.includes(postItem.id))
-      );
-      setSelectedComments([]);
-    } catch (error) {
-      console.error(error);
+        setSelectedComments([]);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -147,8 +148,8 @@ function MyPost() {
                 </CommentContainer>
               ))}
           </CommentsContainer>
-          <DeleteButton onClick={deletePosts}> 삭제 </DeleteButton>
         </CommentPageContainer>
+        <DeleteButton onClick={deletePosts}> 삭제 </DeleteButton>
       </PageContainer>
     </>
   );
@@ -212,7 +213,7 @@ const DeleteButton = styled.button`
   border-radius: 5px;
   position: absolute;
   right: 10%;
-  bottom: -15%;
+  top: 85%;
   cursor: pointer;
 `;
 

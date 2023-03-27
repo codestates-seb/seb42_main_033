@@ -156,6 +156,9 @@ const BoardCarddetail = ({
                   // userId={userId}
                   username={comment.username}
                   content={comment.content}
+                  post={post}
+                  setPost={setPost}
+                  id={id}
                 />
               ))}
               <div className="writranswer">
