@@ -35,7 +35,7 @@ const BoardCard = ({
             </span>
             <span className="commentCount">
               <FaCommentAlt size="11px" />
-              <span className="cmt"> 20 {commentCount}</span>
+              <span className="cmt"> {commentCount}</span>
             </span>
             <span className="createdAt" style={{ marginLeft: 'auto' }}>
               {createdAt}

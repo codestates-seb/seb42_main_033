@@ -7,36 +7,37 @@ const PostModal = ({
   onDelete,
   onClose,
   isOpen,
-  title,
-  content,
-  postId,
+  // title,
+  // content,
+  // postId,
 }) => {
-  const handleSubmit = (event) => {
+  const handlemodalSubmit = (event) => {
     event.preventDefault();
     onClose();
   };
+
   PostModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    postId: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
+    // postId: PropTypes.string.isRequired,
+    // title: PropTypes.string.isRequired,
+    // content: PropTypes.string.isRequired,
   };
   return (
     <>
       {isOpen && (
         <Container>
-          <form onSubmit={handleSubmit}>
-            <ButtonLink to="/PostPage/${postId}" state={{ title, content }}>
-              <Button type="submit" onClick={onEdit}>
-                수정하기
-              </Button>
-            </ButtonLink>
+          <form onSubmit={handlemodalSubmit}>
+            {/* <ButtonLink to="/PostEditPage/${postId}" state={{ title, content }}> */}
+            <Button type="submit" onClick={onEdit}>
+              수정하기
+            </Button>
             <Button
               onClick={() => {
                 if (window.confirm('정말로 삭제하시겠습니까?')) {
                   onDelete();
                   alert('게시물이 삭제되었습니다😎');
+                  window.location.href = '/PostlistPage';
                 }
               }}
             >
@@ -48,7 +49,6 @@ const PostModal = ({
     </>
   );
 };
-
 const Container = styled.div`
   position: absolute;
   top: 85px;

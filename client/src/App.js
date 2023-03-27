@@ -11,6 +11,7 @@ import SendDm from './page/SendDm.js';
 import PostlistPage from './page/PostlistPage';
 import PostPage from './page/PostPage.js';
 import PostviewPage from './page/PostviewPage.js';
+import PostEditPage from './page/PostEditPage';
 import MainPage from './page/MainPage';
 import MyCommentsPage from './page/MyCommentsPage';
 import MyPostPage from './page/MyPostPage.js';
@@ -45,6 +46,10 @@ function App() {
           <Route path=":id" element={<PostviewPage />} />
         </Route>
         {/* 게시글 화면 */}
+        <Route path="/PostEditPage">
+          <Route path=":id" element={<PostEditPage />} />
+        </Route>
+        {/* 게시글 수정 */}
         <Route path="/Login" element={<LoginPage />} />
         {/* 로그인 */}
         <Route path="/Signup" element={<SignupPage />} />

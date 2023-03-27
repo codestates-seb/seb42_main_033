@@ -5,12 +5,10 @@ import axios from 'axios';
 
 const PostviewPage = () => {
   const { id } = useParams();
-  const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('jwtToken');
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
   const [post, setPost] = useState({});
-
   //게시글 조회
   useEffect(() => {
     const getPost = async () => {
@@ -29,7 +27,7 @@ const PostviewPage = () => {
   }, [id]);
   // 게시글 수정
   const handleEdit = async () => {
-    navigate(`/PostPage/${id}`, {
+    navigate(`/PostEditPage/${id}`, {
       state: { title: post.title, content: post.content },
     });
   };
@@ -50,7 +48,6 @@ const PostviewPage = () => {
       console.log(error);
     }
   };
-
   return (
     <BoardCarddetail
       id={id}

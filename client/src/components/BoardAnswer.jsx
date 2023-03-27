@@ -38,7 +38,7 @@ const BoardAnswer = ({ username, content, post }) => {
   };
   return (
     <AnswerForm>
-      <div className="answernickname">인프피 맞습니다{username}</div>
+      <div className="answernickname">{username}</div>
       <div
         className="answerbutton"
         style={{ marginLeft: '730px', fontSize: '13px' }}
