@@ -11,39 +11,24 @@ const BoardCreateOrEdit = ({
 }) => {
   return (
     <BoardForm onSubmit={handleSubmit}>
-      <Title className="titlediv">
-        <p>글쓰기</p>
-        <input
-          placeholder=" 글 제목"
-          type="text"
-          name="title"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-          // defaultValue={props.TitleValue}
-        />
-        <hr />
-      </Title>
+      <input
+        placeholder=" 글 제목"
+        type="text"
+        name="title"
+        value={title}
+        onChange={(e) => {
+          setTitle(e.target.value);
+        }}
+      />
+      <br />
+      <hr />
       <QuillEditor
         name="content"
         value={content}
-        // onChange={(e) => {
-        //   setContent(e.target.value);
-        // }}
-        onChange={setContent}
-        // defaultValue={props.ContentValue}
+        onChange={(e) => {
+          setContent(e.target.value);
+        }}
       />
-      <ButtonContainer>
-        <BoardButtonLink to="/PostlistPage">
-          <BoardButton className="delete"> 취소 </BoardButton>
-        </BoardButtonLink>
-        <BoardButtonLink to="/PostviewPage">
-          <BoardButton type="submit" className="submit" onClick={handleSubmit}>
-            등록
-          </BoardButton>
-        </BoardButtonLink>
-      </ButtonContainer>
     </BoardForm>
   );
 };
@@ -62,50 +47,23 @@ const BoardForm = styled.form`
     height: 800px;
     font-size: 20px;
   }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-left: 600px;
-  margin-top: 20px;
-  width: 220px;
-`;
-const BoardButtonLink = styled(Link)`
-  text-decoration: none;
-`;
-const BoardButton = styled.button`
-  width: 106px;
-  height: 54px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 700;
-  color: #ffffff;
-  border-radius: 10px;
-  border: 0;
-  letter-spacing: 7px;
-  text-decoration: none;
-  &.delete {
-    background-color: #a1a1a1;
-  }
-  &.submit {
-    background-color: #64b5ff;
-  }
-`;
-
-const Title = styled.div`
-  p {
-    font-size: 40px;
-    margin-bottom: 10px;
-    font-weight: 600;
-  }
   input {
     width: 825px;
     height: 40px;
+    margin-top: -100px;
+    margin-bottom: -70px;
     border-radius: 10px;
     border-width: thin;
     font-size: 18px;
     padding-left: 10px;
   }
+  hr {
+    width: 100%;
+    border: none;
+    border-top: 1px solid black;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
 `;
+
 export default BoardCreateOrEdit;
