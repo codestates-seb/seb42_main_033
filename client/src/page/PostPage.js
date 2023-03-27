@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import moment from 'moment';
-
 const PostPage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');

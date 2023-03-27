@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 const Infp = () => {
-  const URL = `http://ec2-3-39-235-30.ap-northeast-2.compute.amazonaws.com:8080`;
+  const URL = `http://ec2-3-38-180-247.ap-northeast-2.compute.amazonaws.com:8080`;
   const [answers, setAnswers] = useState([]);
   const [nickName, setNickName] = useState([]);
   const [mbtiArr, setMbtiArr] = useState('');
