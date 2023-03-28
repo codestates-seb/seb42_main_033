@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 function UserEditContent() {
-  const [name, setName] = useState('');
+  const [nickName, setnickName] = useState('');
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
   const [mbti, setMbti] = useState('');
@@ -13,8 +13,8 @@ function UserEditContent() {
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('jwtToken');
 
-  const handleChangeName = (e) => {
-    setName(e.target.value);
+  const handleChangenickName = (e) => {
+    setnickName(e.target.value);
   };
 
   const handleChangepassword1 = (e) => {
@@ -34,7 +34,7 @@ function UserEditContent() {
       .patch(
         `${process.env.REACT_APP_API_URL}/users/${userId}`,
         {
-          name,
+          nickName,
           password1,
           password2,
           mbti,
@@ -46,7 +46,7 @@ function UserEditContent() {
         }
       )
       .then((res) => {
-        setName(res.data.data.name);
+        setnickName(res.data.data.nickName);
         setPassword1(res.data.data.password1);
         setPassword2(res.data.data.password2);
         setMbti(res.data.data.mbti);
@@ -64,7 +64,8 @@ function UserEditContent() {
         },
       })
       .then((res) => {
-        setName(res.data.data.name);
+        console.log('userId:', userId);
+        setName(res.data.data.nickName);
         setPassword1(res.data.data.password1);
         setPassword2(res.data.data.password2);
         setMbti(res.data.data.mbti);
@@ -94,8 +95,8 @@ function UserEditContent() {
           <Input
             type="text"
             placeholder="닉네임"
-            value={name}
-            onChange={handleChangeName}
+            value={nickName}
+            onChange={handleChangenickName}
           />
           <Input
             type="text"
