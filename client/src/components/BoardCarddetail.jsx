@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import BoardAnswer from './BoardAnswer.jsx';
 import axios from 'axios';
-import moment from 'moment';
 
 const BoardCarddetail = ({
   id,
@@ -22,9 +21,10 @@ const BoardCarddetail = ({
   const token = localStorage.getItem('jwtToken');
   const userId = localStorage.getItem('userId');
   const [comment, setComment] = useState('');
-  const [comments, setComments] = useState([]);
+  // const [comments, setComments] = useState([]);
+  const [commetList, setCommentList] = useState([]);
   const [isValid, setIsValid] = useState(false);
-  const commentCount = comments.length;
+  const commentCount = commetList.length;
   const postId = post.id;
   //게시글 수정삭제 모달
   const handleClick = () => {
@@ -51,6 +51,24 @@ const BoardCarddetail = ({
       console.log(error);
     }
   };
+  //댓글 조회
+  const getComment = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/board/integrated/${id}/comment`
+      );
+      console.log('status:', response.status);
+      console.log('data:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getComment().then((data) => {
+      setCommentList([...commetList, ...data]);
+    });
+  }, [id]);
   //댓글 등록
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +84,7 @@ const BoardCarddetail = ({
       };
       const data = {
         userId: userId,
-        postId: postId,
+        postId: id,
         content: comment,
       };
       await axios.post(
@@ -74,19 +92,8 @@ const BoardCarddetail = ({
         data,
         config
       );
-      const newComment = { username: post.username, content: comment };
-      setComments([...comments, newComment]);
-
-      // setComments([
-      //   ...comments,
-      //   { username: data.username, content: data.content },
-      // ]);
-      // setComment('');
-
-      // const newComments = [...comments];
-      // newComments.push(comment);
-      // setComments(newComments);
-
+      const newComment = { username: data.username, content: data.content };
+      setCommentList([...commetList, newComment]);
       setComment('');
       setCount(count + 1);
       setPost({ ...post, commentCount: commentCount + 1 });
@@ -94,22 +101,6 @@ const BoardCarddetail = ({
       console.log(error);
     }
   };
-
-  //댓글조회
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/board/integrated/${id}/comment`
-        );
-        console.log(data);
-        setComments(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchComments();
-  }, [id]);
 
   return (
     <>
@@ -167,19 +158,17 @@ const BoardCarddetail = ({
               </div>
             </div>
             <div className="answerview">
-              {/* {comments.map((comment, index) => (
+              {commetList.map((comment, index) => (
                 <BoardAnswer
                   key={index}
                   id={id}
-                  userId={userId}
-                  username={comment.username}
-                  content={comment.content}
-                  post={post}
-                  setPost={setPost}
+                  comment={comment}
+                  // post={post}
+                  // setPost={setPost}
                 />
-              ))} */}
-              {comments.map((comment) => (
-                <BoardAnswer key={comment.id}>
+              ))}
+              {/* {commetList.map((comment) => (
+                <BoardAnswer key={comment.idx}>
                   id={comment.id}
                   postId={post.id}
                   username={comment.username}
@@ -187,7 +176,7 @@ const BoardCarddetail = ({
                   post={post}
                   setPost={setPost}
                 </BoardAnswer>
-              ))}
+              ))} */}
               <div className="writranswer">
                 <input
                   placeholder="댓글 쓰기"
@@ -335,7 +324,7 @@ const ModalContainer = styled.div`
 `;
 const Like = styled(FaHeart)`
   color: #64b5ff;
-  margin-right: 10px;a
+  margin-right: 10px;
 `;
 
 const CommentIcon = styled(FaCommentAlt)`
