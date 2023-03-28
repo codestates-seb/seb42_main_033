@@ -50,8 +50,8 @@ function MyComments() {
 
   const getComments = async () => {
     try {
-      const postsResponse = await axios.get(
-        `${process.env.REACT_APP_API_URL}/board/integrated`,
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/board/integrated/1/comment`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -59,34 +59,13 @@ function MyComments() {
         }
       );
 
-      const userPosts = postsResponse.data.filter(
-        (post) => post.userId === parseInt(userId)
+      const commentsData = response.data;
+
+      const userComments = commentsData.filter(
+        (comment) => comment.user.userId === parseInt(userId)
       );
 
-      const commentsPromises = userPosts.map((post) =>
-        axios.get(
-          `${process.env.REACT_APP_API_URL}/board/integrated/${post.id}/comment`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-      );
-
-      const commentsResponses = await Promise.all(commentsPromises);
-
-      const allUserComments = commentsResponses.flatMap(
-        (response) => response.data
-      );
-
-      const myComments = allUserComments.filter(
-        (comment) => comment.userId === parseInt(userId)
-      );
-
-      const sortedUserComments = myComments.sort((a, b) => b.id - a.id);
-
-      return sortedUserComments;
+      setComments(userComments);
     } catch (error) {
       console.error(error);
     }
@@ -98,9 +77,9 @@ function MyComments() {
 
   const deleteComment = async () => {
     try {
-      const deletePromises = selectedComments.map(({ postId, commentId }) => {
+      const deletePromises = selectedComments.map(({ id }) => {
         return axios.delete(
-          `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${commentId}`,
+          `${process.env.REACT_APP_API_URL}/board/integrated/1/comment/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -118,15 +97,13 @@ function MyComments() {
     }
   };
 
-  const handleCheckboxClick = (postId, commentId) => {
-    const commentData = { postId, commentId };
-    const isSelected = selectedComments.some(
-      (comment) => comment.commentId === commentId
-    );
+  const handleCheckboxClick = (id) => {
+    const commentData = { id };
+    const isSelected = selectedComments.some((comment) => comment.id === id);
 
     if (isSelected) {
       setSelectedComments(
-        selectedComments.filter((comment) => comment.commentId !== commentId)
+        selectedComments.filter((comment) => comment.id !== id)
       );
     } else {
       setSelectedComments([...selectedComments, commentData]);
@@ -147,7 +124,9 @@ function MyComments() {
                 <input
                   type="checkbox"
                   id={`checkbox-${commentItem.id}`}
-                  checked={selectedComments.includes(commentItem.id)}
+                  checked={selectedComments.some(
+                    (comment) => comment.id === commentItem.id
+                  )}
                   onChange={() => handleCheckboxClick(commentItem.id)}
                 />
                 <CommentText htmlFor={`checkbox-${commentItem.id}`}>

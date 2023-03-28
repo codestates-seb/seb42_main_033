@@ -21,6 +21,66 @@ const buttons = [
   { id: 16, text: 'ESTJ' },
 ];
 
+const MbtiButton = () => {
+  const [showButtons, setShowButtons] = useState(true);
+  const [text, setText] = useState('>>MBTI별 게시판');
+
+  const buttonRows = [];
+  for (let i = 0; i < buttons.length; i += 4) {
+    buttonRows.push(buttons.slice(i, i + 4));
+  }
+
+  const handleClick = () => {
+    setShowButtons(!showButtons);
+    setText(
+      text === '>>MBTI별 게시판 펼치기'
+        ? '>>MBTI별 게시판 접기'
+        : '>>MBTI별 게시판 펼치기'
+    );
+  };
+
+  const userMbti = localStorage.getItem('mbti');
+  const handleButtonClick = (buttonMbti) => {
+    if (buttonMbti !== userMbti) {
+      alert(`${userMbti} 게시판을 이용해주세요`);
+    }
+  };
+  return (
+    <>
+      <StyledText onClick={handleClick}>{text}</StyledText>
+      {showButtons && (
+        <>
+          <StyledContainer>
+            {buttonRows.map((row, index) => (
+              <StyledRow key={index}>
+                {row.map((button) => (
+                  <StyledButtonLink
+                    to={
+                      button.text.toLocaleLowerCase() ===
+                      userMbti.toLocaleLowerCase()
+                        ? `${button.text}list`
+                        : '#'
+                    }
+                    key={button.id}
+                    button={button}
+                  >
+                    <StyledButton
+                      onClick={() => handleButtonClick(button.text)}
+                      key={button.id}
+                      button={button}
+                    >
+                      {button.text}
+                    </StyledButton>
+                  </StyledButtonLink>
+                ))}
+              </StyledRow>
+            ))}
+          </StyledContainer>
+        </>
+      )}
+    </>
+  );
+};
 const StyledText = styled.div`
   font-size: 2vh;
   margin-bottom: 2vh;
@@ -78,62 +138,6 @@ const StyledRow = styled.div`
   display: flex;
   justify-content: center;
 `;
-
-const MbtiButton = () => {
-  const [showButtons, setShowButtons] = useState(true);
-  const [text, setText] = useState('>>MBTI별 게시판');
-
-  const buttonRows = [];
-  for (let i = 0; i < buttons.length; i += 4) {
-    buttonRows.push(buttons.slice(i, i + 4));
-  }
-
-  const handleClick = () => {
-    setShowButtons(!showButtons);
-    setText(
-      text === '>>MBTI별 게시판 펼치기'
-        ? '>>MBTI별 게시판 접기'
-        : '>>MBTI별 게시판 펼치기'
-    );
-  };
-
-  const userMbti = localStorage.getItem('mbti');
-  const handleButtonClick = (buttonMbti) => {
-    if (buttonMbti !== userMbti) {
-      alert('');
-    }
-  };
-  return (
-    <>
-      <StyledText onClick={handleClick}>{text}</StyledText>
-      {showButtons && (
-        <>
-          <StyledContainer>
-            {buttonRows.map((row, index) => (
-              <StyledRow key={index}>
-                {row.map((button) => (
-                  <StyledButtonLink
-                    to={button.text === userMbti ? 'PostlistPage' : '#'}
-                    key={button.id}
-                    button={button}
-                  >
-                    <StyledButton
-                      onClick={() => handleButtonClick(button.text)}
-                      key={button.id}
-                      button={button}
-                    >
-                      {button.text}
-                    </StyledButton>
-                  </StyledButtonLink>
-                ))}
-              </StyledRow>
-            ))}
-          </StyledContainer>
-        </>
-      )}
-    </>
-  );
-};
 
 export default MbtiButton;
 
