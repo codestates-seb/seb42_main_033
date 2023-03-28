@@ -2,7 +2,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Button from './Button.jsx';
 import MyPageSidebar from './MypageSidebar.jsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function SignoutContent() {
@@ -29,7 +29,7 @@ function SignoutContent() {
 
   const deleteUser = async (e) => {
     e.preventDefualt();
-    window.confirm('확인을 누르면 회원 정보가 삭제합니다.');
+    window.confirm('탈퇴가 완료되었습니다.');
     await axios.delete(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -46,13 +46,10 @@ function SignoutContent() {
         <InputWrapper>
           <Input type="text" placeholder="이메일" />
           <Input type="password" placeholder="비밀번호" />
-          <Input type="password" placeholder="비밀번호 확인" />
         </InputWrapper>
         <BtnWrapper>
-          <Button background="#D9D9D9" onClick={() => deleteUser()}>
-            예
-          </Button>
-          <Button>아니오</Button>
+          <Button background="#D9D9D9">취소</Button>
+          <Button onClick={deleteUser}>탈퇴</Button>
         </BtnWrapper>
       </Container>
     </>
