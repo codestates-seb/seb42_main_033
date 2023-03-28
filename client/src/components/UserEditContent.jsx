@@ -11,7 +11,7 @@ function UserEditContent() {
   const [mbti, setMbti] = useState('');
 
   const userId = localStorage.getItem('userId');
-  // const token = localStorage.getItem('jwtToken');
+  const token = localStorage.getItem('jwtToken');
 
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -31,12 +31,20 @@ function UserEditContent() {
   const handleClickSubmit = (e) => {
     e.preventDefault();
     axios
-      .patch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
-        name,
-        password1,
-        password2,
-        mbti,
-      })
+      .patch(
+        `${process.env.REACT_APP_API_URL}/users/${userId}`,
+        {
+          name,
+          password1,
+          password2,
+          mbti,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         setName(res.data.data.name);
         setPassword1(res.data.data.password1);
@@ -45,12 +53,16 @@ function UserEditContent() {
         window.alert('수정 완료');
       })
       .catch(() => {
-        window.alert('오류 발생');
+        window.alert('수정 오류 발생');
       });
   };
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/users/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setName(res.data.data.name);
         setPassword1(res.data.data.password1);
@@ -58,7 +70,7 @@ function UserEditContent() {
         setMbti(res.data.data.mbti);
       })
       .catch(() => {
-        window.alert('오류 발생');
+        window.alert('get 오류 발생');
       });
   });
 
