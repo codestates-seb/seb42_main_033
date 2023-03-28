@@ -65,16 +65,15 @@ function MyComments() {
         (comment) => comment.user.userId === parseInt(userId)
       );
 
-      setComments(userComments);
+      const sortedUserComments = userComments.sort((a, b) => b.id - a.id);
+      setComments(sortedUserComments);
     } catch (error) {
       console.error(error);
     }
   };
-
   useEffect(() => {
     getComments();
   }, []);
-
   const deleteComment = async () => {
     try {
       const deletePromises = selectedComments.map(({ id }) => {
@@ -88,10 +87,8 @@ function MyComments() {
         );
       });
       await Promise.all(deletePromises);
-      setComments(
-        comments.filter((comment) => !selectedComments.includes(comment.id))
-      );
       setSelectedComments([]);
+      getComments();
     } catch (error) {
       console.error(error);
     }
