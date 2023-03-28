@@ -23,7 +23,7 @@ const buttons = [
 
 const MbtiButton = () => {
   const [showButtons, setShowButtons] = useState(true);
-  const [text, setText] = useState('>>MBTI별 게시판');
+  const [text, setText] = useState('>> MBTI별 게시판');
 
   const buttonRows = [];
   for (let i = 0; i < buttons.length; i += 4) {
@@ -33,9 +33,9 @@ const MbtiButton = () => {
   const handleClick = () => {
     setShowButtons(!showButtons);
     setText(
-      text === '>>MBTI별 게시판 펼치기'
-        ? '>>MBTI별 게시판 접기'
-        : '>>MBTI별 게시판 펼치기'
+      text === '▼ MBTI별 게시판 펼치기'
+        ? '▲ MBTI별 게시판 접기'
+        : '▼ MBTI별 게시판 펼치기'
     );
   };
 
@@ -77,11 +77,11 @@ const MbtiButton = () => {
   );
 };
 const StyledText = styled.div`
-  font-size: 2vh;
+  font-size: 2.5vh;
   margin-bottom: 2vh;
   position: absolute;
-  bottom: 28%;
-  left: 11%;
+  bottom: 29%;
+  left: 15%;
   cursor: pointer;
 `;
 
@@ -105,7 +105,7 @@ const StyledButton = styled.button`
   border: none;
   color: #676767;
 
-  margin: 2vh 5vw;
+  margin: 2vh 4vw;
 
   text-align: center;
   font-size: 2vw;

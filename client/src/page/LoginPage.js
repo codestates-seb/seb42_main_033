@@ -193,7 +193,7 @@ const Loginbutton = styled.button`
   background-color: #64b5ff;
   margin: auto;
   margin-bottom: 20px;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 600;
   border: solid 10px #64b5ff;
   :hover {
@@ -230,10 +230,12 @@ const Googlebody = styled.button`
   width: 430px;
   height: 50px;
   background-color: #202124;
+  border-radius: 5px;
   border: solid 0px;
   :hover {
     background-color: #555658;
     transition-delay: 0.1s;
   }
 `;
+
 export default LoginPage;
