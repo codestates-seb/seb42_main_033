@@ -3,11 +3,13 @@ import Button from './Button.jsx';
 import MyPageSidebar from './MypageSidebar.jsx';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
 function UserEditContent() {
   const [name, setName] = useState('');
-  const { id } = useParams();
+
+  const userId = localStorage.getItem('userId');
+  // const token = localStorage.getItem('jwtToken');
+
   const handleChangeName = (e) => {
     setName(e.target.value);
   };
@@ -15,7 +17,7 @@ function UserEditContent() {
   const handleClickSubmit = (e) => {
     e.preventDefault();
     axios
-      .patch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
+      .patch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
         name,
       })
       .then((res) => {
@@ -26,16 +28,28 @@ function UserEditContent() {
         window.alert('오류 발생');
       });
   };
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.REACT_APP_API_URL}/users/${id}`)
+  //     .then((res) => {
+  //       setName(res.data.data.name);
+  //     })
+  //     .catch(() => {
+  //       window.alert('오류 발생');
+  //     });
+  // });
+
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/users/${id}`)
-      .then((res) => {
-        setName(res.data.data.name);
-      })
-      .catch(() => {
-        window.alert('오류 발생');
-      });
-  });
+    loadUsers();
+  }, []);
+
+  const loadUsers = async () => {
+    const result = await axios.get(
+      `${process.env.REACT_APP_API_URL}/users/${userId}`
+    );
+    setUsers(result.data);
+  };
+
   return (
     <>
       <MyPageSidebar />
