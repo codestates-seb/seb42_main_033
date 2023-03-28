@@ -34,7 +34,11 @@ function LoginPage() {
         alert('회원가입 해야할듯');
       }
       const accessToken = response.headers.Authorization;
-      const refreshToken = response.headers.refresh;
+      const refreshToken = response.headers.Refresh;
+      console.log(response);
+      console.log(response.headers);
+      console.log(response.headers.Authorization);
+      console.log(response.headers.authorization);
       localStorage.setItem('jwtToken', accessToken);
       localStorage.setItem('rfToken', refreshToken);
       //user Id 추가 (병민)

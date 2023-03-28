@@ -32,7 +32,6 @@ function SignupPage() {
     }
     try {
       const response = await axios.post(
-        // `http://ec2-3-39-227-39.ap-northeast-2.compute.amazonaws.com:8080/users`,
         `${process.env.REACT_APP_API_URL}/users`,
         {
           // input 안의 값을 onChage로 받아와서 포스트 바디에 넣기
@@ -45,6 +44,8 @@ function SignupPage() {
         }
       );
       console.log(response);
+      response.status(201);
+      response.json();
       navigate('/login');
     } catch {
       console.log('에러');
