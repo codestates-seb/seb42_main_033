@@ -8,7 +8,7 @@ const BoardAnswer = ({ post, id, comment }) => {
 
   const answerDelete = async () => {
     const postId = post.id;
-    const commentId = post.comments[0].commentId;
+    const commentId = post.comments.commentId;
     try {
       const response = await axios.delete(
         `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${commentId}`,

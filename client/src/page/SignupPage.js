@@ -44,8 +44,6 @@ function SignupPage() {
         }
       );
       console.log(response);
-      response.status(201);
-      response.json();
       navigate('/login');
     } catch {
       console.log('에러');
