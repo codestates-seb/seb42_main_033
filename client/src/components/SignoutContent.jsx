@@ -28,8 +28,8 @@ function SignoutContent() {
   };
 
   const deleteUser = async (e) => {
-    e.preventDefualt();
-    window.confirm('탈퇴가 완료되었습니다.');
+    // e.preventDefualt();
+    window.alert('탈퇴가 완료되었습니다.');
     await axios.delete(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
