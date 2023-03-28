@@ -11,9 +11,6 @@ function LoginPage() {
   const navigate = useNavigate();
   // const clientId =
   //   '830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com';
-  // 로그인 같은 비동기 외부파일로.(관심사 불리 위해)
-  // const clientId =
-  //   '830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com';
   const LoginSubit = async (event) => {
     event.preventDefault();
     if (userId === '') {
@@ -23,43 +20,48 @@ function LoginPage() {
     }
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/user/login`,
+        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/user/login`,
         {
           email: userId,
           password1: password,
         }
       );
-      console.log(response);
-      if (response.status === 401) {
-        alert('회원가입 해야할듯');
-      }
-      const accessToken = response.headers.Authorization;
-      const refreshToken = response.headers.Refresh;
-      console.log(response);
-      console.log(response.headers);
+      const accessToken = response.headers.authorization;
+      const refreshToken = response.headers.refresh;
       localStorage.setItem('jwtToken', accessToken);
       localStorage.setItem('rfToken', refreshToken);
-      //user Id 추가 (병민)
-      try {
-        const userIdGet = await axios.get(
-          `${process.env.REACT_APP_API_URL}/users`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        console.log('userIdGet:', userIdGet.data);
-        const user = userIdGet.data.data.find((user) => user.email === userId);
-        if (user) {
-          const userIdSet = user.userId;
-          localStorage.setItem('userId', userIdSet);
-        }
-        //user Id 추가 (병민)
+      console.log(response.config.headers);
+      console.log(response.headers.get('Authorization'));
+      console.log(response.headers.authorization);
+      console.log(response.headers['Authorization']);
+      console.log(response.headers['authorization']);
+      console.log(accessToken);
+      console.log(refreshToken);
+      if (response.status === 200) {
         navigate('/');
-      } catch (error) {
-        console.log(error);
+        location.reload();
       }
+      //user Id 추가 (병민)
+      // try {
+      //   const userIdGet = await axios.get(
+      //     `${process.env.REACT_APP_API_URL}/users`,
+      //     {
+      //       headers: {
+      //         Authorization: `Bearer ${accessToken}`,
+      //       },
+      //     }
+      //   );
+      //   console.log('userIdGet:', userIdGet.data);
+      //   const user = userIdGet.data.data.find((user) => user.email === userId);
+      //   if (user) {
+      //     const userIdSet = user.userId;
+      //     localStorage.setItem('userId', userIdSet);
+      //   }
+      //   //user Id 추가 (병민)
+      //   navigate('/');
+      // } catch (error) {
+      //   console.log(error);
+      // }
     } catch (error) {
       console.log(error);
     }
