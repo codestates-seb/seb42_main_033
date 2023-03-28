@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 
-const BoardAnswer = ({ username, content, post, id, postId }) => {
+const BoardAnswer = ({ post, id, comment }) => {
   const [commentsId, setcommentsId] = useState();
   const token = localStorage.getItem('jwtToken');
 
@@ -27,7 +26,7 @@ const BoardAnswer = ({ username, content, post, id, postId }) => {
   };
   return (
     <AnswerForm>
-      <div className="answernickname">{username}</div>
+      <div className="answernickname">{comment.username}</div>
       <div
         className="answerbutton"
         style={{ marginLeft: '730px', fontSize: '13px' }}
@@ -42,7 +41,7 @@ const BoardAnswer = ({ username, content, post, id, postId }) => {
         </AnswerButton>
       </div>
 
-      <div className="answercontent"> {content} </div>
+      <div className="answercontent"> {comment.content} </div>
     </AnswerForm>
   );
 };

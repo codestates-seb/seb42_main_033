@@ -5,16 +5,16 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 function UserEditContent() {
-  const [name, setName] = useState('');
+  const [nickName, setnickName] = useState('');
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
   const [mbti, setMbti] = useState('');
 
   const userId = localStorage.getItem('userId');
-  // const token = localStorage.getItem('jwtToken');
+  const token = localStorage.getItem('jwtToken');
 
-  const handleChangeName = (e) => {
-    setName(e.target.value);
+  const handleChangenickName = (e) => {
+    setnickName(e.target.value);
   };
 
   const handleChangepassword1 = (e) => {
@@ -31,36 +31,51 @@ function UserEditContent() {
   const handleClickSubmit = (e) => {
     e.preventDefault();
     axios
-      .patch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
-        name,
-        password1,
-        password2,
-        mbti,
-      })
+      .patch(
+        `${process.env.REACT_APP_API_URL}/users/${userId}`,
+        {
+          nickName,
+          password1,
+          password2,
+          mbti,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
-        setName(res.data.data.name);
-        setPassword1(res.data.data.password1);
-        setPassword2(res.data.data.password2);
-        setMbti(res.data.data.mbti);
+        setnickName(res.data.nickName);
+        setPassword1(res.data.password1);
+        setPassword2(res.data.password2);
+        setMbti(res.data.mbti);
         window.alert('수정 완료');
       })
       .catch(() => {
-        window.alert('오류 발생');
+        window.alert('수정 오류 발생');
       });
   };
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/users/${userId}`)
-      .then((res) => {
-        setName(res.data.data.name);
-        setPassword1(res.data.data.password1);
-        setPassword2(res.data.data.password2);
-        setMbti(res.data.data.mbti);
+      .get(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch(() => {
-        window.alert('오류 발생');
+      .then((res) => {
+        console.log(res.data);
+        console.log('userId:', userId);
+        setnickName(res.data.nickName);
+        setPassword1(res.data.password1);
+        setPassword2(res.data.password2);
+        setMbti(res.data.mbti);
+      })
+      .catch((e) => {
+        window.alert('get 오류 발생');
+        console.log(e);
       });
-  });
+  }, []);
 
   // useEffect(() => {
   //   loadUsers();
@@ -82,8 +97,8 @@ function UserEditContent() {
           <Input
             type="text"
             placeholder="닉네임"
-            value={name}
-            onChange={handleChangeName}
+            value={nickName}
+            onChange={handleChangenickName}
           />
           <Input
             type="text"

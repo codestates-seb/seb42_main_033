@@ -2,12 +2,14 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Button from './Button.jsx';
 import MyPageSidebar from './MypageSidebar.jsx';
-import { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function SignoutContent() {
   const [users, setUsers] = useState([]);
   const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('jwtToken');
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadUsers();
@@ -15,7 +17,12 @@ function SignoutContent() {
 
   const loadUsers = async () => {
     const result = await axios.get(
-      `${process.env.REACT_APP_API_URL}/users/${userId}`
+      `${process.env.REACT_APP_API_URL}/users/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     setUsers(result.data);
   };
@@ -24,10 +31,11 @@ function SignoutContent() {
     e.preventDefualt();
     window.confirm('확인을 누르면 회원 정보가 삭제합니다.');
     await axios.delete(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
-      headers: { Authorization: 'Bearer' },
+      headers: { Authorization: `Bearer ${token}` },
     });
     loadUsers();
-    return <Navigate to="/" />;
+    localStorage.clear();
+    navigate('/');
   };
 
   return (
@@ -41,7 +49,7 @@ function SignoutContent() {
           <Input type="password" placeholder="비밀번호 확인" />
         </InputWrapper>
         <BtnWrapper>
-          <Button background="#D9D9D9" onClick={() => deleteUser(users.id)}>
+          <Button background="#D9D9D9" onClick={() => deleteUser()}>
             예
           </Button>
           <Button>아니오</Button>
