@@ -55,12 +55,7 @@ const MbtiButton = () => {
               <StyledRow key={index}>
                 {row.map((button) => (
                   <StyledButtonLink
-                    to={
-                      button.text.toLocaleLowerCase() ===
-                      userMbti.toLocaleLowerCase()
-                        ? `${button.text}list`
-                        : '#'
-                    }
+                    to={button.text === userMbti ? `${button.text}list` : '#'}
                     key={button.id}
                     button={button}
                   >
