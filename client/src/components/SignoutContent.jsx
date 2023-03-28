@@ -27,15 +27,15 @@ function SignoutContent() {
     setUsers(result.data);
   };
 
-  const deleteUser = async (e) => {
+  const deleteUser = async () => {
     // e.preventDefualt();
     window.alert('탈퇴가 완료되었습니다.');
+    window.location.replace('/');
     await axios.delete(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     loadUsers();
     localStorage.clear();
-    navigate('/');
   };
 
   return (

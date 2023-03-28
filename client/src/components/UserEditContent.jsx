@@ -58,7 +58,7 @@ function UserEditContent() {
         setPassword2(res.data.password2);
         setMbti(res.data.mbti);
         window.alert('😎수정이 완료되었습니다😎');
-        navigate('/EditProfile');
+        window.location.replace('/');
       })
       .catch((e) => {
         window.alert('잘못된 정보입니다. 수정할 내용을 다시 입력해주세요!😭');
