@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Button from './Button.jsx';
 import MyPageSidebar from './MypageSidebar.jsx';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 
 function SignoutContent() {
   const [users, setUsers] = useState([]);
@@ -22,6 +22,7 @@ function SignoutContent() {
   const deleteUser = async (id) => {
     await axios.delete(`${process.env.REACT_APP_API_URL}/users/${id}`);
     loadUsers();
+    return <Navigate to="/" />;
   };
 
   return (
