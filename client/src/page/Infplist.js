@@ -5,101 +5,113 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 const Infp = () => {
   const [answers, setAnswers] = useState([]);
-  const [nickName, setNickName] = useState([]);
-  const [infplist, setinfpList] = useState([]);
-  const [mbtiArr, setMbtiArr] = useState('');
-  const [enfpId, setenfpId] = useState('');
-  const [infpId, setinfpId] = useState('');
-  const [entpId, setentpId] = useState('');
-  const [intpId, setintpId] = useState('');
-  const [enfjId, setenfjId] = useState('');
-  const [infjId, setinfjId] = useState('');
-  const [entjId, setentjId] = useState('');
-  const [intjId, setintjId] = useState('');
-  const [esfpId, setesfpId] = useState('');
-  const [isfpId, setisfpId] = useState('');
-  const [estpId, setestpId] = useState('');
-  const [istpId, setistpId] = useState('');
-  const [esfjId, setesfjId] = useState('');
-  const [isfjId, setisfjId] = useState('');
-  const [estjId, setestjId] = useState('');
-  const [istjId, setistjId] = useState('');
-  let enfps = '';
-  let infps = '';
-  let entps = '';
-  let intps = '';
-  let enfjs = '';
-  let infjs = '';
-  let entjs = '';
-  let intjs = '';
-  let esfps = '';
-  let isfps = '';
-  let estps = '';
-  let istps = '';
-  let esfjs = '';
-  let isfjs = '';
-  let estjs = '';
-  let istjs = '';
-  useEffect(() => {
-    for (const i in mbtiArr) {
-      // 엠비티아이별 회원 id
-      if (mbtiArr[i].mbti === 'ENFP' || mbtiArr[i].mbti === 'enfp') {
-        enfps += mbtiArr[i].userId;
-        setenfpId(enfps);
-      } else if (mbtiArr[i].mbti === 'INFP' || mbtiArr[i].mbti === 'infp') {
-        infps += mbtiArr[i].userId;
-        setinfpId(infps);
-      } else if (mbtiArr[i].mbti === 'ENTP' || mbtiArr[i].mbti === 'entp') {
-        entps += mbtiArr[i].userId;
-        setentpId(entps);
-      } else if (mbtiArr[i].mbti === 'INTP' || mbtiArr[i].mbti === 'intp') {
-        intps += mbtiArr[i].userId;
-        setintpId(intps);
-      } else if (mbtiArr[i].mbti === 'ENFJ' || mbtiArr[i].mbti === 'enfj') {
-        enfjs += mbtiArr[i].userId;
-        setenfjId(enfjs);
-      } else if (mbtiArr[i].mbti === 'INFJ' || mbtiArr[i].mbti === 'infj') {
-        infjs += mbtiArr[i].userId;
-        setinfjId(infjs);
-      } else if (mbtiArr[i].mbti === 'ENTJ' || mbtiArr[i].mbti === 'entj') {
-        entjs += mbtiArr[i].userId;
-        setentjId(entjs);
-      } else if (mbtiArr[i].mbti === 'INTJ' || mbtiArr[i].mbti === 'intj') {
-        intjs += mbtiArr[i].userId;
-        setintjId(intjs);
-      } else if (mbtiArr[i].mbti === 'ESFP' || mbtiArr[i].mbti === 'esfp') {
-        esfps += mbtiArr[i].userId;
-        setesfpId(esfps);
-      } else if (mbtiArr[i].mbti === 'ISFP' || mbtiArr[i].mbti === 'isfp') {
-        isfps += mbtiArr[i].userId;
-        setisfpId(isfps);
-      } else if (mbtiArr[i].mbti === 'ESTP' || mbtiArr[i].mbti === 'estp') {
-        estps += mbtiArr[i].userId;
-        setestpId(estps);
-      } else if (mbtiArr[i].mbti === 'ISTP' || mbtiArr[i].mbti === 'istp') {
-        istps += mbtiArr[i].userId;
-        setistpId(istps);
-      } else if (mbtiArr[i].mbti === 'ESFJ' || mbtiArr[i].mbti === 'esfj') {
-        esfjs += mbtiArr[i].userId;
-        setesfjId(esfjs);
-      } else if (mbtiArr[i].mbti === 'ISFJ' || mbtiArr[i].mbti === 'isfj') {
-        isfjs += mbtiArr[i].userId;
-        setisfjId(isfjs);
-      } else if (mbtiArr[i].mbti === 'ESTJ' || mbtiArr[i].mbti === 'estj') {
-        estjs += mbtiArr[i].userId;
-        setestjId(estjs);
-      } else if (mbtiArr[i].mbti === 'ISTJ' || mbtiArr[i].mbti === 'istj') {
-        istjs += mbtiArr[i].userId;
-        setistjId(istjs);
-      }
-    }
-  });
+  // const [nickName, setNickName] = useState([]);
+  // const [infplist, setinfpList] = useState([]);
+  // const [mbtiArr, setMbtiArr] = useState('');
+  // const [enfpId, setenfpId] = useState('');
+  // const [infpId, setinfpId] = useState('');
+  // const [entpId, setentpId] = useState('');
+  // const [intpId, setintpId] = useState('');
+  // const [enfjId, setenfjId] = useState('');
+  // const [infjId, setinfjId] = useState('');
+  // const [entjId, setentjId] = useState('');
+  // const [intjId, setintjId] = useState('');
+  // const [esfpId, setesfpId] = useState('');
+  // const [isfpId, setisfpId] = useState('');
+  // const [estpId, setestpId] = useState('');
+  // const [istpId, setistpId] = useState('');
+  // const [esfjId, setesfjId] = useState('');
+  // const [isfjId, setisfjId] = useState('');
+  // const [estjId, setestjId] = useState('');
+  // const [istjId, setistjId] = useState('');
+  // let enfps = '';
+  // let infps = '';
+  // let entps = '';
+  // let intps = '';
+  // let enfjs = '';
+  // let infjs = '';
+  // let entjs = '';
+  // let intjs = '';
+  // let esfps = '';
+  // let isfps = '';
+  // let estps = '';
+  // let istps = '';
+  // let esfjs = '';
+  // let isfjs = '';
+  // let estjs = '';
+  // let istjs = '';
+  // useEffect(() => {
+  //   for (const i in mbtiArr) {
+  //     // 엠비티아이별 회원 id
+  //     if (mbtiArr[i].mbti === 'ENFP' || mbtiArr[i].mbti === 'enfp') {
+  //       enfps += mbtiArr[i].userId;
+  //       setenfpId(enfps);
+  //     } else if (mbtiArr[i].mbti === 'INFP' || mbtiArr[i].mbti === 'infp') {
+  //       infps += mbtiArr[i].userId;
+  //       setinfpId(infps);
+  //     } else if (mbtiArr[i].mbti === 'ENTP' || mbtiArr[i].mbti === 'entp') {
+  //       entps += mbtiArr[i].userId;
+  //       setentpId(entps);
+  //     } else if (mbtiArr[i].mbti === 'INTP' || mbtiArr[i].mbti === 'intp') {
+  //       intps += mbtiArr[i].userId;
+  //       setintpId(intps);
+  //     } else if (mbtiArr[i].mbti === 'ENFJ' || mbtiArr[i].mbti === 'enfj') {
+  //       enfjs += mbtiArr[i].userId;
+  //       setenfjId(enfjs);
+  //     } else if (mbtiArr[i].mbti === 'INFJ' || mbtiArr[i].mbti === 'infj') {
+  //       infjs += mbtiArr[i].userId;
+  //       setinfjId(infjs);
+  //     } else if (mbtiArr[i].mbti === 'ENTJ' || mbtiArr[i].mbti === 'entj') {
+  //       entjs += mbtiArr[i].userId;
+  //       setentjId(entjs);
+  //     } else if (mbtiArr[i].mbti === 'INTJ' || mbtiArr[i].mbti === 'intj') {
+  //       intjs += mbtiArr[i].userId;
+  //       setintjId(intjs);
+  //     } else if (mbtiArr[i].mbti === 'ESFP' || mbtiArr[i].mbti === 'esfp') {
+  //       esfps += mbtiArr[i].userId;
+  //       setesfpId(esfps);
+  //     } else if (mbtiArr[i].mbti === 'ISFP' || mbtiArr[i].mbti === 'isfp') {
+  //       isfps += mbtiArr[i].userId;
+  //       setisfpId(isfps);
+  //     } else if (mbtiArr[i].mbti === 'ESTP' || mbtiArr[i].mbti === 'estp') {
+  //       estps += mbtiArr[i].userId;
+  //       setestpId(estps);
+  //     } else if (mbtiArr[i].mbti === 'ISTP' || mbtiArr[i].mbti === 'istp') {
+  //       istps += mbtiArr[i].userId;
+  //       setistpId(istps);
+  //     } else if (mbtiArr[i].mbti === 'ESFJ' || mbtiArr[i].mbti === 'esfj') {
+  //       esfjs += mbtiArr[i].userId;
+  //       setesfjId(esfjs);
+  //     } else if (mbtiArr[i].mbti === 'ISFJ' || mbtiArr[i].mbti === 'isfj') {
+  //       isfjs += mbtiArr[i].userId;
+  //       setisfjId(isfjs);
+  //     } else if (mbtiArr[i].mbti === 'ESTJ' || mbtiArr[i].mbti === 'estj') {
+  //       estjs += mbtiArr[i].userId;
+  //       setestjId(estjs);
+  //     } else if (mbtiArr[i].mbti === 'ISTJ' || mbtiArr[i].mbti === 'istj') {
+  //       istjs += mbtiArr[i].userId;
+  //       setistjId(istjs);
+  //     }
+  //   }
+  // });
+  // useEffect(() => {
+  //   axios
+  //     // 전체회원 조회
+  //     .get(`${process.env.REACT_APP_API_URL}/users`)
+  //     .then((response) => {
+  //       setMbtiArr(response.data.data);
+  //       console.log(response.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
   useEffect(() => {
     axios
-      // 전체회원 조회
-      .get(`${process.env.REACT_APP_API_URL}/users`)
+      // 엠비티아이별
+      .get(`${process.env.REACT_APP_API_URL}/board/infp`)
       .then((response) => {
-        setMbtiArr(response.data.data);
+        console.log(response);
       })
       .catch((err) => {
         console.log(err);
@@ -119,20 +131,21 @@ const Infp = () => {
   //       });
   //   }
   // }, []);
-  useEffect(() => {
-    for (const i of infpId) {
-      // userid랑 게시글 id랑 안맞아서 특정 mbti만 불러오기 안되는거였음
-      // 해결법 생각해 봤는데 없음 게시글 id로 받아올라 해도 거기에는 mbti 안적혀있음
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/board/integrated/${i}`)
-        .then((response) => {
-          setinfpList((prevList) => [...prevList, response.data]);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   for (const i of infpId) {
+  //     // userid랑 게시글 id랑 안맞아서 특정 mbti만 불러오기 안되는거였음
+  //     // 해결법 생각해 봤는데 없음 게시글 id로 받아올라 해도 거기에는 mbti 안적혀있지않음
+  //     console.log(infpId);
+  //     axios
+  //       .get(`${process.env.REACT_APP_API_URL}/board/integrated/${i}`)
+  //       .then((response) => {
+  //         setinfpList((prevList) => [...prevList, response.data]);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }, []);
 
   useEffect(() => {
     axios
@@ -146,17 +159,15 @@ const Infp = () => {
   }, []);
   return (
     <BoardLayout>
-      {console.log(infpId)}
-      {console.log(infplist)}
       <BoardHead>INFP 게시판</BoardHead>
       <BoardBox>
-        {infplist.map((infplist, index) => (
-          <Link key={index} to={`/board/integrated/${infplist.id}`}>
+        {answers.map((answers, index) => (
+          <Link key={index} to={`/board/integrated/${answers.id}`}>
             <div>
               <CardLayout>
-                <div className="posttitle"> {infplist.title} </div>
-                <div className="postcontent"> {infplist.content} </div>
-                <div className="postnickname"> {infplist.nickName} </div>
+                <div className="posttitle"> {answers.title} </div>
+                <div className="postcontent"> {answers.content} </div>
+                <div className="postnickname"> {answers.nickName} </div>
               </CardLayout>
             </div>
           </Link>

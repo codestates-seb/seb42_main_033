@@ -3,24 +3,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const BoardAnswer = ({ username, content, post }) => {
+const BoardAnswer = ({ username, content, post, id, postId }) => {
   const [commentsId, setcommentsId] = useState();
   const token = localStorage.getItem('jwtToken');
 
-  useEffect(() => {
-    const postId = post.id;
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment`
-      )
-      .then((response) => {
-        setcommentsId(response.data.commentsId);
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
   const answerDelete = async () => {
     const postId = post.id;
     const commentId = post.comments[0].commentId;

@@ -3,7 +3,7 @@ import { AiOutlineEllipsis } from 'react-icons/ai';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
 import PostModal from './PostModal.jsx';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BoardAnswer from './BoardAnswer.jsx';
 import axios from 'axios';
 import moment from 'moment';
@@ -22,40 +22,39 @@ const BoardCarddetail = ({
   const token = localStorage.getItem('jwtToken');
   const userId = post.userId;
   const [comment, setComment] = useState('');
+  const [isValid, setIsValid] = useState(false);
   const [comments, setComments] = useState([]);
   const commentCount = comments.length;
+  const postId = post.id;
+
   //게시글 수정삭제 모달
   const handleClick = () => {
-    // if (userId === post.userId) {
-    //   setIsModalOpen(!isModalOpen);
-    // }
     setIsModalOpen(!isModalOpen);
   };
   //좋아요
-  const handleLikeClick = async () => {
-    const postId = post.id;
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${id}/like`,
-        {
-          userId: userId,
-          postId: postId,
-        },
-        {
-          headers: {
-            Authorization: token,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+  // const handleLikeClick = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_API_URL}/board/integrated/${id}/like`,
+  //       {
+  //         userId: userId,
+  //         postId: postId,
+  //       }
+  //     );
+  //     console.log(userId);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  const postLike = () => {
+    axios.post(`${process.env.REACT_APP_API_URL}/board/integrated/${id}/like`, {
+      userId: userId,
+      postId: postId,
+    });
   };
   //댓글 등록
-  const handleCommentSubmit = async () => {
-    const postId = post.id;
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
     try {
       const config = {
         headers: {
@@ -72,10 +71,17 @@ const BoardCarddetail = ({
         data,
         config
       );
-      setComments([
-        ...comments,
-        { username: data.username, content: data.content },
-      ]);
+      // const newComment = { username: post.username, content: comment };
+      // setComments([...comments, newComment]);
+
+      // setComments([
+      //   ...comments,
+      //   { username: data.username, content: data.content },
+      // ]);
+      // setComment('');
+      const newComments = [...comments];
+      newComments.push(comment);
+      setComments(newComments);
       setComment('');
       setCount(count + 1);
       setPost({ ...post, commentCount: commentCount + 1 });
@@ -83,10 +89,27 @@ const BoardCarddetail = ({
       console.log(error);
     }
   };
+
+  //댓글조회
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_URL}/board/integrated/${id}/comment`
+        );
+        setComments(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchComments();
+  }, [id]);
+
   return (
     <>
       {isLoaded && (
         <Container>
+          {console.log(post.userId)}
           <div className="boardwrap">
             <HeaderLink to="/PostlistPage">통합 게시판</HeaderLink>
             <div className="boardview">
@@ -95,7 +118,6 @@ const BoardCarddetail = ({
                   {post.title}
                   <ModalContainer onClick={handleClick}>
                     {token && userId === post.userId && <EditDeletIcon />}
-                    {/* <EditDeletIcon /> */}
                   </ModalContainer>
                   {isModalOpen && (
                     <PostModal
@@ -103,19 +125,11 @@ const BoardCarddetail = ({
                       isOpen={isModalOpen}
                       onEdit={handleEdit}
                       onDelete={handleDelete}
-                      // title={post.title}
-                      // content={post.content}
-                      // postId={post.id}
                     />
                   )}
                 </div>
                 <div className="nickname">{post.nickName}</div>
-                <div className="createdate">
-                  {post.createdAt}
-                  {/* {moment(post.createdAt)
-                    .add(9, 'hour')
-                    .format('MM.DD HH:mm:ss')} */}
-                </div>
+                <div className="createdate">{post.createdAt}</div>
               </div>
               <div className="boardcontent">
                 <div className="content">{post.content}</div>
@@ -125,7 +139,7 @@ const BoardCarddetail = ({
                       <Like
                         onClick={() => {
                           setLike(like + 1);
-                          handleLikeClick();
+                          postLike();
                         }}
                         style={{ fontSize: '20px' }}
                       />
@@ -148,17 +162,26 @@ const BoardCarddetail = ({
               </div>
             </div>
             <div className="answerview">
-              {comments.map((comment, index) => (
+              {/* {comments.map((comment, index) => (
                 <BoardAnswer
                   key={index}
-                  // id={id}
-                  // userId={userId}
+                  id={id}
+                  userId={userId}
                   username={comment.username}
                   content={comment.content}
                   post={post}
                   setPost={setPost}
-                  id={id}
                 />
+              ))} */}
+              {comments.map((comment) => (
+                <BoardAnswer key={comment.id}>
+                  id={comment.id}
+                  postId={post.id}
+                  username={comment.username}
+                  content={comment.content}
+                  post={post}
+                  setPost={setPost}
+                </BoardAnswer>
               ))}
               <div className="writranswer">
                 <input
@@ -171,6 +194,11 @@ const BoardCarddetail = ({
                   }}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
+                  onKeyUp={(e) =>
+                    e.target.value.length > 0
+                      ? setIsValid(true)
+                      : setIsValid(false)
+                  }
                 />
                 <button
                   style={{

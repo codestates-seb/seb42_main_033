@@ -3,23 +3,45 @@ import Button from './Button.jsx';
 import MyPageSidebar from './MypageSidebar.jsx';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
 function UserEditContent() {
   const [name, setName] = useState('');
-  const { id } = useParams();
+  const [password1, setPassword1] = useState('');
+  const [password2, setPassword2] = useState('');
+  const [mbti, setMbti] = useState('');
+
+  const userId = localStorage.getItem('userId');
+  // const token = localStorage.getItem('jwtToken');
+
   const handleChangeName = (e) => {
     setName(e.target.value);
+  };
+
+  const handleChangepassword1 = (e) => {
+    setPassword1(e.target.value);
+  };
+
+  const handleChangepassword2 = (e) => {
+    setPassword2(e.target.value);
+  };
+  const handleChangeMbti = (e) => {
+    setMbti(e.target.value);
   };
 
   const handleClickSubmit = (e) => {
     e.preventDefault();
     axios
-      .patch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
+      .patch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
         name,
+        password1,
+        password2,
+        mbti,
       })
       .then((res) => {
         setName(res.data.data.name);
+        setPassword1(res.data.data.password1);
+        setPassword2(res.data.data.password2);
+        setMbti(res.data.data.mbti);
         window.alert('수정 완료');
       })
       .catch(() => {
@@ -28,14 +50,29 @@ function UserEditContent() {
   };
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/users/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}/users/${userId}`)
       .then((res) => {
         setName(res.data.data.name);
+        setPassword1(res.data.data.password1);
+        setPassword2(res.data.data.password2);
+        setMbti(res.data.data.mbti);
       })
       .catch(() => {
         window.alert('오류 발생');
       });
   });
+
+  // useEffect(() => {
+  //   loadUsers();
+  // }, []);
+
+  // const loadUsers = async () => {
+  //   const result = await axios.get(
+  //     `${process.env.REACT_APP_API_URL}/users/${userId}`
+  //   );
+  //   setUsers(result.data);
+  // };
+
   return (
     <>
       <MyPageSidebar />
@@ -45,12 +82,27 @@ function UserEditContent() {
           <Input
             type="text"
             placeholder="닉네임"
-            id="nickName"
+            value={name}
             onChange={handleChangeName}
           />
-          <Input type="text" placeholder="MBTI" id="mbit" />
-          <Input type="password" placeholder="비밀번호" id="password1" />
-          <Input type="password" placeholder="비밀번호 확인" id="password2" />
+          <Input
+            type="text"
+            placeholder="MBTI"
+            value={mbti}
+            onChange={handleChangeMbti}
+          />
+          <Input
+            type="password"
+            placeholder="비밀번호"
+            value={password1}
+            onChange={handleChangepassword1}
+          />
+          <Input
+            type="password"
+            placeholder="비밀번호 확인"
+            value={password2}
+            onChange={handleChangepassword2}
+          />
         </InputWrapper>
         <BtnWrapper>
           <Button background="#D9D9D9">취소</Button>

@@ -33,7 +33,7 @@ function LoginPage() {
       if (response.status === 401) {
         alert('회원가입 해야할듯');
       }
-      const accessToken = response.headers.authorization;
+      const accessToken = response.headers.Authorization;
       const refreshToken = response.headers.refresh;
       localStorage.setItem('jwtToken', accessToken);
       localStorage.setItem('rfToken', refreshToken);
@@ -52,6 +52,7 @@ function LoginPage() {
         if (user) {
           const userIdSet = user.userId;
           localStorage.setItem('userId', userIdSet);
+          localStorage.setItem('mbti', user.mbti);
         }
         //user Id 추가 (병민)
         navigate('/');
