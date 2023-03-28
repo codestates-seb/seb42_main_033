@@ -7,7 +7,7 @@ const BoardCard = ({
   id,
   title,
   content,
-  nickname,
+  nickName,
   viewCount,
   likeCount,
   commentCount,
@@ -21,7 +21,7 @@ const BoardCard = ({
           <div className="postcontent">
             <span className="content">{content}</span>
             <span className="username" style={{ marginLeft: 'auto' }}>
-              {nickname}
+              {nickName}
             </span>
           </div>
           <div className="cardbottom">
