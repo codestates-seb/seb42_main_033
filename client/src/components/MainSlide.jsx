@@ -60,7 +60,9 @@ const MainSlide = () => {
 `;
   const Img = styled.img`
     animation: ${slideAnimation} 0.5s ease-in-out;
-    height: 50vh;
+    width: 80%;
+    height: auto;
+    margin-bottom: -30px;
   `;
 
   return (
