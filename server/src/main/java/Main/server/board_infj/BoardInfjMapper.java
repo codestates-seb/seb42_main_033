@@ -1,7 +1,5 @@
 package Main.server.board_infj;
 
-import Main.server.board_infj.BoardInfjDto;
-import Main.server.board_infj.BoardInfj;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

@@ -1,9 +1,6 @@
 package Main.server.response;
 
-import Main.server.message.dto.MessageDto;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @AllArgsConstructor

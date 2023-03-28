@@ -1,4 +1,4 @@
-package Main.server.board_infj;
+package Main.server.board_istj;
 
 import Main.server.advice.errors.DuplicateResourceException;
 import Main.server.advice.errors.NotFoundException;
@@ -7,8 +7,8 @@ import Main.server.comment.CommentRepository;
 import Main.server.like.Like;
 import Main.server.like.LikeDto;
 import Main.server.like.LikeRepository;
-import Main.server.user.Users;
 import Main.server.user.UserRepository;
+import Main.server.user.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,34 +21,34 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BoardInfjService {
-    private final BoardInfjRepository boardInfjRepository;
+public class BoardIstjService {
+    private final BoardIstjRepository boardIstjRepository;
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
 
-    public BoardInfjService(BoardInfjRepository boardInfjRepository,
+    public BoardIstjService(BoardIstjRepository boardIstjRepository,
                             UserRepository userRepository,
                             LikeRepository likeRepository,
                             CommentRepository commentRepository) {
-        this.boardInfjRepository = boardInfjRepository;
+        this.boardIstjRepository = boardIstjRepository;
         this.userRepository = userRepository;
         this.likeRepository = likeRepository;
         this.commentRepository = commentRepository;
     }
 
     @Transactional
-    public BoardInfj createPost(BoardInfj post, long userId) {
+    public BoardIstj createPost(BoardIstj post, long userId) {
         Users findUser = getUserFromId(userId);
 
-        if(findUser.getMbti().equalsIgnoreCase("infj")) {
+        if(findUser.getMbti().equalsIgnoreCase("istj")) {
             post.setUsers(findUser);
             post.setViewCount(0L);
             post.setLikeCount(0L);
             post.setCommentCount(0L);
-            post.setCategory("infj");
+            post.setCategory("istj");
 
-            return boardInfjRepository.save(post);
+            return boardIstjRepository.save(post);
         }
         else {
             return null;
@@ -56,8 +56,8 @@ public class BoardInfjService {
     }
 
     @Transactional
-    public BoardInfj updatePost(BoardInfj post) {
-        BoardInfj findPost = findPost(post.getId());
+    public BoardIstj updatePost(BoardIstj post) {
+        BoardIstj findPost = findPost(post.getId());
 
         Optional.ofNullable(post.getTitle()).ifPresent(title -> findPost.setTitle(title));
         Optional.ofNullable(post.getContent()).ifPresent(content -> findPost.setContent(content));
@@ -69,8 +69,8 @@ public class BoardInfjService {
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public BoardInfj readPost(long id) {
-        BoardInfj post = findPost(id);
+    public BoardIstj readPost(long id) {
+        BoardIstj post = findPost(id);
         post.setViewCount(post.getViewCount() + 1);
         return post;
     }
@@ -81,21 +81,21 @@ public class BoardInfjService {
         Users users = userRepository.findById(likeDto.getUserId())
                 .orElseThrow(() -> new NotFoundException("회원 정보를 찾을 수 없습니다."));
 
-        BoardInfj post = boardInfjRepository.findById(likeDto.getPostId())
+        BoardIstj post = boardIstjRepository.findById(likeDto.getPostId())
                 .orElseThrow(() -> new NotFoundException("게시글을 찾을 수 없습니다."));
 
-        if(likeRepository.findByUsersAndBoardInfj(users, post).isPresent()) {
+        if(likeRepository.findByUsersAndBoardIstj(users, post).isPresent()) {
             throw new DuplicateResourceException("이미 추천했습니다.");
         }
 
-        if(users.getMbti().equalsIgnoreCase("infj")) {
-            Like boardInfjLike = Like.builder()
-                    .boardInfj(post)
+        if(users.getMbti().equalsIgnoreCase("istj")) {
+            Like boardIstjLike = Like.builder()
+                    .boardIstj(post)
                     .users(users)
-                    .category("infj")
+                    .category("istj")
                     .build();
 
-            return likeRepository.save(boardInfjLike);
+            return likeRepository.save(boardIstjLike);
         }
         else {
             return null;
@@ -107,37 +107,37 @@ public class BoardInfjService {
         Users users = userRepository.findById(likeDto.getUserId())
                 .orElseThrow(() -> new NotFoundException("회원 정보를 찾을 수 없습니다."));
 
-        BoardInfj post = boardInfjRepository.findById(likeDto.getPostId())
+        BoardIstj post = boardIstjRepository.findById(likeDto.getPostId())
                 .orElseThrow(() -> new NotFoundException("게시글을 찾을 수 없습니다."));
 
-        Like boardInfjLike = likeRepository.findByUsersAndBoardInfj(users, post)
+        Like boardIstjLike = likeRepository.findByUsersAndBoardIstj(users, post)
                 .orElseThrow(() -> new NotFoundException("추천하지 않았습니다."));
 
-        likeRepository.delete(boardInfjLike);
+        likeRepository.delete(boardIstjLike);
     }
 
-    public BoardInfj addLike(long id) {
-        BoardInfj post = findPost(id);
+    public BoardIstj addLike(long id) {
+        BoardIstj post = findPost(id);
         post.setLikeCount(post.getLikeCount() + 1);
-        return boardInfjRepository.save(post);
+        return boardIstjRepository.save(post);
     }
 
-    public BoardInfj deleteLike(long id) {
-        BoardInfj post = findPost(id);
+    public BoardIstj deleteLike(long id) {
+        BoardIstj post = findPost(id);
         post.setLikeCount(post.getLikeCount() - 1);
-        return boardInfjRepository.save(post);
+        return boardIstjRepository.save(post);
     }
 
     public void deletePost(long id) {
-        BoardInfj post = findPost(id);
+        BoardIstj post = findPost(id);
 
-        List<Like> boardInfjLikes = likeRepository.findAll();
+        List<Like> boardIstjLikes = likeRepository.findAll();
 
         while (post.getLikeCount() != 0) {
-            for(int i = 0; i < boardInfjLikes.size(); i++) {
-                Like boardInfjLike = boardInfjLikes.get(i);
-                if(boardInfjLike.getCategory().equals("infj") && boardInfjLike.getBoardInfj().getId() == id) {
-                    likeRepository.delete(boardInfjLike);
+            for(int i = 0; i < boardIstjLikes.size(); i++) {
+                Like boardIstjLike = boardIstjLikes.get(i);
+                if(boardIstjLike.getCategory().equals("istj") && boardIstjLike.getBoardIstj().getId() == id) {
+                    likeRepository.delete(boardIstjLike);
                     deleteLike(id);
                 }
             }
@@ -148,27 +148,27 @@ public class BoardInfjService {
         while (post.getCommentCount() != 0) {
             for(int i = 0; i < comments.size(); i++) {
                 Comment comment = comments.get(i);
-                if(comment.getCategory().equals("infj") && comment.getBoardInfj().getId() == id) {
+                if(comment.getCategory().equals("istj") && comment.getBoardIstj().getId() == id) {
                     commentRepository.delete(comment);
                     post.setCommentCount(post.getCommentCount() - 1);
                 }
             }
         }
 
-        boardInfjRepository.deleteById(id);
+        boardIstjRepository.deleteById(id);
     }
 
     // 댓글 작성
     @Transactional
     public Comment createComment(Comment comment, long userId, long postId) {
         Users findUser = getUserFromId(userId);
-        BoardInfj findPost = findPost(postId);
+        BoardIstj findPost = findPost(postId);
 
-        if(findUser.getMbti().equalsIgnoreCase("infj")) {
+        if(findUser.getMbti().equalsIgnoreCase("istj")) {
             findPost.setCommentCount(findPost.getCommentCount()+1);
             comment.setUser(findUser);
-            comment.setBoardInfj(findPost);
-            comment.setCategory("infj");
+            comment.setBoardIstj(findPost);
+            comment.setCategory("istj");
             return commentRepository.save(comment);
         }
         else {
@@ -190,7 +190,7 @@ public class BoardInfjService {
     @Transactional
     public void deleteComment(long commentId) {
         Comment findComment = findVerifiedComment(commentId);
-        BoardInfj post = findComment.getBoardInfj();
+        BoardIstj post = findComment.getBoardIstj();
         commentRepository.deleteById(commentId);
         post.setCommentCount(post.getCommentCount()-1);
     }
@@ -205,12 +205,12 @@ public class BoardInfjService {
         return commentRepository.findAll();
     }
 
-    public BoardInfj findPost(long id) {
-        return boardInfjRepository.findById(id).orElse(null);
+    public BoardIstj findPost(long id) {
+        return boardIstjRepository.findById(id).orElse(null);
     }
 
-    public Page<BoardInfj> findAllPost(int page, int size) {
-        return boardInfjRepository.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
+    public Page<BoardIstj> findAllPost(int page, int size) {
+        return boardIstjRepository.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
     }
 
     public Users getUserFromId(long userId) {

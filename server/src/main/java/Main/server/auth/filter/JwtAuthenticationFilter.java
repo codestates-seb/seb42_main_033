@@ -2,7 +2,7 @@ package Main.server.auth.filter;
 
 import Main.server.auth.JwtTokenizer;
 import Main.server.auth.dto.LoginDto;
-import Main.server.user.entity.Users;
+import Main.server.user.Users;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;

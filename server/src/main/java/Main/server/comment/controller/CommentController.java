@@ -6,7 +6,7 @@
 //import Main.server.comment.entity.Comment;
 //import Main.server.comment.mapper.CommentMapper;
 //import Main.server.comment.service.CommentService;
-//import Main.server.notification.service.SseService;
+//import Main.server.notification.SseService;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.*;

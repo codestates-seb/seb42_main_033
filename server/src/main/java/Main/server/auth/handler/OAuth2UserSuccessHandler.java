@@ -2,8 +2,8 @@ package Main.server.auth.handler;
 
 import Main.server.auth.JwtTokenizer;
 import Main.server.auth.utils.CustomAuthorityUtils;
-import Main.server.user.entity.Users;
-import Main.server.user.service.UserService;
+import Main.server.user.Users;
+import Main.server.user.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;

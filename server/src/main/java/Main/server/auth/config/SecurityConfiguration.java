@@ -5,7 +5,7 @@ import Main.server.auth.filter.JwtAuthenticationFilter;
 import Main.server.auth.filter.JwtverificationFilter;
 import Main.server.auth.handler.*;
 import Main.server.auth.utils.CustomAuthorityUtils;
-import Main.server.user.service.UserService;
+import Main.server.user.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -22,11 +22,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.cors.reactive.CorsUtils;
-
-import java.util.Arrays;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -43,8 +38,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http
-                .headers().frameOptions().sameOrigin()
+        http.headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
                 .cors()
@@ -93,8 +87,7 @@ public class SecurityConfiguration {
         public CorsConfigurationSource corsConfigurationSource(){
 
         CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.addAllowedOrigin("*");
+        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);

@@ -1,4 +1,4 @@
-package Main.server.board_infj;
+package Main.server.board_infp;
 
 import Main.server.audit.Auditable;
 import Main.server.comment.Comment;
@@ -17,8 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class BoardInfj extends Auditable {
-
+public class BoardInfp extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +25,7 @@ public class BoardInfj extends Auditable {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String content;
 
     private String category;
@@ -39,7 +38,7 @@ public class BoardInfj extends Auditable {
 
     private Long likeCount;
 
-    @OneToMany(mappedBy = "boardInfj", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "boardInfp", cascade = CascadeType.PERSIST)
     private List<Comment> comment = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)

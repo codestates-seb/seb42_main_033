@@ -2,10 +2,13 @@ package Main.server.comment;
 
 import Main.server.audit.Auditable;
 import Main.server.board_infj.BoardInfj;
+import Main.server.board_infp.BoardInfp;
 import Main.server.board_integrated.BoardIntegrated;
-import Main.server.user.entity.Users;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import Main.server.board_isfj.BoardIsfj;
+import Main.server.board_istj.BoardIstj;
+import Main.server.board_istp.BoardIstp;
+import Main.server.user.Users;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,17 +31,35 @@ public class Comment extends Auditable {
 
     private String category;
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JsonManagedReference
     @JoinColumn(name = "board_integrated_id")
-    @JsonIgnore
     private BoardIntegrated boardIntegrated;
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JsonManagedReference
     @JoinColumn(name = "board_infj_id")
-    @JsonIgnore
     private BoardInfj boardInfj;
+
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "board_infp_id")
+    private BoardInfp boardInfp;
+
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "board_istj_id")
+    private BoardIstj boardIstj;
+
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "board_istp_id")
+    private BoardIstp boardIstp;
+
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "board_isfj_id")
+    private BoardIsfj boardIsfj;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "USER_ID")

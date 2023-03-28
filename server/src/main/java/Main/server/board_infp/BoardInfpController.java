@@ -1,4 +1,4 @@
-package Main.server.board_infj;
+package Main.server.board_infp;
 
 import Main.server.comment.Comment;
 import Main.server.comment.CommentDto;
@@ -16,15 +16,15 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
-@RequestMapping("/board/infj")
-public class BoardInfjController {
-    private final BoardInfjService service;
-    private final CustomBoardInfjMapper mapper;
+@RequestMapping("/board/infp")
+public class BoardInfpController {
+    private final BoardInfpService service;
+    private final CustomBoardInfpMapper mapper;
     private final LikeRepository likeRepository;
     private final CommentMapper commentMapper;
 
-    public BoardInfjController(BoardInfjService service,
-                               CustomBoardInfjMapper mapper,
+    public BoardInfpController(BoardInfpService service,
+                               CustomBoardInfpMapper mapper,
                                LikeRepository likeRepository,
                                CommentMapper commentMapper) {
         this.service = service;
@@ -35,11 +35,11 @@ public class BoardInfjController {
 
     //게시글 등록
     @PostMapping
-    public ResponseEntity postPost(@RequestBody BoardInfjDto.Post postDto) {
-        BoardInfj createdPost = service.createPost(mapper.postDtoToBoardInfj(postDto), postDto.getUserId());
+    public ResponseEntity postPost(@RequestBody BoardInfpDto.Post postDto) {
+        BoardInfp createdPost = service.createPost(mapper.postDtoToBoardInfp(postDto), postDto.getUserId());
 
         if(createdPost != null) {
-            BoardInfjDto.Response result = mapper.boardInfjToResponseDto(createdPost);
+            BoardInfpDto.Response result = mapper.boardInfpToResponseDto(createdPost);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -50,9 +50,9 @@ public class BoardInfjController {
     public ResponseEntity getPosts(@Positive @RequestParam(defaultValue = "1") int page,
                                    @Positive @RequestParam(defaultValue = "100") int size) {
 
-        Page<BoardInfj> pagePosts = service.findAllPost(page - 1, size);
-        List<BoardInfj> posts = pagePosts.getContent();
-        List<BoardInfjDto.Response> result = mapper.boardInfjToResponseDtos(posts);
+        Page<BoardInfp> pagePosts = service.findAllPost(page - 1, size);
+        List<BoardInfp> posts = pagePosts.getContent();
+        List<BoardInfpDto.Response> result = mapper.boardInfpToResponseDtos(posts);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -61,8 +61,8 @@ public class BoardInfjController {
     @GetMapping("/{post-id}")
     public ResponseEntity getPost(@PathVariable("post-id") long postId) {
 
-        BoardInfj post = service.readPost(postId);
-        BoardInfjDto.Response result = mapper.boardInfjToResponseDto(post);
+        BoardInfp post = service.readPost(postId);
+        BoardInfpDto.Response result = mapper.boardInfpToResponseDto(post);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -70,13 +70,13 @@ public class BoardInfjController {
     //게시글 수정
     @PatchMapping("/{post-id}")
     public ResponseEntity patchPost(@PathVariable("post-id") long postId,
-                                    @RequestBody BoardInfjDto.Patch patchDto) {
+                                    @RequestBody BoardInfpDto.Patch patchDto) {
 
-        BoardInfj post = mapper.patchDtoToBoardInfj(patchDto);
+        BoardInfp post = mapper.patchDtoToBoardInfp(patchDto);
         post.setId(postId);
 
-        BoardInfj modifiedPost = service.updatePost(post);
-        BoardInfjDto.Response result = mapper.boardInfjToResponseDto(modifiedPost);
+        BoardInfp modifiedPost = service.updatePost(post);
+        BoardInfpDto.Response result = mapper.boardInfpToResponseDto(modifiedPost);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -141,7 +141,7 @@ public class BoardInfjController {
                 CommentDto.Response result = commentMapper.commentToCommentResponseDto(createComment);
                 result.setUserId(createComment.getUser().getUserId());
                 result.setUsername(createComment.getUser().getNickName());
-                result.setBoardId(createComment.getBoardInfj().getId());
+                result.setBoardId(createComment.getBoardInfp().getId());
 
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -171,7 +171,7 @@ public class BoardInfjController {
         CommentDto.Response result = commentMapper.commentToCommentResponseDto(comment);
         result.setUserId(comment.getUser().getUserId());
         result.setUsername(comment.getUser().getNickName());
-        result.setBoardId(comment.getBoardInfj().getId());
+        result.setBoardId(comment.getBoardInfp().getId());
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
