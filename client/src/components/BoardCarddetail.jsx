@@ -33,7 +33,7 @@ const BoardCarddetail = ({
   const handleLikeClick = async () => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${id}/like`,
+        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/like`,
         {
           userId: userId,
           postId: postId,
@@ -54,7 +54,7 @@ const BoardCarddetail = ({
   const getComment = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${id}/comment`
+        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment`
       );
       console.log('status:', response.status);
       console.log('data:', response.data);
@@ -83,11 +83,11 @@ const BoardCarddetail = ({
       };
       const data = {
         userId: userId,
-        postId: id,
+        postId: postId,
         content: comment,
       };
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${id}`,
+        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}`,
         data,
         config
       );
@@ -105,7 +105,6 @@ const BoardCarddetail = ({
   };
   //댓글 삭제
   const commentDelete = async () => {
-    const commentId = comment.id;
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -113,10 +112,10 @@ const BoardCarddetail = ({
     };
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${id}/comment/${commentId}`,
+        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${userId}`,
         config
       );
-      navigate(`/PostviewPage/${id}`);
+      navigate(`/PostviewPage/${postId}`);
     } catch (error) {
       console.log(error);
     }
@@ -162,7 +161,6 @@ const BoardCarddetail = ({
                     </span>
                     <span style={{ paddingBottom: '40' }}>
                       {post.likeCount}
-                      {like}
                     </span>
                     <span className="commenticon">
                       <CommentIcon
