@@ -38,7 +38,6 @@ function HeaderLogin() {
       </Headerimgdiv>
       <Headertext2>
         <Headertext to="/PostlistPage">통합게시판</Headertext>
-        <Headertext>MBTI TEST</Headertext>
         <Headertextlogin to="/Login"> 로그인</Headertextlogin>
       </Headertext2>
     </Headerbody>

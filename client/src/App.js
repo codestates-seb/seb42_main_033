@@ -18,6 +18,7 @@ import MyPostPage from './page/MyPostPage.js';
 import EditProfilePage from './page/EditProfilePage';
 import SignoutPage from './page/SignoutPage';
 import Infp from './page/Infplist';
+import GlobalStyle from './utils/GlobalStyle';
 
 const Dev = styled.div`
   display: flex;
@@ -39,6 +40,7 @@ function App() {
       ) : (
         <HeaderLogin />
       )}
+      <GlobalStyle />
       <Routes>
         <Route path="/" element={<MainPage />} />
         {/* 홈화면 */}

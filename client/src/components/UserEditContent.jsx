@@ -80,7 +80,7 @@ function UserEditContent() {
         setPassword2(res.data.password2);
       })
       .catch(() => {
-        window.alert('오류 발생');
+        //window.alert('오류 발생');
       });
   }, []);
 
@@ -140,7 +140,7 @@ const Input = styled.input`
   border: solid 1px gray;
   padding: 15px;
   margin: 15px;
-  width: 350px;
+  width: 380px;
 `;
 
 const InputWrapper = styled.form`
@@ -162,7 +162,8 @@ const Container = styled.div`
   flex-direction: column;
   position: absolute;
   top: 52%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  right: 20%;
+  transform: translate(-27%, -48%);
 `;
+
 export default UserEditContent;
