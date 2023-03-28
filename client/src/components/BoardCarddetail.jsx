@@ -22,9 +22,11 @@ const BoardCarddetail = ({
   const token = localStorage.getItem('jwtToken');
   const userId = post.userId;
   const [comment, setComment] = useState('');
+  const [isValid, setIsValid] = useState(false);
   const [comments, setComments] = useState([]);
   const commentCount = comments.length;
   const postId = post.id;
+
   //게시글 수정삭제 모달
   const handleClick = () => {
     setIsModalOpen(!isModalOpen);
@@ -51,7 +53,8 @@ const BoardCarddetail = ({
     }
   };
   //댓글 등록
-  const handleCommentSubmit = async () => {
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
     try {
       const config = {
         headers: {
@@ -68,12 +71,17 @@ const BoardCarddetail = ({
         data,
         config
       );
-      const newComment = { username: post.username, content: comment };
-      setComments([...comments, newComment]);
+      // const newComment = { username: post.username, content: comment };
+      // setComments([...comments, newComment]);
+
       // setComments([
       //   ...comments,
       //   { username: data.username, content: data.content },
       // ]);
+      // setComment('');
+      const newComments = [...comments];
+      newComments.push(comment);
+      setComments(newComments);
       setComment('');
       setCount(count + 1);
       setPost({ ...post, commentCount: commentCount + 1 });
@@ -81,21 +89,22 @@ const BoardCarddetail = ({
       console.log(error);
     }
   };
+
   //댓글조회
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment`
+          `${process.env.REACT_APP_API_URL}/board/integrated/${id}/comment`
         );
+        console.log(data);
         setComments(data);
       } catch (error) {
         console.log(error);
       }
     };
-
     fetchComments();
-  }, [postId]);
+  }, [id]);
 
   return (
     <>
@@ -158,7 +167,7 @@ const BoardCarddetail = ({
                   key={index}
                   id={id}
                   userId={userId}
-                  nickName={comment.nickName}
+                  username={comment.username}
                   content={comment.content}
                   post={post}
                   setPost={setPost}
@@ -166,9 +175,9 @@ const BoardCarddetail = ({
               ))} */}
               {comments.map((comment) => (
                 <BoardAnswer key={comment.id}>
-                  id={id}
-                  userId={userId}
-                  nickName={comment.nickName}
+                  id={comment.id}
+                  postId={post.id}
+                  username={comment.username}
                   content={comment.content}
                   post={post}
                   setPost={setPost}
@@ -185,6 +194,11 @@ const BoardCarddetail = ({
                   }}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
+                  onKeyUp={(e) =>
+                    e.target.value.length > 0
+                      ? setIsValid(true)
+                      : setIsValid(false)
+                  }
                 />
                 <button
                   style={{

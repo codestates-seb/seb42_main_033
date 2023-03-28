@@ -3,24 +3,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const BoardAnswer = ({ nickName, content, post, id }) => {
+const BoardAnswer = ({ username, content, post, id, postId }) => {
   const [commentsId, setcommentsId] = useState();
   const token = localStorage.getItem('jwtToken');
-  const postId = post.id;
-  useEffect(() => {
-    const getAnswer = async () => {
-      try {
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment`
-        );
-        setcommentsId(data.commentsId);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getAnswer();
-  }, [id]);
 
   const answerDelete = async () => {
     try {
@@ -40,7 +25,7 @@ const BoardAnswer = ({ nickName, content, post, id }) => {
   };
   return (
     <AnswerForm>
-      <div className="answernickname">{nickName}</div>
+      <div className="answernickname">{username}</div>
       <div
         className="answerbutton"
         style={{ marginLeft: '730px', fontSize: '13px' }}
