@@ -8,9 +8,11 @@ const BoardAnswer = ({ username, content, post, id, postId }) => {
   const token = localStorage.getItem('jwtToken');
 
   const answerDelete = async () => {
+    const postId = post.id;
+    const commentId = post.comments[0].commentId;
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${commentsId}`,
+        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${commentId}`,
         {
           headers: {
             Authorization: token,

@@ -97,12 +97,29 @@ function SignupPage() {
           />
         </Signuptextbox>
         <Signuptextbox>
-          <Signuptextboxinput
-            type="text"
-            name="userid"
-            placeholder=" MBTI를 입력해주세요."
+          <Signupselectboxinput
+            name="mbti"
+            value={mbti}
             onChange={(e) => setMbti(e.target.value)}
-          />
+          >
+            <option value="">MBTI를 선택해주세요</option>
+            <option value="INTJ">INTJ</option>
+            <option value="INTP">INTP</option>
+            <option value="INFJ">INFJ</option>
+            <option value="INFP">INFP</option>
+            <option value="ISTJ">ISTJ</option>
+            <option value="ISFJ">ISFJ</option>
+            <option value="ISTP">ISTP</option>
+            <option value="ISFP">ISFP</option>
+            <option value="ENTJ">ENTJ</option>
+            <option value="ENTP">ENTP</option>
+            <option value="ENFJ">ENFJ</option>
+            <option value="ENFP">ENFP</option>
+            <option value="ESTJ">ESTJ</option>
+            <option value="ESFJ">ESFJ</option>
+            <option value="ESTP">ESTP</option>
+            <option value="ESFP">ESFP</option>
+          </Signupselectboxinput>
         </Signuptextbox>
         <Signupbutton type="submit">회원가입</Signupbutton>
       </form>
@@ -134,6 +151,15 @@ const Signuptextbox = styled.div`
   margin-top: 10%;
 `;
 const Signuptextboxinput = styled.input`
+  display: flex;
+  height: 45px;
+  width: 400px;
+  color: black;
+  border-radius: 3px;
+  border: solid 1px gray;
+  font-size: 1rem;
+`;
+const Signupselectboxinput = styled.select`
   display: flex;
   height: 45px;
   width: 400px;
