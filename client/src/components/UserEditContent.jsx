@@ -46,10 +46,10 @@ function UserEditContent() {
         }
       )
       .then((res) => {
-        setnickName(res.data.data.nickName);
-        setPassword1(res.data.data.password1);
-        setPassword2(res.data.data.password2);
-        setMbti(res.data.data.mbti);
+        setnickName(res.data.nickName);
+        setPassword1(res.data.password1);
+        setPassword2(res.data.password2);
+        setMbti(res.data.mbti);
         window.alert('수정 완료');
       })
       .catch(() => {
@@ -64,14 +64,16 @@ function UserEditContent() {
         },
       })
       .then((res) => {
+        console.log(res.data);
         console.log('userId:', userId);
-        setName(res.data.data.nickName);
-        setPassword1(res.data.data.password1);
-        setPassword2(res.data.data.password2);
-        setMbti(res.data.data.mbti);
+        setnickName(res.data.nickName);
+        setPassword1(res.data.password1);
+        setPassword2(res.data.password2);
+        setMbti(res.data.mbti);
       })
-      .catch(() => {
+      .catch((e) => {
         window.alert('get 오류 발생');
+        console.log(e);
       });
   }, []);
 
