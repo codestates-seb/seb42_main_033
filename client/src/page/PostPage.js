@@ -113,6 +113,9 @@ const ButtonContainer = styled.div`
   margin-left: 600px;
   width: 220px;
   margin-top: -30px;
+  @media only screen and (max-width: 1440px) {
+    margin-top: -250px;
+  }
 `;
 const BoardButtonLink = styled(Link)`
   text-decoration: none;

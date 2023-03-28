@@ -48,6 +48,7 @@ const PostviewPage = () => {
       console.log(error);
     }
   };
+
   return (
     <BoardCarddetail
       id={id}

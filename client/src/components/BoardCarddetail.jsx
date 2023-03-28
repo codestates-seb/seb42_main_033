@@ -21,10 +21,9 @@ const BoardCarddetail = ({
   const token = localStorage.getItem('jwtToken');
   const userId = localStorage.getItem('userId');
   const [comment, setComment] = useState('');
-  // const [comments, setComments] = useState([]);
-  const [commetList, setCommentList] = useState([]);
+  const [commentList, setCommentList] = useState([]);
   const [isValid, setIsValid] = useState(false);
-  const commentCount = commetList.length;
+  const commentCount = commentList.length;
   const postId = post.id;
   //게시글 수정삭제 모달
   const handleClick = () => {
@@ -66,7 +65,7 @@ const BoardCarddetail = ({
   };
   useEffect(() => {
     getComment().then((data) => {
-      setCommentList([...commetList, ...data]);
+      setCommentList(data);
     });
   }, [id]);
   //댓글 등록
@@ -92,8 +91,11 @@ const BoardCarddetail = ({
         data,
         config
       );
-      const newComment = { username: data.username, content: data.content };
-      setCommentList([...commetList, newComment]);
+      const newComment = {
+        username: data.user.nickName,
+        content: data.content,
+      };
+      setCommentList([...commentList, newComment]);
       setComment('');
       setCount(count + 1);
       setPost({ ...post, commentCount: commentCount + 1 });
@@ -101,7 +103,24 @@ const BoardCarddetail = ({
       console.log(error);
     }
   };
-
+  //댓글 삭제
+  const commentDelete = async () => {
+    const commentId = comment.id;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_API_URL}/board/integrated/${id}/comment/${commentId}`,
+        config
+      );
+      navigate(`/PostviewPage/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       {isLoaded && (
@@ -113,6 +132,7 @@ const BoardCarddetail = ({
                 <div className="title">
                   {post.title}
                   <ModalContainer onClick={handleClick}>
+                    {/* {userId === post.userId && <EditDeletIcon />} */}
                     {token && userId === post.userId && <EditDeletIcon />}
                   </ModalContainer>
                   {isModalOpen && (
@@ -159,25 +179,13 @@ const BoardCarddetail = ({
               </div>
             </div>
             <div className="answerview">
-              {commetList.map((comment, index) => (
+              {commentList.map((comment, index) => (
                 <BoardAnswer
                   key={index}
-                  id={id}
                   comment={comment}
-                  // post={post}
-                  // setPost={setPost}
+                  commentDelete={commentDelete}
                 />
               ))}
-              {/* {commetList.map((comment) => (
-                <BoardAnswer key={comment.idx}>
-                  id={comment.id}
-                  postId={post.id}
-                  username={comment.username}
-                  content={comment.content}
-                  post={post}
-                  setPost={setPost}
-                </BoardAnswer>
-              ))} */}
               <div className="writranswer">
                 <input
                   placeholder="댓글 쓰기"
@@ -221,10 +229,10 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: space-between;
     width: 800px;
-    height: 1000px;
+    height: 1500px;
     left: 50%;
     position: absolute;
-    top: 65%;
+    top: 100%;
     transform: translate(-50%, -50%);
     box-sizing: border-box;
   }
@@ -232,12 +240,12 @@ const Container = styled.div`
     //해상도 1440이하 모니터
     position: absolute;
     display: flex;
-    top: 60%;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
     margin-top: 45vh;
     width: 800px;
-    height: 1100px;
+    height: 1500px;
     margin-bottom: 700px;
   }
   div.boardheader {
@@ -264,7 +272,7 @@ const Container = styled.div`
     }
   }
   div.boardcontent {
-    height: 240px;
+    height: 200px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

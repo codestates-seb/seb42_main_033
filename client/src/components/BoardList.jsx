@@ -77,6 +77,7 @@ const BoardLayout = styled.div`
   align-items: center;
   flex-direction: column;
   margin-bottom: 300px;
+  margin-top: -50px;
 `;
 
 const BoardHead = styled.div`
