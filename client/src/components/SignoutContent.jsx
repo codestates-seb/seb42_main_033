@@ -91,7 +91,7 @@ const Container = styled.div`
   position: absolute;
   top: 52%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-27%, -48%);
 `;
 
 export default SignoutContent;
