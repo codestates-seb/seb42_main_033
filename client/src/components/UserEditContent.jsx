@@ -3,6 +3,7 @@ import Button from './Button.jsx';
 import MyPageSidebar from './MypageSidebar.jsx';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function UserEditContent() {
   const [nickName, setnickName] = useState('');
@@ -12,6 +13,7 @@ function UserEditContent() {
 
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('jwtToken');
+  const navigate = useNavigate();
 
   const handleChangenickName = (e) => {
     setnickName(e.target.value);
@@ -28,6 +30,10 @@ function UserEditContent() {
     setMbti(e.target.value);
   };
 
+  const handleClickCancle = (e) => {
+    window.alert('수정을 취소하시면, 입력된 정보는 저장되지 않습니다!');
+    navigate('/');
+  };
   const handleClickSubmit = (e) => {
     e.preventDefault();
     axios
@@ -50,10 +56,11 @@ function UserEditContent() {
         setPassword1(res.data.password1);
         setPassword2(res.data.password2);
         setMbti(res.data.mbti);
-        window.alert('수정 완료');
+        window.alert('😎수정이 완료되었습니다😎');
+        navigate('/EditProfile');
       })
-      .catch(() => {
-        window.alert('수정 오류 발생');
+      .catch((e) => {
+        window.alert('잘못된 정보입니다. 수정할 내용을 다시 입력해주세요!😭');
       });
   };
   useEffect(() => {
@@ -64,29 +71,14 @@ function UserEditContent() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         console.log('userId:', userId);
         setnickName(res.data.nickName);
-        setPassword1(res.data.password1);
-        setPassword2(res.data.password2);
         setMbti(res.data.mbti);
       })
-      .catch((e) => {
-        window.alert('get 오류 발생');
-        console.log(e);
+      .catch(() => {
+        window.alert('오류 발생');
       });
   }, []);
-
-  // useEffect(() => {
-  //   loadUsers();
-  // }, []);
-
-  // const loadUsers = async () => {
-  //   const result = await axios.get(
-  //     `${process.env.REACT_APP_API_URL}/users/${userId}`
-  //   );
-  //   setUsers(result.data);
-  // };
 
   return (
     <>
@@ -120,13 +112,16 @@ function UserEditContent() {
           />
         </InputWrapper>
         <BtnWrapper>
-          <Button background="#D9D9D9">취소</Button>
+          <Button background="#D9D9D9" onClick={handleClickCancle}>
+            취소
+          </Button>
           <Button onClick={handleClickSubmit}>수정</Button>
         </BtnWrapper>
       </Container>
     </>
   );
 }
+
 const Title = styled.div`
   position: relative;
   font-size: 30px;
