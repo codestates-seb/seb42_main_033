@@ -20,13 +20,12 @@ const BoardCarddetail = ({
   const [count, setCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const token = localStorage.getItem('jwtToken');
-  const userId = post.userId;
+  const userId = localStorage.getItem('userId');
   const [comment, setComment] = useState('');
-  const [isValid, setIsValid] = useState(false);
   const [comments, setComments] = useState([]);
+  const [isValid, setIsValid] = useState(false);
   const commentCount = comments.length;
   const postId = post.id;
-
   //게시글 수정삭제 모달
   const handleClick = () => {
     setIsModalOpen(!isModalOpen);
@@ -55,6 +54,10 @@ const BoardCarddetail = ({
   //댓글 등록
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+    if (comment === '' || comment === null || comment === undefined) {
+      alert('내용을 작성하십시오.');
+      return false;
+    }
     try {
       const config = {
         headers: {
@@ -71,17 +74,19 @@ const BoardCarddetail = ({
         data,
         config
       );
-      // const newComment = { username: post.username, content: comment };
-      // setComments([...comments, newComment]);
+      const newComment = { username: post.username, content: comment };
+      setComments([...comments, newComment]);
 
       // setComments([
       //   ...comments,
       //   { username: data.username, content: data.content },
       // ]);
       // setComment('');
-      const newComments = [...comments];
-      newComments.push(comment);
-      setComments(newComments);
+
+      // const newComments = [...comments];
+      // newComments.push(comment);
+      // setComments(newComments);
+
       setComment('');
       setCount(count + 1);
       setPost({ ...post, commentCount: commentCount + 1 });
@@ -330,7 +335,7 @@ const ModalContainer = styled.div`
 `;
 const Like = styled(FaHeart)`
   color: #64b5ff;
-  margin-right: 10px;
+  margin-right: 10px;a
 `;
 
 const CommentIcon = styled(FaCommentAlt)`
