@@ -10,7 +10,7 @@ const BoardAnswer = ({ post, id, comment }) => {
     const postId = post.id;
     const commentId = post.comments[0].commentId;
     try {
-      const response = await axios.post(
+      const response = await axios.delete(
         `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${commentId}`,
         {
           headers: {
