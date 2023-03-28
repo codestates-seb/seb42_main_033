@@ -18,7 +18,7 @@ const Sidebar = styled.div`
   position: fixed;
   padding: 10px;
   text-align: left;
-  left: 15%;
+  left: 13%;
   bottom: 25%;
 
   ul {

@@ -6,9 +6,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    padding-left: 50px;
-    padding-right: 50px;
-    background-color: pink;
+    padding-left: 45px;
+    padding-right: 45px;
     padding-top: 20px;
   }
 `;
