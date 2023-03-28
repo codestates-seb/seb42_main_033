@@ -162,6 +162,7 @@ const BoardCarddetail = ({
                     </span>
                     <span style={{ paddingBottom: '40' }}>
                       {post.likeCount}
+                      {like}
                     </span>
                     <span className="commenticon">
                       <CommentIcon
@@ -242,7 +243,7 @@ const Container = styled.div`
     top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
-    margin-top: 100px;
+    margin-top: 45vh;
     width: 800px;
     height: 1500px;
     margin-bottom: 700px;
