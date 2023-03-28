@@ -72,7 +72,7 @@ function UserEditContent() {
       .catch(() => {
         window.alert('get 오류 발생');
       });
-  });
+  }, []);
 
   // useEffect(() => {
   //   loadUsers();
