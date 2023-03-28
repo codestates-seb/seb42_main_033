@@ -37,8 +37,6 @@ function LoginPage() {
       const refreshToken = response.headers.Refresh;
       console.log(response);
       console.log(response.headers);
-      console.log(response.headers.Authorization);
-      console.log(response.headers.authorization);
       localStorage.setItem('jwtToken', accessToken);
       localStorage.setItem('rfToken', refreshToken);
       //user Id 추가 (병민)
@@ -56,7 +54,6 @@ function LoginPage() {
         if (user) {
           const userIdSet = user.userId;
           localStorage.setItem('userId', userIdSet);
-          localStorage.setItem('mbti', user.mbti);
         }
         //user Id 추가 (병민)
         navigate('/');
