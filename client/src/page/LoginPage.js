@@ -52,6 +52,7 @@ function LoginPage() {
         if (user) {
           const userIdSet = user.userId;
           localStorage.setItem('userId', userIdSet);
+          localStorage.setItem('mbti', user.mbti);
         }
         //user Id 추가 (병민)
         navigate('/');

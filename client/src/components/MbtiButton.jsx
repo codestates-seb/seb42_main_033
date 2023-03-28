@@ -97,6 +97,12 @@ const MbtiButton = () => {
     );
   };
 
+  const userMbti = localStorage.getItem('mbti');
+  const handleButtonClick = (buttonMbti) => {
+    if (buttonMbti !== userMbti) {
+      alert('');
+    }
+  };
   return (
     <>
       <StyledText onClick={handleClick}>{text}</StyledText>
@@ -107,12 +113,12 @@ const MbtiButton = () => {
               <StyledRow key={index}>
                 {row.map((button) => (
                   <StyledButtonLink
-                    to="PostlistPage"
+                    to={button.text === userMbti ? 'PostlistPage' : '#'}
                     key={button.id}
                     button={button}
                   >
                     <StyledButton
-                      to="PostlistPage"
+                      onClick={() => handleButtonClick(button.text)}
                       key={button.id}
                       button={button}
                     >
