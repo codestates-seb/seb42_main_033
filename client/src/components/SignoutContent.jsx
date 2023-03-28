@@ -2,25 +2,30 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Button from './Button.jsx';
 import MyPageSidebar from './MypageSidebar.jsx';
-import { useState, useEffect } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 function SignoutContent() {
   const [users, setUsers] = useState([]);
-
-  const { id } = useParams();
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     loadUsers();
   }, []);
 
   const loadUsers = async () => {
-    const result = await axios.get(`${process.env.REACT_APP_API_URL}/users`);
+    const result = await axios.get(
+      `${process.env.REACT_APP_API_URL}/users/${userId}`
+    );
     setUsers(result.data);
   };
 
-  const deleteUser = async (id) => {
-    await axios.delete(`${process.env.REACT_APP_API_URL}/users/${id}`);
+  const deleteUser = async (e) => {
+    e.preventDefualt();
+    window.confirm('확인을 누르면 회원 정보가 삭제합니다.');
+    await axios.delete(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+      headers: { Authorization: 'Bearer' },
+    });
     loadUsers();
     return <Navigate to="/" />;
   };
