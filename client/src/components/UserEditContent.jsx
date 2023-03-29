@@ -38,7 +38,7 @@ function UserEditContent() {
     e.preventDefault();
     axios
       .patch(
-        `${process.env.REACT_APP_API_URL}/users/${userId}`,
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}`,
         {
           nickName,
           password1,
@@ -67,11 +67,14 @@ function UserEditContent() {
   };
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         console.log('userId:', userId);
         setnickName(res.data.nickName);

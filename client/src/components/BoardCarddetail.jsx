@@ -33,7 +33,7 @@ const BoardCarddetail = ({
   const handleLikeClick = async () => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/like`,
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}/like`,
         {
           userId: userId,
           postId: postId,
@@ -54,7 +54,7 @@ const BoardCarddetail = ({
   const getComment = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment`
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}/comment`
       );
       console.log('status:', response.status);
       console.log('data:', response.data);
@@ -87,7 +87,7 @@ const BoardCarddetail = ({
         content: comment,
       };
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}`,
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}`,
         data,
         config
       );
@@ -113,7 +113,7 @@ const BoardCarddetail = ({
     };
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${cmtuserId}`,
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}/comment/${userId}`,
         config
       );
       navigate(`/PostviewPage/${postId}`);
@@ -132,8 +132,8 @@ const BoardCarddetail = ({
                 <div className="title">
                   {post.title}
                   <ModalContainer onClick={handleClick}>
-                    {/* {userId === post.userId && <EditDeletIcon />} */}
-                    {token && userId === post.userId && <EditDeletIcon />}
+                    {Number(userId) === post.userId && <EditDeletIcon />}
+                    {/* {token && userId === post.userId && <EditDeletIcon />} */}
                   </ModalContainer>
                   {isModalOpen && (
                     <PostModal
@@ -144,8 +144,11 @@ const BoardCarddetail = ({
                     />
                   )}
                 </div>
+                {console.log(typeof userId)}
+                {console.log('d')}
                 <div className="nickname">{post.nickName}</div>
                 <div className="createdate">{post.createdAt}</div>
+                {console.log(String(post.userId))}
               </div>
               <div className="boardcontent">
                 <div className="content">{post.content}</div>
@@ -161,7 +164,8 @@ const BoardCarddetail = ({
                       />
                     </span>
                     <span style={{ paddingBottom: '40' }}>
-                      {post.likeCount}
+                      {console.log(post)}
+                      {like}
                     </span>
                     <span className="commenticon">
                       <CommentIcon

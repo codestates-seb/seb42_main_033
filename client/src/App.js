@@ -30,7 +30,7 @@ const Dev = styled.div`
 `;
 function App() {
   const [modal, setModal] = useState(false);
-  const token = localStorage.getItem('acces_token');
+  const token = localStorage.getItem('jwtToken');
 
   return (
     <Dev className="App">

@@ -17,7 +17,7 @@ function SignoutContent() {
 
   const loadUsers = async () => {
     const result = await axios.get(
-      `${process.env.REACT_APP_API_URL}/users/${userId}`,
+      `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -30,9 +30,12 @@ function SignoutContent() {
   const deleteUser = async () => {
     window.alert('탈퇴가 완료되었습니다.');
     // window.location.replace('/');
-    await axios.delete(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    await axios.delete(
+      `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     loadUsers();
     localStorage.clear();
   };

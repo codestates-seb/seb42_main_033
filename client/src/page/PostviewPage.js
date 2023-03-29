@@ -14,7 +14,7 @@ const PostviewPage = () => {
     const getPost = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/board/integrated/${id}`
+          `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`
         );
         console.log(data);
         setPost(data);
@@ -40,7 +40,7 @@ const PostviewPage = () => {
     };
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${id}`,
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`,
         config
       );
       navigate('/PostlistPage');

@@ -24,11 +24,15 @@ function SendDm() {
       receiverNickName: receiverNickname,
     };
     axios
-      .post(`${process.env.REACT_APP_API_URL}/messages`, Dm, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .post(
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/messages`,
+        Dm,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         console.log('성공');
       })
