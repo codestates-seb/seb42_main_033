@@ -55,8 +55,6 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-//                        .antMatchers("**/users/**").hasAnyRole("ADMIN", "USER")
-//                        .antMatchers("**/board/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2.successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService)));
@@ -106,9 +104,6 @@ public class SecurityConfiguration {
             builder.addFilter(jwtAuthenticationFilter)
 //                    .addFilterAfter(jwtverificationFilter, JwtverificationFilter.class)
                     .addFilterAfter(jwtverificationFilter, OAuth2LoginAuthenticationFilter.class);
-
-            builder.addFilter(jwtAuthenticationFilter)
-                    .addFilterAfter(jwtverificationFilter, JwtverificationFilter.class);
         }
     }
 }
