@@ -33,13 +33,18 @@ function LoginPage() {
       console.log(response.headers);
       console.log(accessToken);
       if (response.status === 200) {
-        navigate('/');
-        location.reload();
+        // navigate('/');
+        // location.reload();
       }
       // user Id 추가 (병민)
       try {
         const userIdGet = await axios.get(
-          `${process.env.REACT_APP_API_URL}/users`
+          `${process.env.REACT_APP_API_URL}/users`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
         );
         console.log('userIdGet:', userIdGet.data);
         console.log(userIdGet.headers);
@@ -49,7 +54,7 @@ function LoginPage() {
           localStorage.setItem('userId', userIdSet);
         }
         // user Id 추가 (병민)
-        navigate('/');
+        // navigate('/');
         console.log('아이디 받아와짐');
         if (response.status === 200) {
           // navigate('/');
