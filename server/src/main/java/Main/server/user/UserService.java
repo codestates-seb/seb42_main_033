@@ -49,7 +49,10 @@ public class UserService {
         verifyExistedUserNickName(users.getNickName());
 
         Optional.ofNullable(users.getNickName())
-                .ifPresent(findUsers::setNickName);
+                .ifPresent(nickName -> {
+                    verifyExistedUserNickName(nickName);
+                    findUsers.setNickName(nickName);
+                });
         Optional.ofNullable(users.getPassword1())
                 .ifPresent(findUsers::setPassword1);
         Optional.ofNullable(users.getPassword2())
