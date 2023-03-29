@@ -26,35 +26,43 @@ function LoginPage() {
           password1: password,
         }
       );
-      const accessToken = response.headers.Authorization;
+      const accessToken = response.headers.authorization;
+      const refreshToken = response.headers.refresh;
       localStorage.setItem('jwtToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
       console.log(response.headers);
       console.log(accessToken);
       if (response.status === 200) {
-        // navigate('/');
-        // location.reload();
+        navigate('/');
+        location.reload();
       }
-      //user Id 추가 (병민)
-      // try {
-      //   const userIdGet = await axios.get(
-      //     `${process.env.REACT_APP_API_URL}/users`,
-      //     {
-      //       headers: {
-      //         Authorization: `Bearer ${accessToken}`,
-      //       },
-      //     }
-      //   );
-      //   console.log('userIdGet:', userIdGet.data);
-      //   const user = userIdGet.data.data.find((user) => user.email === userId);
-      //   if (user) {
-      //     const userIdSet = user.userId;
-      //     localStorage.setItem('userId', userIdSet);
-      //   }
-      //   //user Id 추가 (병민)
-      //   navigate('/');
-      // } catch (error) {
-      //   console.log(error);
-      // }
+      // user Id 추가 (병민)
+      try {
+        const userIdGet = await axios.get(
+          `${process.env.REACT_APP_API_URL}/users`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log('userIdGet:', userIdGet.data);
+        console.log(userIdGet.headers);
+        const user = userIdGet.data.data.find((user) => user.email === userId);
+        if (user) {
+          const userIdSet = user.userId;
+          localStorage.setItem('userId', userIdSet);
+        }
+        // user Id 추가 (병민)
+        navigate('/');
+        console.log('아이디 받아와짐');
+        if (response.status === 200) {
+          // navigate('/');
+          // location.reload();
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -66,7 +74,7 @@ function LoginPage() {
       // 게스트 여러개면 재밌을둣
       setGuest('guest');
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/login/guest`,
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/login/guest`,
         {
           email: guest,
           // 게스트 상태에 guest

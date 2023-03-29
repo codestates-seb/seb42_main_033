@@ -161,6 +161,7 @@ const BoardCarddetail = ({
                       />
                     </span>
                     <span style={{ paddingBottom: '40' }}>
+                      {console.log(post)}
                       {post.likeCount}
                     </span>
                     <span className="commenticon">
