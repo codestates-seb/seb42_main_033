@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const BoardAnswer = ({ comment, commentDelete }) => {
   return (
     <AnswerForm>
-      <div className="answernickname">{comment.user.nickName}</div>
+      <div className="answernickname">{comment.username}</div>
       {/* {comment.userId === userId && ( */}
       <div
         className="answerbutton"
