@@ -55,17 +55,7 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/*/users").permitAll()
-                        .antMatchers(HttpMethod.PATCH, "/*/users/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/*/board/integrated").permitAll()
-                        .antMatchers(HttpMethod.GET, "/*/board/integrated/**").permitAll()
-                        .antMatchers(HttpMethod.POST, "/*/board/**").hasAnyRole("ADMIN", "USER")
-                        .antMatchers(HttpMethod.PATCH, "/*/board/**").hasAnyRole("ADMIN", "USER")
-                        .antMatchers(HttpMethod.DELETE, "/*/board/**").hasAnyRole("ADMIN", "USER")
-                        .antMatchers(HttpMethod.POST, "/*/board/*/*/comment").hasAnyRole("ADMIN", "USER")
-                        .antMatchers(HttpMethod.DELETE, "/*/board/*/*/comment/**").hasAnyRole("ADMIN", "USER")
-                        .antMatchers(HttpMethod.POST ,"/users/login").permitAll()
-                        .antMatchers(HttpMethod.DELETE ,"/users/**").hasAnyRole("ADMIN", "USER")
+                        .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2.successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService)));
 
