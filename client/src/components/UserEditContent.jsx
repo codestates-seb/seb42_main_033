@@ -52,15 +52,17 @@ function UserEditContent() {
         }
       )
       .then((res) => {
+        console.log(res.data);
         setnickName(res.data.nickName);
         setPassword1(res.data.password1);
         setPassword2(res.data.password2);
         setMbti(res.data.mbti);
         window.alert('😎수정이 완료되었습니다😎');
-        navigate('/EditProfile');
+        window.location.replace('/');
       })
       .catch((e) => {
         window.alert('잘못된 정보입니다. 수정할 내용을 다시 입력해주세요!😭');
+        console.log(e);
       });
   };
   useEffect(() => {
@@ -74,9 +76,11 @@ function UserEditContent() {
         console.log('userId:', userId);
         setnickName(res.data.nickName);
         setMbti(res.data.mbti);
+        setPassword1(res.data.password1);
+        setPassword2(res.data.password2);
       })
       .catch(() => {
-        window.alert('오류 발생');
+        //window.alert('오류 발생');
       });
   }, []);
 
@@ -136,7 +140,7 @@ const Input = styled.input`
   border: solid 1px gray;
   padding: 15px;
   margin: 15px;
-  width: 350px;
+  width: 380px;
 `;
 
 const InputWrapper = styled.form`
@@ -158,7 +162,8 @@ const Container = styled.div`
   flex-direction: column;
   position: absolute;
   top: 52%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  right: 20%;
+  transform: translate(-27%, -48%);
 `;
+
 export default UserEditContent;

@@ -27,20 +27,19 @@ function LoginPage() {
         }
       );
       const accessToken = response.headers.authorization;
-      const refreshToken = response.headers.refresh;
-      localStorage.setItem('jwtToken', accessToken);
-      localStorage.setItem('rfToken', refreshToken);
+      const accessToken2 = response.headers.Authorization;
+      localStorage.setItem('acces_token', accessToken);
       console.log(response.config.headers);
       console.log(response.headers.get('Authorization'));
-      console.log(response.headers.authorization);
+      console.log(response.headers);
       console.log(response.headers['Authorization']);
       console.log(response.headers['authorization']);
       console.log(accessToken);
-      console.log(refreshToken);
-      if (response.status === 200) {
-        navigate('/');
-        location.reload();
-      }
+      console.log(accessToken2);
+      // if (response.status === 200) {
+      //   navigate('/');
+      //   location.reload();
+      // }
       //user Id 추가 (병민)
       // try {
       //   const userIdGet = await axios.get(
@@ -195,7 +194,7 @@ const Loginbutton = styled.button`
   background-color: #64b5ff;
   margin: auto;
   margin-bottom: 20px;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 600;
   border: solid 10px #64b5ff;
   :hover {
@@ -232,10 +231,12 @@ const Googlebody = styled.button`
   width: 430px;
   height: 50px;
   background-color: #202124;
+  border-radius: 5px;
   border: solid 0px;
   :hover {
     background-color: #555658;
     transition-delay: 0.1s;
   }
 `;
+
 export default LoginPage;

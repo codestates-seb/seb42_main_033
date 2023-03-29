@@ -166,18 +166,17 @@ const CommentPageContainer = styled.div`
 
   justify-content: center;
   position: absolute;
-  top: 15%;
-  left: 55%;
-  transform: translate(-50%, 20%);
+  top: 6%;
+  left: 60%;
+  transform: translate(-50%, 320%);
 `;
 
 const CommentsContainer = styled.div`
   border: 0.05vh solid black;
   padding: 10px;
-  width: 45vw;
   height: 100%;
   flex: 1 1 auto;
-  width: 60vw;
+  width: 50vw;
 `;
 
 const CommentContainer = styled.div`
@@ -204,16 +203,17 @@ const HeaderContainer = styled.div`
 
 const DeleteButton = styled.button`
   background-color: gray;
+  font-size: 20px;
   width: 13vh;
-  height: 6vh;
+  height: 5.5vh;
   color: white;
   padding: 5px 10px;
   margin: auto;
   border: none;
   border-radius: 5px;
   position: absolute;
-  right: 10%;
-  top: 85%;
+  right: 16%;
+  bottom: 15%;
   cursor: pointer;
 `;
 

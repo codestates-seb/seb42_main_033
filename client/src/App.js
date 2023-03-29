@@ -18,6 +18,7 @@ import MyPostPage from './page/MyPostPage.js';
 import EditProfilePage from './page/EditProfilePage';
 import SignoutPage from './page/SignoutPage';
 import Infp from './page/Infplist';
+import GlobalStyle from './utils/GlobalStyle';
 
 const Dev = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ const Dev = styled.div`
 `;
 function App() {
   const [modal, setModal] = useState(false);
-  const token = localStorage.getItem('jwtToken');
+  const token = localStorage.getItem('acces_token');
 
   return (
     <Dev className="App">
@@ -39,6 +40,7 @@ function App() {
       ) : (
         <HeaderLogin />
       )}
+      <GlobalStyle />
       <Routes>
         <Route path="/" element={<MainPage />} />
         {/* 홈화면 */}

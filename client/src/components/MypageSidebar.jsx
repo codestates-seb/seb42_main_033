@@ -10,18 +10,17 @@ import {
 import { Link } from 'react-router-dom';
 
 const Sidebar = styled.div`
-  nav {
-    right: 79%;
-    bottom: 24%;
-    width: 170px;
-    height: 350px;
-    box-shadow: 2px 2px 2px 2px rgb(194, 194, 194);
-    border-radius: 5px;
-    background-color: #f4f4f4;
-    position: fixed;
-    padding: 10px;
-    text-align: left;
-  }
+  width: 185px;
+  height: 360px;
+  box-shadow: 2px 2px 2px 2px rgb(194, 194, 194);
+  border-radius: 5px;
+  background-color: #f4f4f4;
+  position: fixed;
+  padding: 10px;
+  text-align: left;
+  left: 13%;
+  bottom: 25%;
+
   ul {
     padding: 0;
   }

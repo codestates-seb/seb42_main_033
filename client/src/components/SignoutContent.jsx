@@ -27,15 +27,14 @@ function SignoutContent() {
     setUsers(result.data);
   };
 
-  const deleteUser = async (e) => {
-    e.preventDefualt();
-    window.confirm('탈퇴가 완료되었습니다.');
+  const deleteUser = async () => {
+    window.alert('탈퇴가 완료되었습니다.');
+    // window.location.replace('/');
     await axios.delete(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     loadUsers();
     localStorage.clear();
-    navigate('/');
   };
 
   return (
@@ -92,7 +91,7 @@ const Container = styled.div`
   position: absolute;
   top: 52%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-27%, -48%);
 `;
 
 export default SignoutContent;

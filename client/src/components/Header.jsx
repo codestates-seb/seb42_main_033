@@ -12,9 +12,9 @@ function HeaderIcon({ setModal, modal }) {
       <Headertext2>
         <Headertext to="/PostlistPage">통합게시판</Headertext>
       </Headertext2>
-      <Headertext2>
+      {/* <Headertext2>
         <Headertext>MBTI TEST</Headertext>
-      </Headertext2>
+      </Headertext2> */}
       <Headericon>
         <Headericonbell>
           <FaRegBell />
@@ -38,7 +38,6 @@ function HeaderLogin() {
       </Headerimgdiv>
       <Headertext2>
         <Headertext to="/PostlistPage">통합게시판</Headertext>
-        <Headertext>MBTI TEST</Headertext>
         <Headertextlogin to="/Login"> 로그인</Headertextlogin>
       </Headertext2>
     </Headerbody>
@@ -75,6 +74,7 @@ const Headertext2 = styled.div`
   display: flex;
   width: auto;
   height: 7vh;
+  padding-right: 30px;
 `;
 const Headertext = styled(Link)`
   display: flex;

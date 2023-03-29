@@ -43,18 +43,20 @@ const BoardList = ({ boardList }) => {
         <WriteButtonLink to="/postpage">
           <WriteButton>글쓰기</WriteButton>
         </WriteButtonLink>
-        <Pagination
-          variant="outlined"
-          color="primary"
-          page={currentPage}
-          count={pageCount}
-          size="large"
-          onChange={(e, value) => {
-            setCurrentPage(value);
-          }}
-          showFirstButton
-          showLastButton
-        />
+        <PageWrapper>
+          <Pagination
+            variant="outlined"
+            color="primary"
+            page={currentPage}
+            count={pageCount}
+            size="large"
+            onChange={(e, value) => {
+              setCurrentPage(value);
+            }}
+            showFirstButton
+            showLastButton
+          />
+        </PageWrapper>
       </div>
       <Search>
         <input
@@ -76,26 +78,27 @@ const BoardLayout = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 300px;
+  margin-bottom: 100px;
+  margin-top: -20px;
 `;
 
 const BoardHead = styled.div`
-  width: 898px;
+  width: 928px;
   height: 68px;
   background-color: #9bcbf8;
   color: #ffffff;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 28px;
   display: flex;
   align-items: center;
-  margin-top: 110px;
-  padding-left: 30px;
+  margin-top: 50px;
+  padding: 25px;
 `;
 const BoardBox = styled.form`
   width: 928px;
   height: 640px;
-  background-color: #fafafa;
-  margin-top: 10px;
+  background-color: #aab4b7a7;
+  margin-top: 20px;
 `;
 const WriteButtonLink = styled(Link)`
   text-decoration: none;
@@ -103,7 +106,7 @@ const WriteButtonLink = styled(Link)`
 const WriteButton = styled.button`
   width: 99px;
   height: 35px;
-  margin-top: 10px;
+  margin-top: 25px;
   margin-left: -830px;
   background-color: #ffffff;
   border-color: rgba(161, 161, 161, 1);
@@ -117,18 +120,23 @@ const WriteButton = styled.button`
 const Search = styled.div`
   display: flex;
   margin-top: 15px;
+  margin-left: 30px;
   input {
     width: 242px;
     height: 33px;
     padding-left: 10px;
   }
   button {
-    margin-left: 10px;
+    margin-left: 12px;
     width: 58px;
-    height: 39px;
+    height: 33px;
     background-color: #9fd0fe;
     border: none;
   }
+`;
+const PageWrapper = styled.div`
+  margin-top: 20px;
+  margin-bottom: 15px;
 `;
 
 export default BoardList;
