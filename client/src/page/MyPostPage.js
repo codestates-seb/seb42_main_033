@@ -65,7 +65,7 @@ function MyPost() {
       const userId = localStorage.getItem('userId');
       console.log('userId:', userId);
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/board/integrated`,
+        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -95,7 +95,7 @@ function MyPost() {
       try {
         const deletePromises = selectedComments.map((postId) => {
           return axios.delete(
-            `${process.env.REACT_APP_API_URL}/board/integrated/${postId}`,
+            `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,

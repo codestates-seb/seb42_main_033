@@ -33,7 +33,7 @@ const BoardCarddetail = ({
   const handleLikeClick = async () => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/like`,
+        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}/like`,
         {
           userId: userId,
           postId: postId,
@@ -54,7 +54,7 @@ const BoardCarddetail = ({
   const getComment = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment`
+        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}/comment`
       );
       console.log('status:', response.status);
       console.log('data:', response.data);
@@ -87,7 +87,7 @@ const BoardCarddetail = ({
         content: comment,
       };
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}`,
+        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}`,
         data,
         config
       );
@@ -112,7 +112,7 @@ const BoardCarddetail = ({
     };
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/board/integrated/${postId}/comment/${userId}`,
+        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}/comment/${userId}`,
         config
       );
       navigate(`/PostviewPage/${postId}`);

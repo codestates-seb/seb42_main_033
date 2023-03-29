@@ -51,7 +51,7 @@ function MyComments() {
   const getComments = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/board/integrated/1/comment`,
+        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/1/comment`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -78,7 +78,7 @@ function MyComments() {
     try {
       const deletePromises = selectedComments.map(({ id }) => {
         return axios.delete(
-          `${process.env.REACT_APP_API_URL}/board/integrated/1/comment/${id}`,
+          `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/1/comment/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

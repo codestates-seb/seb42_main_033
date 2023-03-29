@@ -1,24 +1,46 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const BoardAnswer = ({ comment, commentDelete }) => {
+const BoardAnswer = ({ post, id, comment }) => {
+  const [commentsId, setcommentsId] = useState();
+  const token = localStorage.getItem('jwtToken');
+
+  const answerDelete = async () => {
+    const postId = post.id;
+    const commentId = post.comments[postId].commentId;
+    try {
+      const response = await axios.delete(
+        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${postId}/comment/${commentId}`,
+        {
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <AnswerForm>
-      <div className="answernickname">{comment.user.nickName}</div>
-      {/* {comment.userId === userId && ( */}
+      <div className="answernickname">{comment.username}</div>
       <div
         className="answerbutton"
         style={{ marginLeft: '730px', fontSize: '13px' }}
       >
-        {/* <AnswerButton>수정</AnswerButton> */}
+        <AnswerButton>수정</AnswerButton>
         <AnswerButton
           onClick={() => {
-            commentDelete();
+            answerDelete();
           }}
         >
           삭제
         </AnswerButton>
       </div>
-      {/* )} */}
+
       <div className="answercontent"> {comment.content} </div>
     </AnswerForm>
   );
@@ -26,27 +48,12 @@ const BoardAnswer = ({ comment, commentDelete }) => {
 
 const AnswerForm = styled.div`
   color: #767676;
-  height: 120px;
+  height: 130px;
   border-bottom: 1px solid black;
-  text-align: left;
-  padding-left: 10px;
-  .answernickname {
-    font-size: 15px;
-    font-weight: 700;
-    padding-top: 5px;
-    width: 700px;
-  }
-  .answercontent {
-    font-size: 17px;
-    margin-top: 20px;
-    width: 700px;
-    margin-top: 10px;
-  }
 `;
 const AnswerButton = styled.button`
   background-color: rgba(0, 0, 0, 0);
   border: solid 0px rgba(0, 0, 0, 0);
-  width: 50px;
 `;
 
 export default BoardAnswer;

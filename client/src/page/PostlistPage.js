@@ -13,7 +13,7 @@ const PostlistPage = () => {
   const getBoardlist = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/board/integrated`,
+        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated`,
         config
       );
       console.log('status:', response.status);
