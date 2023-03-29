@@ -164,7 +164,7 @@ public class BoardIsfjService {
         Users findUser = getUserFromId(userId);
         BoardIsfj findPost = findPost(postId);
 
-        if(findUser.getMbti().equalsIgnoreCase("isftj")) {
+        if(findUser.getMbti().equalsIgnoreCase("isfj")) {
             findPost.setCommentCount(findPost.getCommentCount()+1);
             comment.setUser(findUser);
             comment.setBoardIsfj(findPost);

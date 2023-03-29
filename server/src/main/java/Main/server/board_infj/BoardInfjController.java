@@ -169,11 +169,18 @@ public class BoardInfjController {
 
         Comment comment = service.findVerifiedComment(commentId);
         CommentDto.Response result = commentMapper.commentToCommentResponseDto(comment);
-        result.setUserId(comment.getUser().getUserId());
-        result.setUsername(comment.getUser().getNickName());
-        result.setBoardId(comment.getBoardInfj().getId());
+        BoardInfj post = service.readPost(postId);
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        if(post.getId() == postId && comment.getId() == commentId) {
+            result.setUserId(comment.getUser().getUserId());
+            result.setUsername(comment.getUser().getNickName());
+            result.setBoardId(comment.getBoardInfj().getId());
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //댓글 수정
