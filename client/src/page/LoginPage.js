@@ -36,10 +36,10 @@ function LoginPage() {
       console.log(response.headers['authorization']);
       console.log(accessToken);
       console.log(accessToken2);
-      // if (response.status === 200) {
-      //   navigate('/');
-      //   location.reload();
-      // }
+      if (response.status === 200) {
+        navigate('/');
+        location.reload();
+      }
       //user Id 추가 (병민)
       // try {
       //   const userIdGet = await axios.get(
