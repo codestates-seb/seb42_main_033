@@ -20,24 +20,19 @@ function LoginPage() {
     }
     try {
       const response = await axios.post(
-        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/user/login`,
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/user/login`,
         {
           email: userId,
           password1: password,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
-          },
         }
       );
-      const accessToken = response.headers.authorization;
+      const accessToken = response.headers.Authorization;
       localStorage.setItem('jwtToken', accessToken);
       console.log(response.headers);
       console.log(accessToken);
       if (response.status === 200) {
-        navigate('/');
-        location.reload();
+        // navigate('/');
+        // location.reload();
       }
       //user Id 추가 (병민)
       // try {

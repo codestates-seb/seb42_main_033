@@ -32,7 +32,7 @@ function SignupPage() {
     }
     try {
       const response = await axios.post(
-        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/users`,
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/users`,
         {
           // input 안의 값을 onChage로 받아와서 포스트 바디에 넣기
           // 같은 아이디나 닉네임이 있다면 false 메시지 보내기

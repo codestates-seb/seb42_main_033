@@ -1,0 +1,9 @@
+package Main.server.board_enfj;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BoardEnfjRepository extends JpaRepository<BoardEnfj, Long> {
+    Page<BoardEnfj> findAll(Pageable pageable);
+}

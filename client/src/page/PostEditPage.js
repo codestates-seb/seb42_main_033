@@ -17,7 +17,7 @@ const PostEditPage = () => {
   useEffect(() => {
     const getBoard = async () => {
       const { data } = await axios.get(
-        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`
       );
       return data;
     };
@@ -36,7 +36,7 @@ const PostEditPage = () => {
       const modifiedContent = content.replace(/<\/?p[^>]*>/g, '');
       const data = { title, content: modifiedContent, tag: '' };
       await axios.patch(
-        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`,
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/board/integrated/${id}`,
         data,
         {
           headers: {

@@ -1,0 +1,39 @@
+#server:
+#  port: 3000
+spring:
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    url: jdbc:h2:mem:test
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+# swagger 적용 시  필요한 것.
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 830176255460-o74i0j4tfi22top821p6g18c5j33d787.apps.googleusercontent.com
+            clientSecret: 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
+            scope:
+              - email
+              - profile
+jwt:
+  key: lee56810374571982374987151235787843451123
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420
+mail:
+  address:
+    admin: fkdltj1@gmail.com
+    show-sql: true

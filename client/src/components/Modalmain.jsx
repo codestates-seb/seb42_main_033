@@ -11,7 +11,7 @@ function Modal({ setModal, modal }) {
   const Logout = async () => {
     try {
       const response = await axios.post(
-        `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/user/logout`
+        `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/user/logout`
       );
       console.log(response);
     } catch (error) {

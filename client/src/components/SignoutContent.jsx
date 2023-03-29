@@ -17,7 +17,7 @@ function SignoutContent() {
 
   const loadUsers = async () => {
     const result = await axios.get(
-      `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}`,
+      `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -31,7 +31,7 @@ function SignoutContent() {
     window.alert('탈퇴가 완료되었습니다.');
     // window.location.replace('/');
     await axios.delete(
-      `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}`,
+      `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }

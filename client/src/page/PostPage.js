@@ -36,7 +36,7 @@ const PostPage = () => {
 
       try {
         const response = await axios.post(
-          `http://ec2-43-201-29-212.ap-northeast-2.compute.amazonaws.com:8080/board/integrated`,
+          `http://ec2-54-180-158-15.ap-northeast-2.compute.amazonaws.com:8080/board/integrated`,
           {
             userId: post.userId,
             title: post.title,
