@@ -27,6 +27,11 @@ function LoginPage() {
         {
           email: userId,
           password1: password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+          },
         }
       );
       console.log(response);
