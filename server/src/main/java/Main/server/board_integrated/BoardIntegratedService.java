@@ -7,6 +7,7 @@ import Main.server.comment.CommentRepository;
 import Main.server.like.Like;
 import Main.server.like.LikeDto;
 import Main.server.like.LikeRepository;
+import Main.server.notification.SseService;
 import Main.server.user.Users;
 import Main.server.user.UserRepository;
 import org.springframework.data.domain.Page;
@@ -26,15 +27,17 @@ public class BoardIntegratedService {
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
+    private final SseService sseService;
 
     public BoardIntegratedService(BoardIntegratedRepository boardIntegratedRepository,
                                   UserRepository userRepository,
                                   LikeRepository likeRepository,
-                                  CommentRepository commentRepository) {
+                                  CommentRepository commentRepository, SseService sseService) {
         this.boardIntegratedRepository = boardIntegratedRepository;
         this.userRepository = userRepository;
         this.likeRepository = likeRepository;
         this.commentRepository = commentRepository;
+        this.sseService = sseService;
     }
 
     // 게시글 작성
@@ -164,6 +167,9 @@ public class BoardIntegratedService {
         comment.setUser(findUser);
         comment.setBoardIntegrated(findPost);
         comment.setCategory("integrated");
+
+        sseService.AddCommentEvent(postId);
+
         return commentRepository.save(comment);
     }
 

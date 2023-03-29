@@ -7,6 +7,7 @@ import Main.server.comment.CommentRepository;
 import Main.server.like.Like;
 import Main.server.like.LikeDto;
 import Main.server.like.LikeRepository;
+import Main.server.notification.SseService;
 import Main.server.user.UserRepository;
 import Main.server.user.Users;
 import org.springframework.data.domain.Page;
@@ -26,15 +27,17 @@ public class BoardEstpService {
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
+    private final SseService sseService;
 
     public BoardEstpService(BoardEstpRepository boardEstpRepository,
                             UserRepository userRepository,
                             LikeRepository likeRepository,
-                            CommentRepository commentRepository) {
+                            CommentRepository commentRepository, SseService sseService) {
         this.boardEstpRepository = boardEstpRepository;
         this.userRepository = userRepository;
         this.likeRepository = likeRepository;
         this.commentRepository = commentRepository;
+        this.sseService = sseService;
     }
 
     @Transactional
@@ -169,6 +172,9 @@ public class BoardEstpService {
             comment.setUser(findUser);
             comment.setBoardEstp(findPost);
             comment.setCategory("estp");
+
+            sseService.AddCommentEvent(postId);
+
             return commentRepository.save(comment);
         }
         else {
