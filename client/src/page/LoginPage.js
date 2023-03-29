@@ -24,18 +24,17 @@ function LoginPage() {
         {
           email: userId,
           password1: password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+          },
         }
       );
       const accessToken = response.headers.authorization;
-      const accessToken2 = response.headers.Authorization;
-      localStorage.setItem('acces_token', accessToken);
-      console.log(response.config.headers);
-      console.log(response.headers.get('Authorization'));
+      localStorage.setItem('jwtToken', accessToken);
       console.log(response.headers);
-      console.log(response.headers['Authorization']);
-      console.log(response.headers['authorization']);
       console.log(accessToken);
-      console.log(accessToken2);
       if (response.status === 200) {
         navigate('/');
         location.reload();

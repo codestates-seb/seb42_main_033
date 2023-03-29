@@ -132,8 +132,8 @@ function MyComments() {
               </CommentContainer>
             ))}
         </CommentsContainer>
-        <DeleteButton onClick={deleteComment}> 삭제 </DeleteButton>
       </CommentPageContainer>
+      <DeleteButton onClick={deleteComment}> 삭제 </DeleteButton>
     </>
   );
 }
@@ -191,7 +191,7 @@ const DeleteButton = styled.button`
   border-radius: 5px;
   position: absolute;
   right: 10%;
-  bottom: -15%;
+  top: 85%;
   cursor: pointer;
 `;
 

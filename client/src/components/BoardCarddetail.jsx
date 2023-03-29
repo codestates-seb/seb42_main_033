@@ -67,7 +67,7 @@ const BoardCarddetail = ({
     getComment().then((data) => {
       setCommentList(data);
     });
-  }, [id]);
+  }, [postId]);
   //댓글 등록
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -92,7 +92,7 @@ const BoardCarddetail = ({
         config
       );
       const newComment = {
-        username: data.user.nickName,
+        username: data.username,
         content: data.content,
       };
       setCommentList([...commentList, newComment]);
@@ -105,6 +105,7 @@ const BoardCarddetail = ({
   };
   //댓글 삭제
   const commentDelete = async () => {
+    const cmtuserId = comment.userId;
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
