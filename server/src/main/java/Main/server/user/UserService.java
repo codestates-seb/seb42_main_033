@@ -48,10 +48,7 @@ public class UserService {
         Users findUsers = findVerifiedUser(users.getUserId());
 
         Optional.ofNullable(users.getNickName())
-                .ifPresent(nickName -> {
-                    verifyExistedUserNickName(nickName);
-                    findUsers.setNickName(nickName);
-                });
+                .ifPresent(findUsers::setNickName);
         Optional.ofNullable(users.getPassword1())
                 .ifPresent(findUsers::setPassword1);
         Optional.ofNullable(users.getPassword2())
@@ -108,12 +105,6 @@ public class UserService {
             throw new BusinessLogicalException(ExceptionCode.NICKNAME_ALREADY_EXIST);
     }
 
-    public Users findUserByEmail(String email) {
-        Optional<Users> optionalUser = userRepository.findByEmail(email);
 
-        Users findUser = optionalUser.orElseThrow(()
-                -> new BusinessLogicalException(ExceptionCode.MEMBER_NOT_FOUND));
-        return findUser;
-    }
 
 }
