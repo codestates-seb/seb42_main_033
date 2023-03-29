@@ -39,12 +39,7 @@ function LoginPage() {
       // user Id 추가 (병민)
       try {
         const userIdGet = await axios.get(
-          `${process.env.REACT_APP_API_URL}/users`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          `${process.env.REACT_APP_API_URL}/users`
         );
         console.log('userIdGet:', userIdGet.data);
         console.log(userIdGet.headers);
