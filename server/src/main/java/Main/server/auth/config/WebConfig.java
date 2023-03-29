@@ -15,6 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "ec2-3-39-235-30.ap-northeast-2.compute.amazonaws.com")
                 .allowedHeaders("*")
                 .allowedMethods("GET","HEAD","POST","PUT","DELETE","OPTIONS","PATCH")
+                .exposedHeaders("*")
                 .allowCredentials(true)
                 .maxAge(3000);
     }

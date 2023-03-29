@@ -16,9 +16,6 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
         log.info("정상적으로 인증완료");
-        System.out.println(authentication.getAuthorities());
-        if(authentication.getAuthorities().contains("ROLE_USER")){
-            System.out.println("aa");
-        }
+        System.out.println(response.getHeader("Authorization"));
     }
 }

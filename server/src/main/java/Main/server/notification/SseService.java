@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,9 +19,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 @Service
 public class SseService {
-
     private final BoardIntegratedRepository boardRepository;
     public static Map<Long, SseEmitter> sseEmitters = new ConcurrentHashMap<>();
+
     private final UserRepository userRepository;
     private static final Long DEFAULT_TIMEOUT = 60 * 1000L;
 
@@ -39,7 +40,6 @@ public class SseService {
         Long findUserId = findUsers.getUserId();
 
         SseEmitter emitter = new SseEmitter(DEFAULT_TIMEOUT);
-
         try{
             emitter.send(SseEmitter.event()
                     .name("Connect")
