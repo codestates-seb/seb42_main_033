@@ -52,7 +52,7 @@ public class UserService {
         Optional.ofNullable(users.getPassword1())
                 .ifPresent(findUsers::setPassword1);
         Optional.ofNullable(users.getPassword2())
-                .ifPresent(findUsers::setPassword2);
+                .ifPresent(findUsers::setPassword1);
         Optional.ofNullable(users.getMbti())
                 .ifPresent(findUsers::setMbti);
 
