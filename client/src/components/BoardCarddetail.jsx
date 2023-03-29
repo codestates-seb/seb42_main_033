@@ -132,8 +132,8 @@ const BoardCarddetail = ({
                 <div className="title">
                   {post.title}
                   <ModalContainer onClick={handleClick}>
-                    {/* {userId === post.userId && <EditDeletIcon />} */}
-                    {token && userId === post.userId && <EditDeletIcon />}
+                    {userId == post.userId && <EditDeletIcon />}
+                    {/* {token && userId === post.userId && <EditDeletIcon />} */}
                   </ModalContainer>
                   {isModalOpen && (
                     <PostModal
@@ -144,8 +144,11 @@ const BoardCarddetail = ({
                     />
                   )}
                 </div>
+                {console.log(typeof userId)}
+                {console.log('d')}
                 <div className="nickname">{post.nickName}</div>
                 <div className="createdate">{post.createdAt}</div>
+                {console.log(typeof post.userId)}
               </div>
               <div className="boardcontent">
                 <div className="content">{post.content}</div>
