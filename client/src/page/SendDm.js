@@ -1,7 +1,43 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
 
 function SendDm() {
+  const [content, setContent] = useState('');
+  const [receiverNickname, setReceiverNickname] = useState('');
+
+  const handleContent = (e) => {
+    setContent(e.target.value);
+  };
+
+  const handleReceiverNickname = (e) => {
+    setReceiverNickname(e.target.value);
+  };
+  const token = localStorage.getItem('jwtToken');
+  const userNickName = localStorage.getItem('nickName');
+  const handleSendClick = () => {
+    const Dm = {
+      title: '',
+      content: content,
+      senderNickName: userNickName,
+      receiverNickName: receiverNickname,
+    };
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/messages`, Dm, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log('성공');
+      })
+      .catch((error) => {
+        console.error(error);
+        console.log(에러);
+      });
+  };
+
   return (
     <Dmbody>
       <Dmmodal>
@@ -11,6 +47,8 @@ function SendDm() {
             <Dmtextboxinput
               type="text"
               name="userid"
+              value={receiverNickname}
+              onChange={handleReceiverNickname}
               placeholder=" 받는 사람"
             />
           </Dmtextbox>
@@ -18,7 +56,9 @@ function SendDm() {
           <Dmtextbox>
             <Dmtextboxinput2
               type="text"
-              name="userid"
+              name="content"
+              value={content}
+              onChange={handleContent}
               placeholder=" 쪽지내용"
             />
           </Dmtextbox>
@@ -29,7 +69,7 @@ function SendDm() {
               <Dmcancelbutton> 취소 </Dmcancelbutton>
             </Dmlink>
             <Dmlink to="/PostviewPage">
-              <Dmsendbutton> 보내기 </Dmsendbutton>
+              <Dmsendbutton onClick={handleSendClick}> 보내기 </Dmsendbutton>
             </Dmlink>
           </Dmbuttons>
         </Dmdiv>
