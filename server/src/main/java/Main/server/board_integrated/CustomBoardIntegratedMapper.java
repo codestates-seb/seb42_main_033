@@ -39,6 +39,7 @@ public class CustomBoardIntegratedMapper implements BoardIntegratedMapper {
             response.setContent(post.getContent());
             response.setTag(post.getTag());
             response.setLikeCount(post.getLikeCount());
+            response.setCategory(post.getCategory());
 
             if(post.getCommentCount() != null) {
                 response.setCommentCount(post.getCommentCount());
