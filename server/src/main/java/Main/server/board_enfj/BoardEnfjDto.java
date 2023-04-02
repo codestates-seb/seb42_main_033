@@ -35,6 +35,7 @@ public class BoardEnfjDto {
         String title;
         String content;
         String tag;
+        String category;
         long commentCount;
         long viewCount;
         long likeCount;

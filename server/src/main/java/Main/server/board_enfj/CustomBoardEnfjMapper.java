@@ -38,6 +38,8 @@ public class CustomBoardEnfjMapper implements BoardEnfjMapper {
             response.setTitle(post.getTitle());
             response.setContent(post.getContent());
             response.setTag(post.getTag());
+            response.setLikeCount(post.getLikeCount());
+            response.setCategory(post.getUsers().getMbti());
 
             if(post.getCommentCount() != null) {
                 response.setCommentCount(post.getCommentCount());
@@ -45,6 +47,10 @@ public class CustomBoardEnfjMapper implements BoardEnfjMapper {
 
             if(post.getViewCount() != null) {
                 response.setViewCount(post.getViewCount());
+            }
+
+            if(post.getLikeCount() != null) {
+                response.setLikeCount(post.getLikeCount());
             }
 
             response.setCreatedAt(post.getCreatedAt());

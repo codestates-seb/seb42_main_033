@@ -38,6 +38,7 @@ public class CustomBoardIntegratedMapper implements BoardIntegratedMapper {
             response.setTitle(post.getTitle());
             response.setContent(post.getContent());
             response.setTag(post.getTag());
+            response.setLikeCount(post.getLikeCount());
 
             if(post.getCommentCount() != null) {
                 response.setCommentCount(post.getCommentCount());
@@ -45,6 +46,10 @@ public class CustomBoardIntegratedMapper implements BoardIntegratedMapper {
 
             if(post.getViewCount() != null) {
                 response.setViewCount(post.getViewCount());
+            }
+
+            if(post.getLikeCount() != null) {
+                response.setLikeCount(post.getLikeCount());
             }
 
             response.setCreatedAt(post.getCreatedAt());

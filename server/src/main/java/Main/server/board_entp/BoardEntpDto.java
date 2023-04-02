@@ -35,6 +35,7 @@ public class BoardEntpDto {
         String title;
         String content;
         String tag;
+        String category;
         long commentCount;
         long viewCount;
         long likeCount;
