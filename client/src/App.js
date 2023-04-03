@@ -36,9 +36,9 @@ function App() {
     <Dev className="App">
       {console.log(token)}
       {token ? (
-        <HeaderIcon setModal={setModal} modal={modal} />
-      ) : (
         <HeaderLogin />
+      ) : (
+        <HeaderIcon setModal={setModal} modal={modal} />
       )}
       <GlobalStyle />
       <Routes>

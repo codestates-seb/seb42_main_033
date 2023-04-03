@@ -17,16 +17,19 @@ function SignupPage() {
     event.preventDefault();
     if (nickName === '') {
       setConfirmNickName('Display name cannot be empty.');
+      alert('닉네임을 입력해주세요!');
     } else {
       setConfirmNickName('a');
     }
     if (userId === '') {
       setConfirmuserId('userId cannot be empty.');
+      alert('아이디를 입력해주세요!');
     } else {
       setConfirmuserId('a');
     }
     if (password === '') {
       setConfirmpassword2('Password cannot be empty.');
+      alert('비밀번호를 입력해주세요!');
     } else {
       setConfirmpassword2('a');
     }

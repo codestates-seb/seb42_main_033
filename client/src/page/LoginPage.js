@@ -14,9 +14,9 @@ function LoginPage() {
   const LoginSubit = async (event) => {
     event.preventDefault();
     if (userId === '') {
-      alert('아이디 확인점');
+      alert('회원가입을 하거나 게스트 로그인을 해주세요!');
     } else if (password === '') {
-      alert('비밀번호 확인좀');
+      alert('비밀번호를 확인해 주세요!');
     }
     try {
       const response = await axios.post(
@@ -26,16 +26,15 @@ function LoginPage() {
           password1: password,
         }
       );
+      if (response.status === 401) {
+        alert('회원가입을 하거나 게스트 로그인을 해주세요!');
+      }
       const accessToken = response.headers.authorization;
       const refreshToken = response.headers.refresh;
       localStorage.setItem('jwtToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
       console.log(response.headers);
       console.log(accessToken);
-      if (response.status === 200) {
-        // navigate('/');
-        // location.reload();
-      }
       // user Id 추가 (병민)
       try {
         const userIdGet = await axios.get(
@@ -57,8 +56,8 @@ function LoginPage() {
         // navigate('/');
         console.log('아이디 받아와짐');
         if (response.status === 200) {
-          // navigate('/');
-          // location.reload();
+          navigate('/');
+          location.reload();
         }
       } catch (error) {
         console.log(error);
