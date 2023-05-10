@@ -101,8 +101,6 @@ function LoginPage() {
             placeholder="  아이디"
             onChange={(e) => setUserId(e.target.value)}
           ></Logintextboxinput>
-          {console.log(userId)}
-          {console.log(password)}
         </Logintextbox>
         <Logintextbox>
           <Logintextboxinput

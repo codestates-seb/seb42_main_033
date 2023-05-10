@@ -5,6 +5,21 @@ import styled from 'styled-components';
 import MainSlide from '../components/MainSlide.jsx';
 import { useEffect } from 'react';
 
+function MainPage() {
+  // useEffect(() => {
+  //   location.reload(true);
+  // }, []);
+  return (
+    <MainContainer>
+      <MainSlide />
+      <hr />
+      <ButtonContainer>
+        <MbtiButton />
+        {/* <MbtiButton2 /> */}
+      </ButtonContainer>
+    </MainContainer>
+  );
+}
 const MainContainer = styled.main`
   width: 100%;
   height: 100vh;
@@ -21,21 +36,5 @@ const ButtonContainer = styled.div`
   height: 50%;
   overflow: hidden;
 `;
-
-function MainPage() {
-  // useEffect(() => {
-  //   location.reload(true);
-  // }, []);
-  return (
-    <MainContainer>
-      <MainSlide />
-      <hr />
-      <ButtonContainer>
-        <MbtiButton />
-        {/* <MbtiButton2 /> */}
-      </ButtonContainer>
-    </MainContainer>
-  );
-}
 
 export default MainPage;

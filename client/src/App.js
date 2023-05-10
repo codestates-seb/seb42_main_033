@@ -20,14 +20,6 @@ import SignoutPage from './page/SignoutPage';
 import Infp from './page/Infplist';
 import GlobalStyle from './utils/GlobalStyle';
 
-const Dev = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  background: none;
-  padding-top: 50px;
-  justify-content: center;
-`;
 function App() {
   const [modal, setModal] = useState(false);
   const token = localStorage.getItem('jwtToken');
@@ -36,9 +28,9 @@ function App() {
     <Dev className="App">
       {console.log(token)}
       {token ? (
-        <HeaderLogin />
-      ) : (
         <HeaderIcon setModal={setModal} modal={modal} />
+      ) : (
+        <HeaderLogin />
       )}
       <GlobalStyle />
       <Routes>
@@ -77,5 +69,13 @@ function App() {
     </Dev>
   );
 }
+const Dev = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: none;
+  padding-top: 50px;
+  justify-content: center;
+`;
 
 export default App;

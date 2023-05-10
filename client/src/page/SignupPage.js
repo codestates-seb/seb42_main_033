@@ -49,7 +49,7 @@ function SignupPage() {
       console.log(response);
       navigate('/login');
     } catch {
-      console.log('에러');
+      alert('현재 서버 문제로 회원가입 진행이 되지 않습니다.');
     }
   };
   return (
@@ -57,14 +57,6 @@ function SignupPage() {
       <form onSubmit={SignUpPost}>
         <Signuptext> 회원가입 </Signuptext>
         <Signuptextbox>
-          {console.log(nickName)}
-          {console.log(userId)}
-          {console.log(password)}
-          {console.log(confirmpassword)}
-          {console.log(mbti)}
-          {console.log(confirmNickName)}
-          {console.log(confirmuserId)}
-          {console.log(confirmpassword2)}
           <Signuptextboxinput
             type="text"
             name="usernickname"

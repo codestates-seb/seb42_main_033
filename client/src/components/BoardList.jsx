@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
-import { Link, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { Pagination } from '@mui/material';
 import BoardCard from './BoardCard.jsx';
 

@@ -12,6 +12,13 @@ const MainSlide = () => {
     setCurrentSlide((prev) => (prev === 3 ? 1 : prev + 1));
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev === 3 ? 1 : prev + 1));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   const Container = styled.div`
     /* margin-top: 30px; */
     width: 300vw;
@@ -29,13 +36,6 @@ const MainSlide = () => {
       /* position: absolute; */
     }
   `;
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === 3 ? 1 : prev + 1));
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
   const LeftIcon = styled(MdKeyboardArrowLeft)`
     position: absolute;
