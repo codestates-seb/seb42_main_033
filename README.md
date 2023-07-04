@@ -1,5 +1,5 @@
-# MBTI COMMUNITY
-
+MBTI는 못 참지
+======
 MBTI 웹 애플리케이션입니다.
 
 ## Features
@@ -15,3 +15,16 @@ MBTI 웹 애플리케이션입니다.
 ## Project Wiki
 
 프로젝트 팀 정보, 기획, 아키텍쳐에 대한 자세한 안내입니다.
+
+## 프로젝트 사용 툴
+프론트엔드 | 백엔드
+--|--|
+React|--
+JavaScript|--
+CSS|--
+Styled-compoenet|--
+Axios|--
+prettier|--
+eslint|--
+
+## 
