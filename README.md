@@ -17,15 +17,10 @@ MBTI 웹 애플리케이션입니다.
 프로젝트 팀 정보, 기획, 아키텍쳐에 대한 자세한 안내입니다.
 
 ## 프로젝트 사용 툴
-프론트엔드 | 백엔드
---|--|
-React|--
-JavaScript|--
-CSS|--
-Styled-compoenet|--
-Axios|--
-prettier|--
-eslint|--
+### <span style=""> 🖥 **Front-end** </span>
+| Html | CSS | JavaScript | React | Styled-<br>Components | axios |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| <img alt="Html" src ="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/440px-HTML5_logo_and_wordmark.svg.png" width="65" height="65" /> | <div style="display: flex; align-items: flex-start;"><img src="https://user-images.githubusercontent.com/111227745/210204643-4c3d065c-59ec-481d-ac13-cea795730835.png" alt="CSS" width="50" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/js-icon.svg" alt="icon" width="75" height="75" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://styled-components.com/logo.png" alt="styled-components icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://axios-http.com/assets/logo.svg" width="65" height="65"/></div> |
 
 ## 프로젝트 페이지 
 ![Untitled (3)](https://github.com/codestates-seb/seb42_main_033/assets/112933856/0938e4b5-b245-43ed-84e2-83d8a9d59c85)
